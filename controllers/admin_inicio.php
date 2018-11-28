@@ -15,7 +15,7 @@
       $respuesta = AdminInicioModels::subirLogoModel( $_SESSION['carpeta'], $file);
 
       #Actualizar
-       var_dump( $respuesta->mensaje );
+      echo json_encode($respuesta);
     }
 
 

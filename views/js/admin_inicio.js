@@ -77,8 +77,8 @@ function mostrar() {
 
 function cambiarLogo(ev) {
   ev.preventDefault();
-  var $btn = $("#btnCambiarLogo").button('Procesando...')
-  //$("#btnGuardar").prop("disabled", true);
+  //var $btn = $("#btnCambiarLogo").button('Procesando...')
+  $("#btnCambiarLogo").prop("disabled", true);
   var formData = new FormData($("#formularioLogo")[0]);
   var url = "views/ajax/admin_inicio.php?op=cambiarLogo";
 
@@ -88,14 +88,24 @@ function cambiarLogo(ev) {
     data: formData,
     contentType: false,
     processData: false,
+    beforeSend: function() {
+      $("#btnCambiarLogo").html('<i class="fa fa-refresh fa-spin " aria-hidden="true"></i> Actualizando logotipo...')
+    },
     success: function(datos) {
-      //$("#btnGuardar").removeAttr('disabled');
-      $btn.button('reset');
-      if(datos == 1){
+      data = JSON.parse(datos);
+      console.log(data);
+      if(data['mensaje'] == 1){
 
+        $("#btnCambiarLogo").removeAttr('disabled');
+        $("#btnCambiarLogo").html('<i class="fa fa-save"></i> Guardar');
+        $('#formularioLogo')[0].reset();
+        $("#exito-logo").html('<strong>¡Bien hecho!</strong> ¡Se actualizó el logotipo correctamente!.').fadeIn(1000);
+        $("#exito-logo").delay(2000).fadeOut("slow");
         console.log('ok');
 
       }else{
+        $("#btnCambiarLogo").removeAttr('disabled');
+        $("#btnCambiarLogo").html('<i class="fa fa-save"></i> Guardar')
         $("#fail-logo").html('<strong>¡Atención!</strong> Ocurrio un error al grabar el registro. Intente nuevamente').fadeIn(1000);
         $("#fail-logo").delay(2000).fadeOut("slow");
         $('#encabezado').focus();

@@ -119,6 +119,13 @@
             <label>Cambiar logotipo:</label>
             <input type="file" name="logotipo" class="btn btn-default" id="logotipo" required>
           </div>
+                   
+          <br>
+          <div class="col-lg-12">
+            <div id="fail-logo" class="alert alert-warning ocultar-contenido"></div>
+            <div id="exito-logo" class="alert alert-success ocultar-contenido"></div>
+          </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -126,13 +133,7 @@
           <!-- <button type="button" class="btn btn-primary">Guardar</button> -->
         </div>
 
-        <div class="row">
-          <br>
-          <div class="col-lg-12">
-            <div id="fail-logo" class="alert alert-warning ocultar-contenido"></div>
-            <div id="exito-logo" class="alert alert-success ocultar-contenido"></div>
-          </div>
-        </div>
+
 
       </form>
     </div><!-- /.modal-content -->
