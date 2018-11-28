@@ -1,0 +1,2 @@
+escapar " y $ 
+poner antes de cada una un \

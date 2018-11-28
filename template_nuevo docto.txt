@@ -1,0 +1,33 @@
+$miArchivo = fopen("../modules/dinamico.php", "w+") or die("No se puede abrir/crear el archivo!");
+
+        #Creamos una variable personalizada
+        $var = 'testDatosPersonalizados';
+
+        $php='<?php
+                include "header.php";
+                include "menu.php";
+              ?>
+              <!-- Content Wrapper. Contains page content -->
+              <div class="content-wrapper">
+                <!-- Main content -->
+                <section class="content">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="box">
+                        <div class="box-header with-border">
+                          <h1 class="box-title">Tablero</h1>
+                        </div>
+                      </div><!-- /.box -->
+                    </div><!-- /.col -->
+                  </div><!-- /.row -->
+                </section><!-- /.content -->
+              </div><!-- /.content-wrapper -->
+
+              <?php
+                include "footer.php";
+               ?>
+                </body>';
+
+        fwrite($miArchivo, $php);
+        fclose($miArchivo);
+        echo "1";
