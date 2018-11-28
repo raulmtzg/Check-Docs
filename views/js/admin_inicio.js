@@ -22,7 +22,6 @@ function cancelarform() {
 }
 
 //Función para guardar o editar
-
 function guardaryeditar(e) {
   e.preventDefault();
   $("#btnGuardar").prop("disabled", true);
@@ -75,6 +74,7 @@ function mostrar() {
   })
 }
 
+//Funciones para actualizar y mostrar el logotipo
 function cambiarLogo(ev) {
   ev.preventDefault();
   //var $btn = $("#btnCambiarLogo").button('Procesando...')
@@ -92,17 +92,16 @@ function cambiarLogo(ev) {
       $("#btnCambiarLogo").html('<i class="fa fa-refresh fa-spin " aria-hidden="true"></i> Actualizando logotipo...')
     },
     success: function(datos) {
-      data = JSON.parse(datos);
-      console.log(data);
-      if(data['mensaje'] == 1){
+      //data = JSON.parse(datos);
+      //console.log(data);
+      if(datos == 1){
 
         $("#btnCambiarLogo").removeAttr('disabled');
         $("#btnCambiarLogo").html('<i class="fa fa-save"></i> Guardar');
         $('#formularioLogo')[0].reset();
         $("#exito-logo").html('<strong>¡Bien hecho!</strong> ¡Se actualizó el logotipo correctamente!.').fadeIn(1000);
         $("#exito-logo").delay(2000).fadeOut("slow");
-        console.log('ok');
-
+        //Aqui hace el refresh del logotipo
       }else{
         $("#btnCambiarLogo").removeAttr('disabled');
         $("#btnCambiarLogo").html('<i class="fa fa-save"></i> Guardar')
@@ -117,5 +116,16 @@ function cambiarLogo(ev) {
   return false;
 }
 
+function mostrarLogo(){
+
+  $.post("views/ajax/admin_inicio.php?op=mostrarLogo",function(data, status){
+    data = JSON.parse(data);
+    $("#idusuario").val(data.idusuario);
+    $("#nombreusuario").val(data.nombre);
+    $("#apellidopaterno").val(data.apellidopaterno);
+    $("#apellidomaterno").val(data.apellidomaterno);
+    $("#correo").val(data.email);
+  });
+}
 
 init();

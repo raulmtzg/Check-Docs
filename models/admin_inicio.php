@@ -80,5 +80,38 @@
 
     }
 
+    public function actualizarLogoModel($idsuscriptor, $respuesta, $tabla){
+
+      #Validar que exista el id
+      $statement = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE idsuscriptor = :idsuscriptor ");
+      $statement->execute(array(
+        ':idsuscriptor' => $idsuscriptor
+      ));
+      $resultado= $statement->fetch();
+      if($resultado != false){
+        #Si existe
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET logo = :logo WHERE idsuscriptor = :idsuscriptor");
+
+
+       $stmt -> bindParam(":logo", $respuesta['ubicacion'], PDO::PARAM_STR);
+       $stmt -> bindParam(":idsuscriptor", $idsuscriptor, PDO::PARAM_INT);
+
+        if($stmt -> execute()){
+          #Se guardo correctamente
+          return "1";
+        }
+        else{
+          #Error al grabar un registro
+          return "0";
+        }
+
+      }else{
+        #No existe el id de la categoria
+        return "2";
+      }
+
+
+
+    }
 
   }

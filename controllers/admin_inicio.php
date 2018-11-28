@@ -14,8 +14,15 @@
       session_start();
       $respuesta = AdminInicioModels::subirLogoModel( $_SESSION['carpeta'], $file);
 
-      #Actualizar
-      echo json_encode($respuesta);
+      if( $respuesta['mensaje']== 1 ){
+
+        $actualizar = AdminInicioModels::actualizarLogoModel($_SESSION['idsuscriptor'], $respuesta, "detalle_suscriptores");
+        if( $actualizar == 1){
+          $_SESSION['logo'] = $respuesta['ubicacion'];
+        }
+      }
+      echo $actualizar;
+
     }
 
 
