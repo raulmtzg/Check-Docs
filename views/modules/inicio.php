@@ -19,18 +19,18 @@
       <div class="col-md-12">
         <div class="box">
           <div class="box-header with-border">
-            <h1 class="box-title">Título de página de inicio</h1>
+            <h1 id="encabezado" class="box-title ">Bienvenido</h1>
           </div>
           <div class="panel-body">
             <div class="row">
-              <div class="col-lg-offset-2 col-lg-8">
-                <h3>Descripcion de la pagina de inicio</h3>
+              <div class="col-lg-offset-2 col-lg-8 text-center">
+                <h3 id="descripcion"></h3>
               </div>
             </div>
-
+            <br>
             <div class="row">
-              <div class="col-lg-offset-2 col-lg-8">
-                <img src="views/img/sacsi/logo_sacsi.jpg" class="img img-responsive" alt="">
+              <div class="col-lg-offset-3 col-lg-6 ">
+                <img id="logoempresa" src="views/img/loading.gif" class="img img-responsive center-block" alt="">
               </div>
             </div>
 
@@ -41,7 +41,8 @@
   </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
-<?php
-  include "footer.php";
- ?>
+  <?php
+    include "footer.php";
+  ?>
+  <script src="views/js/inicio.js"></script>
   </body>

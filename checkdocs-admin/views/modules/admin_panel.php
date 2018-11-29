@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
                   <label>Nombre carpeta:</label>
-                  <input type="text" class="form-control" name="carpeta" id="carpeta" placeholder="Nombre sin espacios" required autocomplete="off" >
+                  <input type="text" class="form-control sinespacios" name="carpeta" id="carpeta" placeholder="Nombre sin espacios, solo letras y números" onkeyup="this.value=NumText(this.value)" required autocomplete="off" >
                 </div>
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>

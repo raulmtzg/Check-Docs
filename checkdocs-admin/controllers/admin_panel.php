@@ -52,6 +52,7 @@
                                    "limite_usuarios"          =>  $limite_usuarios,
                                    "capacidad_almacenamiento" =>  $capacidad_almacenamiento,
                                    "carpeta"                  => $carpeta,
+                                   "logo"                     =>"views/img/logo_init.png",
                                    "condicion"                =>  "1",
     	                             "fecha_alta"                =>  $fechaAlta,
     	                             "usuario_alta"              =>  "SISTEMA"

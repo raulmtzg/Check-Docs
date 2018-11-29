@@ -63,7 +63,7 @@
             $mensaje ="1";
 
           }else{
-            //$mensaje= "Tu archivo es demasiado grande. Debe ser menor a 1MB";
+            //$mensaje= "Tu archivo es demasiado grande. Debe ser menor a 2MB";
             $mensaje = "3";
             $fileNameNew ="";
             $fileDestination = "";
@@ -90,7 +90,7 @@
 
     }
 
-    public function actualizarLogoModel($idsuscriptor, $respuesta, $tabla){
+    public function actualizarLogoModel($idsuscriptor, $ruta, $tabla){
 
       #Validar que exista el id
       $statement = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE idsuscriptor = :idsuscriptor ");
@@ -103,7 +103,7 @@
         $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET logo = :logo WHERE idsuscriptor = :idsuscriptor");
 
 
-       $stmt -> bindParam(":logo", $respuesta['nombredocumento'], PDO::PARAM_STR);
+       $stmt -> bindParam(":logo", $ruta, PDO::PARAM_STR);
        $stmt -> bindParam(":idsuscriptor", $idsuscriptor, PDO::PARAM_INT);
 
         if($stmt -> execute()){

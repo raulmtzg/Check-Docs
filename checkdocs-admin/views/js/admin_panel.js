@@ -17,6 +17,8 @@ function init() {
 function limpiar() {
 
   $('#formulario')[0].reset();
+
+  $("#carpeta").removeAttr('disabled');
 }
 
 //Función mostrar formulario
@@ -139,9 +141,10 @@ function mostrar(idsuscriptor) {
     $("#cantidad_admin").val(data.cantidad_admin);
     $("#limite_usuarios").val(data.limite_usuarios);
     $("#capacidad_almacenamiento").val(data.capacidad_almacenamiento);
+    $("#carpeta").val(data.carpeta);
     $("#idsuscriptor").val(data.idsuscriptor);
-
-  })
+    $("#carpeta").attr('disabled', true);
+  });
 }
 
 //Función para desactivar registros

@@ -38,3 +38,4 @@
 
     <!-- SWEET ALERT  -->
     <script src="../assets/sweetalert/sweetalert.min.js"></script>
+    <script src="views/js/globals.js"></script>

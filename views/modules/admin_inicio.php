@@ -69,7 +69,7 @@
                     </div>
                     <div class="panel-body">
                       <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <img id="logoempresa" src="" class="img-responsive img-rounded" alt="Logotipo">
+                        <img id="logoempresa" src="views/img/loading.gif" class="img-responsive img-rounded center-block" alt="Logotipo">
                       </div>
                     </div>
                   </div>
@@ -119,7 +119,9 @@
             <label>Cambiar logotipo:</label>
             <input type="file" name="logotipo" class="btn btn-default" id="logotipo" required>
           </div>
-
+          <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <p>Solo imagenes tipo: JPG, JPEG y PNG. Con un tamaño máximo de 2MB</p>                        
+          </div>
           <br>
           <div class="col-lg-12">
             <div id="fail-logo" class="alert alert-warning ocultar-contenido"></div>

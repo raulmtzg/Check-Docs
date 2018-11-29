@@ -1,2 +1,5 @@
 escapar " y $ 
 poner antes de cada una un \
+
+Funciones de JS
+https://devlaz.com/restringir-caracteres-en-campos-con-javascript

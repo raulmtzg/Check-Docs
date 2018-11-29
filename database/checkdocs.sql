@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-11-2018 a las 05:37:05
--- Versión del servidor: 10.1.31-MariaDB
--- Versión de PHP: 7.2.4
+-- Tiempo de generación: 29-11-2018 a las 17:53:40
+-- Versión del servidor: 10.1.37-MariaDB
+-- Versión de PHP: 7.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -81,10 +81,9 @@ CREATE TABLE `suscriptores` (
 --
 
 INSERT INTO `suscriptores` (`idsuscriptor`, `nombre_empresa`, `rfc`, `cantidad_admin`, `limite_usuarios`, `direccion`, `codigo_postal`, `telefono`, `capacidad_almacenamiento`, `carpeta`, `encabezado`, `descripcion`, `logo`, `condicion`, `fecha_alta`, `usuario_alta`, `fecha_modificacion`, `usuario_modificacion`) VALUES
-(1, 'SACSI WEB', 'ABCDE', 5, 5, NULL, NULL, '2721289117', '300', 'sacsi', 'SISTEMA SACSI', 'AQUÍ ENCONTRARAS LA DOCUMENTACIÓN NECESARIA PARA EL SISTEMA DE GESTIÓN EN SACSI', 'logo_sacsi.jpg', 1, '2018-11-08 05:06:00', 'SISTEMA', '2018-11-20 05:37:00', 'SISTEMA'),
-(2, 'SERVICIOS DE INTEGRACION PARA PRODUCTOS BASICOS SA DE CV', 'SIPB123', 2, 2, NULL, NULL, '21752', '500', 'SIPB', NULL, NULL, NULL, 1, '2018-11-20 06:45:00', 'SISTEMA', NULL, NULL),
-(3, 'CON PAGINA WEB SA DE CV', 'ABC123E', 5, 5, NULL, NULL, '2721289117', '300', 'PAGINAWEB', NULL, NULL, NULL, 1, '2018-11-22 06:37:00', 'SISTEMA', NULL, NULL),
-(4, 'NETCAM SA DE CV', '646TRYUI', 5, 5, NULL, NULL, '2721289117', '500', 'netcam', NULL, NULL, NULL, 1, '2018-11-24 05:11:00', 'SISTEMA', NULL, NULL);
+(1, 'SACSI WEB', 'ABCDE', 5, 5, NULL, NULL, '2721289117', '300', 'sacsi', 'SISTEMA DE GESTIÓN DE CALIDAD EN LA EMPRESA', 'ESTE SITIO INCLUYE TODA LA DOCUMENTACIÓN NECESARIA PARA EL SISTEMA DE GESTIÓN DE CALIDAD', 'logo_sacsi.jpg', 1, '2018-11-08 05:06:00', 'SISTEMA', '2018-11-20 05:37:00', 'SISTEMA'),
+(5, 'YO LO HAGO SA DE CV', 'YOLO123', 2, 2, NULL, NULL, '2721279118', '100', 'yolohago', NULL, NULL, 'views/img/yolohago/logo_yolohago.jpg', 1, '2018-11-29 17:25:00', 'SISTEMA', NULL, NULL),
+(6, 'MR SITE', 'MRSITE', 3, 3, NULL, NULL, '22299', '200', 'mrsite', NULL, NULL, 'views/img/mrsite/logo_mrsite.png', 1, '2018-11-29 17:49:00', 'SISTEMA', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -115,8 +114,8 @@ CREATE TABLE `usuarios_suscriptores` (
 
 INSERT INTO `usuarios_suscriptores` (`idusuario_suscriptor`, `nombre_completo`, `nombre_usuario`, `password_usuario`, `perfil`, `email`, `foto`, `intentos`, `condicion`, `fecha_alta`, `usuario_alta`, `usuario_modificacion`, `fecha_modificacion`, `idsuscriptor`) VALUES
 (3, 'RAUL MARTINEZ GONZALEZ', NULL, '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 1, 'raul.martinez@sacsi.com.mx', NULL, 0, 1, '2018-11-11 04:48:00', 'SISTEMA', NULL, NULL, 1),
-(4, 'FERNANDO AMBROSIO', NULL, '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 1, 'fambrosio@correo.com', NULL, 0, 1, '2018-11-22 06:38:00', 'SISTEMA', NULL, NULL, 3),
-(5, 'DAVID RODRIGUEZ', NULL, 'chk2wrs0', 1, 'david@mail.com', NULL, 0, 1, '2018-11-24 05:13:00', 'SISTEMA', NULL, NULL, 4);
+(6, 'JEZIEL MARTINEZ', NULL, 'd3ad9315b7be5dd53b31a273b3b3aba5defe700808305aa16a3062b76658a791', 1, 'jd@mail.com', NULL, 0, 1, '2018-11-29 17:27:00', 'SISTEMA', NULL, NULL, 5),
+(7, 'DAVID', NULL, '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 1, 'david@mrsite.com', NULL, 0, 1, '2018-11-29 17:50:00', 'SISTEMA', NULL, NULL, 6);
 
 -- --------------------------------------------------------
 
@@ -195,13 +194,13 @@ ALTER TABLE `administradores`
 -- AUTO_INCREMENT de la tabla `suscriptores`
 --
 ALTER TABLE `suscriptores`
-  MODIFY `idsuscriptor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idsuscriptor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios_suscriptores`
 --
 ALTER TABLE `usuarios_suscriptores`
-  MODIFY `idusuario_suscriptor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idusuario_suscriptor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
@@ -211,7 +210,7 @@ ALTER TABLE `usuarios_suscriptores`
 -- Filtros para la tabla `usuarios_suscriptores`
 --
 ALTER TABLE `usuarios_suscriptores`
-  ADD CONSTRAINT `fk_usuarios_suscriptores_suscriptores` FOREIGN KEY (`idsuscriptor`) REFERENCES `suscriptores` (`idsuscriptor`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_usuarios_suscriptores_suscriptores` FOREIGN KEY (`idsuscriptor`) REFERENCES `suscriptores` (`idsuscriptor`) ON DELETE CASCADE ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

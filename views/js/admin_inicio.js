@@ -70,7 +70,7 @@ function mostrar() {
     $("#logoempresa").attr('src', data.ruta+"?"+d.getTime() );
 
 
-  })
+  });
 }
 
 //Funciones para actualizar y mostrar el logotipo
@@ -102,12 +102,27 @@ function cambiarLogo(ev) {
         $("#exito-logo").delay(2000).fadeOut("slow");
         mostrar();
         //Aqui hace el refresh del logotipo
-      }else{
+      }else if( datos == 3 ){
+        $("#btnCambiarLogo").removeAttr('disabled');
+        $("#btnCambiarLogo").html('<i class="fa fa-save"></i> Guardar');
+        $("#fail-logo").html('<strong>¡Atención!</strong> Tu logo es demasiado grande debe ser menor a 2MB. Intente nuevamente').fadeIn(1000);
+        $("#fail-logo").delay(2000).fadeOut("slow");
+        
+      }else if( datos == 4 ){
+        $("#btnCambiarLogo").removeAttr('disabled');
+        $("#btnCambiarLogo").html('<i class="fa fa-save"></i> Guardar');
+        $("#fail-logo").html('<strong>¡Atención!</strong> No se permite cargar archivos de este tipo. Intente nuevamente').fadeIn(1000);
+        $("#fail-logo").delay(2000).fadeOut("slow");
+        
+      }
+      
+      
+      else{
         $("#btnCambiarLogo").removeAttr('disabled');
         $("#btnCambiarLogo").html('<i class="fa fa-save"></i> Guardar')
         $("#fail-logo").html('<strong>¡Atención!</strong> Ocurrio un error al grabar el registro. Intente nuevamente').fadeIn(1000);
         $("#fail-logo").delay(2000).fadeOut("slow");
-        $('#encabezado').focus();
+        
       }
     }
 

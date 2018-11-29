@@ -31,8 +31,8 @@
         return "3";
       }else{
 
-        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (rfc, nombre_empresa, cantidad_admin, telefono, limite_usuarios, capacidad_almacenamiento, carpeta, condicion, fecha_alta, usuario_alta)
-                                                    VALUES (:rfc, :nombre_empresa, :cantidad_admin, :telefono, :limite_usuarios, :capacidad_almacenamiento, :carpeta, :condicion, :fecha_alta, :usuario_alta)");
+        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (rfc, nombre_empresa, cantidad_admin, telefono, limite_usuarios, capacidad_almacenamiento, carpeta, logo, condicion, fecha_alta, usuario_alta)
+                                                    VALUES (:rfc, :nombre_empresa, :cantidad_admin, :telefono, :limite_usuarios, :capacidad_almacenamiento, :carpeta, :logo, :condicion, :fecha_alta, :usuario_alta)");
     		$stmt -> bindParam(":rfc", $datosModel["rfc"], PDO::PARAM_STR);
     		$stmt -> bindParam(":nombre_empresa", $datosModel["nombre_empresa"], PDO::PARAM_STR);
         $stmt -> bindParam(":cantidad_admin", $datosModel["cantidad_admin"], PDO::PARAM_INT);
@@ -40,6 +40,7 @@
         $stmt -> bindParam(":limite_usuarios", $datosModel["limite_usuarios"], PDO::PARAM_INT);
         $stmt -> bindParam(":capacidad_almacenamiento", $datosModel["capacidad_almacenamiento"], PDO::PARAM_STR);
         $stmt -> bindParam(":carpeta", $datosModel["carpeta"], PDO::PARAM_STR);
+        $stmt -> bindParam(":logo", $datosModel["logo"], PDO::PARAM_STR);
         $stmt -> bindParam(":condicion", $datosModel["condicion"], PDO::PARAM_STR);
     		$stmt -> bindParam(":fecha_alta", $datosModel["fecha_alta"], PDO::PARAM_STR);
     		$stmt -> bindParam(":usuario_alta", $datosModel["usuario_alta"], PDO::PARAM_STR);
