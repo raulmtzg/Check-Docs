@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-11-2018 a las 06:10:00
+-- Tiempo de generación: 29-11-2018 a las 05:37:05
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.4
 
@@ -52,28 +52,6 @@ INSERT INTO `administradores` (`idadministrador`, `nombre_completo`, `nombre_usu
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detalle_suscriptores`
---
-
-CREATE TABLE `detalle_suscriptores` (
-  `iddetalle` int(11) NOT NULL,
-  `descripcion` text,
-  `logo` varchar(100) DEFAULT NULL,
-  `encabezado` text,
-  `imagen` varchar(100) DEFAULT NULL,
-  `idsuscriptor` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `detalle_suscriptores`
---
-
-INSERT INTO `detalle_suscriptores` (`iddetalle`, `descripcion`, `logo`, `encabezado`, `imagen`, `idsuscriptor`) VALUES
-(1, '', '../img/sacsi/logo_sacsi.jpg', 'SISTEMA DE GESTION DE DOCUMENTOS', NULL, 1);
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `suscriptores`
 --
 
@@ -88,6 +66,9 @@ CREATE TABLE `suscriptores` (
   `telefono` varchar(20) DEFAULT NULL,
   `capacidad_almacenamiento` varchar(250) NOT NULL,
   `carpeta` varchar(45) NOT NULL,
+  `encabezado` text,
+  `descripcion` text,
+  `logo` text,
   `condicion` tinyint(4) NOT NULL DEFAULT '0',
   `fecha_alta` datetime NOT NULL,
   `usuario_alta` varchar(15) NOT NULL,
@@ -99,11 +80,11 @@ CREATE TABLE `suscriptores` (
 -- Volcado de datos para la tabla `suscriptores`
 --
 
-INSERT INTO `suscriptores` (`idsuscriptor`, `nombre_empresa`, `rfc`, `cantidad_admin`, `limite_usuarios`, `direccion`, `codigo_postal`, `telefono`, `capacidad_almacenamiento`, `carpeta`, `condicion`, `fecha_alta`, `usuario_alta`, `fecha_modificacion`, `usuario_modificacion`) VALUES
-(1, 'SACSI WEB', 'ABCDE', 5, 5, NULL, NULL, '2721289117', '300', 'sacsi', 1, '2018-11-08 05:06:00', 'SISTEMA', '2018-11-20 05:37:00', 'SISTEMA'),
-(2, 'SERVICIOS DE INTEGRACION PARA PRODUCTOS BASICOS SA DE CV', 'SIPB123', 2, 2, NULL, NULL, '21752', '500', 'SIPB', 1, '2018-11-20 06:45:00', 'SISTEMA', NULL, NULL),
-(3, 'CON PAGINA WEB SA DE CV', 'ABC123E', 5, 5, NULL, NULL, '2721289117', '300', 'PAGINAWEB', 1, '2018-11-22 06:37:00', 'SISTEMA', NULL, NULL),
-(4, 'NETCAM SA DE CV', '646TRYUI', 5, 5, NULL, NULL, '2721289117', '500', 'netcam', 1, '2018-11-24 05:11:00', 'SISTEMA', NULL, NULL);
+INSERT INTO `suscriptores` (`idsuscriptor`, `nombre_empresa`, `rfc`, `cantidad_admin`, `limite_usuarios`, `direccion`, `codigo_postal`, `telefono`, `capacidad_almacenamiento`, `carpeta`, `encabezado`, `descripcion`, `logo`, `condicion`, `fecha_alta`, `usuario_alta`, `fecha_modificacion`, `usuario_modificacion`) VALUES
+(1, 'SACSI WEB', 'ABCDE', 5, 5, NULL, NULL, '2721289117', '300', 'sacsi', 'SISTEMA SACSI', 'AQUÍ ENCONTRARAS LA DOCUMENTACIÓN NECESARIA PARA EL SISTEMA DE GESTIÓN EN SACSI', 'logo_sacsi.jpg', 1, '2018-11-08 05:06:00', 'SISTEMA', '2018-11-20 05:37:00', 'SISTEMA'),
+(2, 'SERVICIOS DE INTEGRACION PARA PRODUCTOS BASICOS SA DE CV', 'SIPB123', 2, 2, NULL, NULL, '21752', '500', 'SIPB', NULL, NULL, NULL, 1, '2018-11-20 06:45:00', 'SISTEMA', NULL, NULL),
+(3, 'CON PAGINA WEB SA DE CV', 'ABC123E', 5, 5, NULL, NULL, '2721289117', '300', 'PAGINAWEB', NULL, NULL, NULL, 1, '2018-11-22 06:37:00', 'SISTEMA', NULL, NULL),
+(4, 'NETCAM SA DE CV', '646TRYUI', 5, 5, NULL, NULL, '2721289117', '500', 'netcam', NULL, NULL, NULL, 1, '2018-11-24 05:11:00', 'SISTEMA', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -160,9 +141,8 @@ CREATE TABLE `vwacceso` (
 ,`intentos` tinyint(4)
 ,`condicion_usuario` tinyint(4)
 ,`foto` text
-,`iddetalle` int(11)
 ,`descripcion` text
-,`logo` varchar(100)
+,`logo` text
 ,`encabezado` text
 );
 
@@ -173,7 +153,7 @@ CREATE TABLE `vwacceso` (
 --
 DROP TABLE IF EXISTS `vwacceso`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vwacceso`  AS  select `s`.`idsuscriptor` AS `idsuscriptor`,`s`.`nombre_empresa` AS `nombre_empresa`,`s`.`rfc` AS `rfc`,`s`.`limite_usuarios` AS `limite_usuarios`,`s`.`carpeta` AS `carpeta`,`s`.`capacidad_almacenamiento` AS `capacidad_almacenamiento`,`s`.`condicion` AS `condicion_suscriptor`,`u`.`idusuario_suscriptor` AS `idusuario_suscriptor`,`u`.`nombre_completo` AS `nombre_completo`,`u`.`nombre_usuario` AS `nombre_usuario`,`u`.`perfil` AS `perfil`,`u`.`email` AS `email`,`u`.`password_usuario` AS `password_usuario`,`u`.`intentos` AS `intentos`,`u`.`condicion` AS `condicion_usuario`,`u`.`foto` AS `foto`,`d`.`iddetalle` AS `iddetalle`,`d`.`descripcion` AS `descripcion`,`d`.`logo` AS `logo`,`d`.`encabezado` AS `encabezado` from ((`suscriptores` `s` join `usuarios_suscriptores` `u` on((`s`.`idsuscriptor` = `u`.`idsuscriptor`))) join `detalle_suscriptores` `d` on((`s`.`idsuscriptor` = `d`.`idsuscriptor`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vwacceso`  AS  select `s`.`idsuscriptor` AS `idsuscriptor`,`s`.`nombre_empresa` AS `nombre_empresa`,`s`.`rfc` AS `rfc`,`s`.`limite_usuarios` AS `limite_usuarios`,`s`.`carpeta` AS `carpeta`,`s`.`capacidad_almacenamiento` AS `capacidad_almacenamiento`,`s`.`condicion` AS `condicion_suscriptor`,`u`.`idusuario_suscriptor` AS `idusuario_suscriptor`,`u`.`nombre_completo` AS `nombre_completo`,`u`.`nombre_usuario` AS `nombre_usuario`,`u`.`perfil` AS `perfil`,`u`.`email` AS `email`,`u`.`password_usuario` AS `password_usuario`,`u`.`intentos` AS `intentos`,`u`.`condicion` AS `condicion_usuario`,`u`.`foto` AS `foto`,`s`.`descripcion` AS `descripcion`,`s`.`logo` AS `logo`,`s`.`encabezado` AS `encabezado` from (`suscriptores` `s` join `usuarios_suscriptores` `u` on((`s`.`idsuscriptor` = `u`.`idsuscriptor`))) ;
 
 --
 -- Índices para tablas volcadas
@@ -185,14 +165,6 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 ALTER TABLE `administradores`
   ADD PRIMARY KEY (`idadministrador`),
   ADD UNIQUE KEY `email_UNIQUE` (`email`);
-
---
--- Indices de la tabla `detalle_suscriptores`
---
-ALTER TABLE `detalle_suscriptores`
-  ADD PRIMARY KEY (`iddetalle`),
-  ADD UNIQUE KEY `iddetalle_UNIQUE` (`iddetalle`),
-  ADD KEY `fk_detalle_suscriptores_suscriptores1_idx` (`idsuscriptor`);
 
 --
 -- Indices de la tabla `suscriptores`
@@ -220,12 +192,6 @@ ALTER TABLE `administradores`
   MODIFY `idadministrador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `detalle_suscriptores`
---
-ALTER TABLE `detalle_suscriptores`
-  MODIFY `iddetalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT de la tabla `suscriptores`
 --
 ALTER TABLE `suscriptores`
@@ -240,12 +206,6 @@ ALTER TABLE `usuarios_suscriptores`
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `detalle_suscriptores`
---
-ALTER TABLE `detalle_suscriptores`
-  ADD CONSTRAINT `fk_detalle_suscriptores_suscriptores1` FOREIGN KEY (`idsuscriptor`) REFERENCES `suscriptores` (`idsuscriptor`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `usuarios_suscriptores`
