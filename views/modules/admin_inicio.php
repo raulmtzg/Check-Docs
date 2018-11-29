@@ -38,7 +38,7 @@
                   </div>
                   <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
-                    <button class="btn btn-danger" onclick="cancelarform()" type="button"><i class="fa fa-arrow-circle-left"></i> Cancelar</button>
+                    <!-- <button class="btn btn-danger" onclick="cancelarform()" type="button"><i class="fa fa-arrow-circle-left"></i> Cancelar</button> -->
                   </div>
                   <div class="row">
                     <br>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="panel-body">
                       <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <img src="views/img/sacsi/logo.jpg" class="img-responsive img-rounded" alt="Logotipo">
+                        <img id="logoempresa" src="" class="img-responsive img-rounded" alt="Logotipo">
                       </div>
                     </div>
                   </div>
@@ -119,7 +119,7 @@
             <label>Cambiar logotipo:</label>
             <input type="file" name="logotipo" class="btn btn-default" id="logotipo" required>
           </div>
-                   
+
           <br>
           <div class="col-lg-12">
             <div id="fail-logo" class="alert alert-warning ocultar-contenido"></div>
@@ -128,7 +128,7 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           <button class="btn btn-primary" type="submit" id="btnCambiarLogo"><i class="fa fa-save"></i> Guardar</button>
           <!-- <button type="button" class="btn btn-primary">Guardar</button> -->
         </div>

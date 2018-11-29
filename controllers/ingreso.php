@@ -63,6 +63,9 @@ class Ingreso{
           $_SESSION['capacidad_almacenamiento']= $respuesta['capacidad_almacenamiento'];
           $_SESSION['carpeta']= $respuesta['carpeta'];
           $_SESSION['condicion_suscriptor']= $respuesta['condicion_suscriptor'];
+          $_SESSION['descripcion']= $respuesta['descripcion'];
+          $_SESSION['logo']= $respuesta['logo'];
+          $_SESSION['encabezado']= $respuesta['encabezado'];
 
           #Datos usuario
           $_SESSION['idusuario_suscriptor']= $respuesta['idusuario_suscriptor'];
@@ -72,11 +75,6 @@ class Ingreso{
           $_SESSION['perfil']= $respuesta['perfil'];
           $_SESSION['foto']= $respuesta['foto'];
 
-          #Detalle Suscriptor
-          $_SESSION['iddetalle']= $respuesta['iddetalle'];
-          $_SESSION['descripcion']= $respuesta['descripcion'];
-          $_SESSION['logo']= $respuesta['logo'];
-          $_SESSION['encabezado']= $respuesta['encabezado'];
 
 
 

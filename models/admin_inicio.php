@@ -6,28 +6,38 @@
 
     public function insertarModel($idsuscriptor, $encabezado, $descripcion, $tabla){
 
-      $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (encabezado, descripcion, idsuscriptor)
-                                                  VALUES (:encabezado, :descripcion, :idsuscriptor)");
-      $stmt -> bindParam(":encabezado", $encabezado, PDO::PARAM_STR);
-      $stmt -> bindParam(":descripcion", $descripcion, PDO::PARAM_STR);
-      $stmt -> bindParam(":idsuscriptor", $idsuscriptor, PDO::PARAM_INT);
+      #Validar que exista el id
+      $statement = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE idsuscriptor = :idsuscriptor ");
+      $statement->execute(array(
+        ':idsuscriptor' => $idsuscriptor
+      ));
+      $resultado= $statement->fetch();
+      if($resultado != false){
+        #Si existe
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET encabezado = :encabezado, descripcion = :descripcion WHERE idsuscriptor = :idsuscriptor");
 
-      if($stmt->execute()){
-        #Insertado correctamente
-        return "1";
-      }
 
-      else{
-        #Error al insertar el registro
+       $stmt -> bindParam(":encabezado", $encabezado, PDO::PARAM_STR);
+       $stmt -> bindParam(":descripcion", $descripcion, PDO::PARAM_STR);
+       $stmt -> bindParam(":idsuscriptor", $idsuscriptor, PDO::PARAM_INT);
+
+        if($stmt -> execute()){
+          #Se guardo correctamente
+          return "1";
+        }
+        else{
+          #Error al grabar un registro
+          return "0";
+        }
+
+      }else{
+        #No existe el id de la categoria
         return "2";
       }
 
-      $stmt->close();
-
-
     }
 
-    public function subirLogoModel( $suscriptor, $file){
+    public function subirLogoModel($suscriptor, $file){
 
       $mensaje="";
       $fileName = $file['name'];
@@ -93,7 +103,7 @@
         $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET logo = :logo WHERE idsuscriptor = :idsuscriptor");
 
 
-       $stmt -> bindParam(":logo", $respuesta['ubicacion'], PDO::PARAM_STR);
+       $stmt -> bindParam(":logo", $respuesta['nombredocumento'], PDO::PARAM_STR);
        $stmt -> bindParam(":idsuscriptor", $idsuscriptor, PDO::PARAM_INT);
 
         if($stmt -> execute()){
@@ -110,8 +120,15 @@
         return "2";
       }
 
-
-
     }
+
+    public function mostrarModel($idsuscriptor, $tabla){
+      $stmt = Conexion::conectar()->prepare("SELECT encabezado, descripcion, logo FROM $tabla WHERE idsuscriptor = :idsuscriptor");
+      $stmt ->bindParam(":idsuscriptor", $idsuscriptor, PDO::PARAM_INT);
+      $stmt -> execute();
+      return $stmt->fetch();  #Si es mas de una fila es fetchAll
+      $stmt ->close();
+    }
+
 
   }

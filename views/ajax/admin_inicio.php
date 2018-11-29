@@ -10,20 +10,11 @@
 
 
   switch ($_GET["op"]){
-    case 'guardaryeditar':
-      		if (empty($idsuscriptor)){
-            $stmt = new AdminInicio();
-            $stmt -> insertarController($encabezado, $descripcion);
-            break;
-      		}
-      		else {
-            $stmt = new AdminInicio();
-            $stmt -> editarController($idsuscriptor, $rfc, $nombre_empresa, $cantidad_admin, $telefono, $limite_usuarios, $capacidad_almacenamiento);
-            break;
-
-      		}
-	        break;
-
+    case 'editarInicio':
+          $stmt = new AdminInicio();
+          $stmt -> editarController($encabezado, $descripcion);
+          break;
+	       
     case 'mostrar':
           $stmt = new AdminInicio();
           $stmt -> mostrarController();

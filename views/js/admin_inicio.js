@@ -4,13 +4,14 @@
 function init() {
 
   $("#formulario").on("submit", function(e) {
-    guardaryeditar(e);
+    editarInicio(e);
   });
 
   $("#formularioLogo").on("submit", function(ev) {
     cambiarLogo(ev);
   });
 
+  mostrar();
 
 }
 
@@ -22,11 +23,11 @@ function cancelarform() {
 }
 
 //Función para guardar o editar
-function guardaryeditar(e) {
+function editarInicio(e) {
   e.preventDefault();
   $("#btnGuardar").prop("disabled", true);
   var formData = new FormData($("#formulario")[0]);
-  var url = "views/ajax/admin_inicio.php?op=guardaryeditar";
+  var url = "views/ajax/admin_inicio.php?op=editarInicio";
 
   $.ajax({
     url: url,
@@ -58,18 +59,16 @@ return false;
 
 function mostrar() {
 
-  $.post("views/ajax/admin_panel.php?op=mostrar",function(data, status) {
+  $.post("views/ajax/admin_inicio.php?op=mostrar",function(data, status) {
     data = JSON.parse(data);
-    mostrarform(true);
+
 
     //Como estan definidos los campos en la base de datos
-    $("#rfc").val(data.rfc);
-    $("#nombre_empresa").val(data.nombre_empresa);
-    $("#telefono").val(data.telefono);
-    $("#cantidad_admin").val(data.cantidad_admin);
-    $("#limite_usuarios").val(data.limite_usuarios);
-    $("#capacidad_almacenamiento").val(data.capacidad_almacenamiento);
-    $("#idsuscriptor").val(data.idsuscriptor);
+    $("#encabezado").val(data.encabezado);
+    $("#descripcion").val(data.descripcion);
+    d = new Date();
+    $("#logoempresa").attr('src', data.ruta+"?"+d.getTime() );
+
 
   })
 }
@@ -101,6 +100,7 @@ function cambiarLogo(ev) {
         $('#formularioLogo')[0].reset();
         $("#exito-logo").html('<strong>¡Bien hecho!</strong> ¡Se actualizó el logotipo correctamente!.').fadeIn(1000);
         $("#exito-logo").delay(2000).fadeOut("slow");
+        mostrar();
         //Aqui hace el refresh del logotipo
       }else{
         $("#btnCambiarLogo").removeAttr('disabled');
@@ -114,18 +114,6 @@ function cambiarLogo(ev) {
   });
 
   return false;
-}
-
-function mostrarLogo(){
-
-  $.post("views/ajax/admin_inicio.php?op=mostrarLogo",function(data, status){
-    data = JSON.parse(data);
-    $("#idusuario").val(data.idusuario);
-    $("#nombreusuario").val(data.nombre);
-    $("#apellidopaterno").val(data.apellidopaterno);
-    $("#apellidomaterno").val(data.apellidomaterno);
-    $("#correo").val(data.email);
-  });
 }
 
 init();
