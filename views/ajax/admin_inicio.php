@@ -4,8 +4,8 @@
   require_once "../../models/parametros.php";
 
   //$idsuscriptor=isset($_POST["idsuscriptor"])? trim(filter_var($_POST['idsuscriptor'], FILTER_SANITIZE_NUMBER_INT)):"";
-  $encabezado=isset($_POST["encabezado"])? trim(strtoupper(filter_var($_POST['encabezado'], FILTER_SANITIZE_STRING))):"";
-  $descripcion=isset($_POST["descripcion"])? trim(strtoupper(filter_var($_POST['descripcion'], FILTER_SANITIZE_STRING))):"";
+  $encabezado=isset($_POST["encabezado"])? trim(mb_strtoupper(filter_var($_POST['encabezado'],FILTER_SANITIZE_STRING), 'UTF-8')):"";
+  $descripcion=isset($_POST["descripcion"])? trim(mb_strtoupper(filter_var($_POST['descripcion'],FILTER_SANITIZE_STRING), 'UTF-8')):"";
 
 
 

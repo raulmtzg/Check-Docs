@@ -12,19 +12,21 @@ function cargarInformacion(){
         data = JSON.parse(data);
         console.log(data);
         
-        if(data.encabezado ==""){
-            $("#encabezado").html("Bienvenido al Sistema Check-Docs");    
+        if(data.encabezado == null){
+
+            $("#encabezado").html("Bienvenido al Sistema Check-Docs");
+
         }else{
             $("#encabezado").html(data.encabezado);
         }
 
-        if( data.descripcion == ""){
+        if( data.descripcion == null){
 
         }else{
             $("#descripcion").html(data.descripcion);
         }
         
-        if( data.ruta == ""){
+        if( data.ruta == null){
             $("#logoempresa").remove();
         }else{
             d = new Date();
