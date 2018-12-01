@@ -7,6 +7,7 @@
         $enlaces=="actualizar_password"   ||
          $enlaces=="admin_panel"          ||
          $enlaces=="admin_inicio"         ||
+         $enlaces== "procesos"            ||
 
          $enlaces=="salir"){
 

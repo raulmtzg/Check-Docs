@@ -34,7 +34,7 @@
               <li><a href="#"><i class="fa fa-circle-o"></i> Tablero</a></li>
               <li><a href="admin_inicio"><i class="fa fa-circle-o"></i> Página inicio</a></li>
               <li><a href="#"><i class="fa fa-circle-o"></i> Usuarios</a></li>
-              <li><a href="#"><i class="fa fa-circle-o"></i> Procesos</a></li>
+              <li><a href="procesos"><i class="fa fa-circle-o"></i> Procesos</a></li>
             </ul>
           </li>';
           echo $administracion;

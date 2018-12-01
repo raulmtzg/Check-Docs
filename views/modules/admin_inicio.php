@@ -1,15 +1,12 @@
 <?php
    session_start();
-  // if(!$_SESSION['validar']){
-  //   header("location:ingreso");
-  //   exit();
-  // }else{
-  //   include "header.php";
-  //   include "menu.php";
-  // }
-
-  include "header.php";
-  include "menu.php";
+  if(!$_SESSION['validar']){
+    header("location:ingreso");
+    exit();
+  }else{
+    include "header.php";
+    include "menu.php";
+  }
  ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -120,7 +117,7 @@
             <input type="file" name="logotipo" class="btn btn-default" id="logotipo" required>
           </div>
           <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <p>Solo imagenes tipo: JPG, JPEG y PNG. Con un tamaño máximo de 2MB</p>                        
+            <p>Solo imagenes tipo: JPG, JPEG y PNG. Con un tamaño máximo de 2MB</p>
           </div>
           <br>
           <div class="col-lg-12">
