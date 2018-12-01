@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-11-2018 a las 17:53:40
--- Versión del servidor: 10.1.37-MariaDB
--- Versión de PHP: 7.2.12
+-- Tiempo de generación: 01-12-2018 a las 07:00:47
+-- Versión del servidor: 10.1.31-MariaDB
+-- Versión de PHP: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,24 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `checkdocs`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `accionesdocumentos`
+--
+
+CREATE TABLE `accionesdocumentos` (
+  `idaccion` int(11) NOT NULL,
+  `descripcionaccion` varchar(150) NOT NULL,
+  `fechainicio` datetime NOT NULL,
+  `fechafin` datetime NOT NULL,
+  `estadoavance` varchar(45) NOT NULL,
+  `usuarioalta` varchar(15) NOT NULL,
+  `fechaalta` datetime NOT NULL,
+  `iddocumento` int(11) NOT NULL,
+  `idusuarioalta` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -48,6 +66,162 @@ CREATE TABLE `administradores` (
 
 INSERT INTO `administradores` (`idadministrador`, `nombre_completo`, `nombre_usuario`, `password_usuario`, `email`, `condicion`, `intentos`, `usuario_alta`, `fecha_alta`, `fecha_modificacion`, `usuario_modificacion`) VALUES
 (1, 'RAUL MARTINEZ GONZALEZ', 'RMARTINEZ', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'raul.mtzglez@gmail.com', 1, 0, 'SISTEMA', '2018-11-21 18:00:00', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `autorizadoresxdocumento`
+--
+
+CREATE TABLE `autorizadoresxdocumento` (
+  `orden` tinyint(4) NOT NULL,
+  `idruta` int(11) NOT NULL,
+  `idusuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `autorizadoresxproceso`
+--
+
+CREATE TABLE `autorizadoresxproceso` (
+  `orden` int(11) NOT NULL,
+  `idusuario` int(11) NOT NULL,
+  `idruta` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `avanceaccion`
+--
+
+CREATE TABLE `avanceaccion` (
+  `enviado` tinyint(4) NOT NULL COMMENT '0 = No\n1 = Si',
+  `autorizado` tinyint(4) NOT NULL COMMENT '0 = No\n1 = Si',
+  `orden` tinyint(4) NOT NULL,
+  `idaccion` int(11) NOT NULL,
+  `idusuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `documentos`
+--
+
+CREATE TABLE `documentos` (
+  `iddocumento` int(11) NOT NULL,
+  `nombredocumento` text NOT NULL,
+  `estado` varchar(45) NOT NULL,
+  `version` varchar(10) NOT NULL,
+  `condicion` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 = Inactivo\n1 = Activo\n3 = Papelera',
+  `usuarioresponsable` varchar(15) NOT NULL,
+  `conruta` tinyint(4) NOT NULL COMMENT '0 = ruta por proceso\n1 = ruta por documento',
+  `usuarioalta` varchar(15) NOT NULL,
+  `fechaalta` datetime NOT NULL,
+  `usuariomodificacion` varchar(15) DEFAULT NULL,
+  `fechamodificacion` datetime DEFAULT NULL,
+  `restaurado` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 = No\n1 = Si',
+  `usuariorestauracion` varchar(15) DEFAULT NULL,
+  `fecharestauracion` datetime DEFAULT NULL,
+  `enpapelera` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 = No\n1 = Si',
+  `idusuarioresponsable` int(11) NOT NULL,
+  `idsubproceso` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `historicodocumentos`
+--
+
+CREATE TABLE `historicodocumentos` (
+  `idhistorico` int(11) NOT NULL,
+  `nombredocumento` int(11) NOT NULL,
+  `version` varchar(45) NOT NULL,
+  `fechasalida` datetime NOT NULL,
+  `iddocumento` int(11) NOT NULL,
+  `idaccion` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `papelera`
+--
+
+CREATE TABLE `papelera` (
+  `idpapelera` int(11) NOT NULL,
+  `usuarioenvio` varchar(15) NOT NULL,
+  `fechaenvio` datetime NOT NULL,
+  `iddocumento` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `procesos`
+--
+
+CREATE TABLE `procesos` (
+  `idproceso` int(11) NOT NULL,
+  `descripcion` varchar(60) NOT NULL,
+  `consubprocesos` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 No\n1 Si\n',
+  `condicion` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 Baja\n1 Activo',
+  `usuarioalta` varchar(15) NOT NULL,
+  `fechaalta` datetime NOT NULL,
+  `usuariomodificacion` varchar(15) DEFAULT NULL,
+  `fechamodificacion` datetime DEFAULT NULL,
+  `idsuscriptor` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `rutaxdocumento`
+--
+
+CREATE TABLE `rutaxdocumento` (
+  `idruta` int(11) NOT NULL,
+  `usuarioalta` varchar(15) NOT NULL,
+  `fechaalta` datetime NOT NULL,
+  `usuariomodificacion` varchar(15) DEFAULT NULL,
+  `fechamodificacion` datetime DEFAULT NULL,
+  `iddocumento` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `rutaxsubproceso`
+--
+
+CREATE TABLE `rutaxsubproceso` (
+  `idruta` int(11) NOT NULL,
+  `usuarioalta` varchar(15) DEFAULT NULL,
+  `fechaalta` datetime DEFAULT NULL,
+  `usuariomodificacion` varchar(15) DEFAULT NULL,
+  `idsubproceso` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `subprocesos`
+--
+
+CREATE TABLE `subprocesos` (
+  `idsubproceso` int(11) NOT NULL,
+  `descripcion` varchar(60) NOT NULL,
+  `condicion` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 Baja\n1 Activo',
+  `usuarioalta` varchar(15) NOT NULL,
+  `fechaalta` datetime NOT NULL,
+  `usuariomodificacion` varchar(15) DEFAULT NULL,
+  `fechamodificacion` datetime DEFAULT NULL,
+  `idproceso` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -81,9 +255,10 @@ CREATE TABLE `suscriptores` (
 --
 
 INSERT INTO `suscriptores` (`idsuscriptor`, `nombre_empresa`, `rfc`, `cantidad_admin`, `limite_usuarios`, `direccion`, `codigo_postal`, `telefono`, `capacidad_almacenamiento`, `carpeta`, `encabezado`, `descripcion`, `logo`, `condicion`, `fecha_alta`, `usuario_alta`, `fecha_modificacion`, `usuario_modificacion`) VALUES
-(1, 'SACSI WEB', 'ABCDE', 5, 5, NULL, NULL, '2721289117', '300', 'sacsi', 'SISTEMA DE GESTIÓN DE CALIDAD EN LA EMPRESA', 'ESTE SITIO INCLUYE TODA LA DOCUMENTACIÓN NECESARIA PARA EL SISTEMA DE GESTIÓN DE CALIDAD', 'logo_sacsi.jpg', 1, '2018-11-08 05:06:00', 'SISTEMA', '2018-11-20 05:37:00', 'SISTEMA'),
-(5, 'YO LO HAGO SA DE CV', 'YOLO123', 2, 2, NULL, NULL, '2721279118', '100', 'yolohago', NULL, NULL, 'views/img/yolohago/logo_yolohago.jpg', 1, '2018-11-29 17:25:00', 'SISTEMA', NULL, NULL),
-(6, 'MR SITE', 'MRSITE', 3, 3, NULL, NULL, '22299', '200', 'mrsite', NULL, NULL, 'views/img/mrsite/logo_mrsite.png', 1, '2018-11-29 17:49:00', 'SISTEMA', NULL, NULL);
+(1, 'SACSI WEB', 'ABCDE', 5, 5, NULL, NULL, '2721289117', '300', 'sacsi', 'SISTEMA SACSI', 'AQUÍ ENCONTRARAS LA DOCUMENTACIÓN NECESARIA PARA EL SISTEMA DE GESTIÓN EN SACSI', 'views/img/sacsi/logo_sacsi.jpg', 1, '2018-11-08 05:06:00', 'SISTEMA', '2018-11-20 05:37:00', 'SISTEMA'),
+(2, 'SERVICIOS DE INTEGRACION PARA PRODUCTOS BASICOS SA DE CV', 'SIPB123', 2, 2, NULL, NULL, '21752', '500', 'SIPB', NULL, NULL, NULL, 1, '2018-11-20 06:45:00', 'SISTEMA', NULL, NULL),
+(3, 'CON PAGINA WEB SA DE CV', 'ABC123E', 5, 5, NULL, NULL, '2721289117', '300', 'PAGINAWEB', NULL, NULL, NULL, 1, '2018-11-22 06:37:00', 'SISTEMA', NULL, NULL),
+(4, 'NETCAM SA DE CV', '646TRYUI', 5, 5, NULL, NULL, '2721289117', '500', 'netcam', NULL, NULL, NULL, 1, '2018-11-24 05:11:00', 'SISTEMA', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -114,8 +289,8 @@ CREATE TABLE `usuarios_suscriptores` (
 
 INSERT INTO `usuarios_suscriptores` (`idusuario_suscriptor`, `nombre_completo`, `nombre_usuario`, `password_usuario`, `perfil`, `email`, `foto`, `intentos`, `condicion`, `fecha_alta`, `usuario_alta`, `usuario_modificacion`, `fecha_modificacion`, `idsuscriptor`) VALUES
 (3, 'RAUL MARTINEZ GONZALEZ', NULL, '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 1, 'raul.martinez@sacsi.com.mx', NULL, 0, 1, '2018-11-11 04:48:00', 'SISTEMA', NULL, NULL, 1),
-(6, 'JEZIEL MARTINEZ', NULL, 'd3ad9315b7be5dd53b31a273b3b3aba5defe700808305aa16a3062b76658a791', 1, 'jd@mail.com', NULL, 0, 1, '2018-11-29 17:27:00', 'SISTEMA', NULL, NULL, 5),
-(7, 'DAVID', NULL, '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 1, 'david@mrsite.com', NULL, 0, 1, '2018-11-29 17:50:00', 'SISTEMA', NULL, NULL, 6);
+(4, 'FERNANDO AMBROSIO', NULL, '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 1, 'fambrosio@correo.com', NULL, 0, 1, '2018-11-22 06:38:00', 'SISTEMA', NULL, NULL, 3),
+(5, 'DAVID RODRIGUEZ', NULL, 'chk2wrs0', 1, 'david@mail.com', NULL, 0, 1, '2018-11-24 05:13:00', 'SISTEMA', NULL, NULL, 4);
 
 -- --------------------------------------------------------
 
@@ -159,11 +334,93 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
+-- Indices de la tabla `accionesdocumentos`
+--
+ALTER TABLE `accionesdocumentos`
+  ADD PRIMARY KEY (`idaccion`),
+  ADD UNIQUE KEY `idaccion_UNIQUE` (`idaccion`),
+  ADD KEY `fk_acciones_documentos_documentos1_idx` (`iddocumento`),
+  ADD KEY `fk_acciones_documentos_usuarios_suscriptores1_idx` (`idusuarioalta`);
+
+--
 -- Indices de la tabla `administradores`
 --
 ALTER TABLE `administradores`
   ADD PRIMARY KEY (`idadministrador`),
   ADD UNIQUE KEY `email_UNIQUE` (`email`);
+
+--
+-- Indices de la tabla `autorizadoresxdocumento`
+--
+ALTER TABLE `autorizadoresxdocumento`
+  ADD KEY `fk_autorizadores_ruta_autorizacion1_idx` (`idruta`),
+  ADD KEY `fk_autorizadores_usuarios_suscriptores1_idx` (`idusuario`);
+
+--
+-- Indices de la tabla `autorizadoresxproceso`
+--
+ALTER TABLE `autorizadoresxproceso`
+  ADD KEY `fk_autorizadoresxproceso_usuarios_suscriptores1_idx` (`idusuario`),
+  ADD KEY `fk_autorizadoresxproceso_rutaxsubproceso1_idx` (`idruta`);
+
+--
+-- Indices de la tabla `avanceaccion`
+--
+ALTER TABLE `avanceaccion`
+  ADD KEY `fk_avanceaccion_accionesdocumentos1_idx` (`idaccion`),
+  ADD KEY `fk_avanceaccion_usuarios_suscriptores1_idx` (`idusuario`);
+
+--
+-- Indices de la tabla `documentos`
+--
+ALTER TABLE `documentos`
+  ADD PRIMARY KEY (`iddocumento`),
+  ADD KEY `fk_documentos_usuarios_suscriptores1_idx` (`idusuarioresponsable`),
+  ADD KEY `fk_documentos_subprocesos1_idx` (`idsubproceso`);
+
+--
+-- Indices de la tabla `historicodocumentos`
+--
+ALTER TABLE `historicodocumentos`
+  ADD PRIMARY KEY (`idhistorico`),
+  ADD UNIQUE KEY `idhistorico_UNIQUE` (`idhistorico`),
+  ADD KEY `fk_historicodocumentos_documentos1_idx` (`iddocumento`),
+  ADD KEY `fk_historicodocumentos_accionesdocumentos1_idx` (`idaccion`);
+
+--
+-- Indices de la tabla `papelera`
+--
+ALTER TABLE `papelera`
+  ADD PRIMARY KEY (`idpapelera`),
+  ADD KEY `fk_papelera_documentos1_idx` (`iddocumento`);
+
+--
+-- Indices de la tabla `procesos`
+--
+ALTER TABLE `procesos`
+  ADD PRIMARY KEY (`idproceso`),
+  ADD KEY `fk_procesos_suscriptores1_idx` (`idsuscriptor`);
+
+--
+-- Indices de la tabla `rutaxdocumento`
+--
+ALTER TABLE `rutaxdocumento`
+  ADD PRIMARY KEY (`idruta`),
+  ADD KEY `fk_rutapordocumento_documentos1_idx` (`iddocumento`);
+
+--
+-- Indices de la tabla `rutaxsubproceso`
+--
+ALTER TABLE `rutaxsubproceso`
+  ADD PRIMARY KEY (`idruta`),
+  ADD KEY `fk_rutaxsubproceso_subprocesos1_idx` (`idsubproceso`);
+
+--
+-- Indices de la tabla `subprocesos`
+--
+ALTER TABLE `subprocesos`
+  ADD PRIMARY KEY (`idsubproceso`),
+  ADD KEY `fk_subprocesos_procesos1_idx` (`idproceso`);
 
 --
 -- Indices de la tabla `suscriptores`
@@ -185,26 +442,128 @@ ALTER TABLE `usuarios_suscriptores`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `accionesdocumentos`
+--
+ALTER TABLE `accionesdocumentos`
+  MODIFY `idaccion` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `administradores`
 --
 ALTER TABLE `administradores`
   MODIFY `idadministrador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de la tabla `documentos`
+--
+ALTER TABLE `documentos`
+  MODIFY `iddocumento` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `historicodocumentos`
+--
+ALTER TABLE `historicodocumentos`
+  MODIFY `idhistorico` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `procesos`
+--
+ALTER TABLE `procesos`
+  MODIFY `idproceso` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `subprocesos`
+--
+ALTER TABLE `subprocesos`
+  MODIFY `idsubproceso` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `suscriptores`
 --
 ALTER TABLE `suscriptores`
-  MODIFY `idsuscriptor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idsuscriptor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios_suscriptores`
 --
 ALTER TABLE `usuarios_suscriptores`
-  MODIFY `idusuario_suscriptor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idusuario_suscriptor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `accionesdocumentos`
+--
+ALTER TABLE `accionesdocumentos`
+  ADD CONSTRAINT `fk_acciones_documentos_documentos1` FOREIGN KEY (`iddocumento`) REFERENCES `documentos` (`iddocumento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_acciones_documentos_usuarios_suscriptores1` FOREIGN KEY (`idusuarioalta`) REFERENCES `usuarios_suscriptores` (`idusuario_suscriptor`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `autorizadoresxdocumento`
+--
+ALTER TABLE `autorizadoresxdocumento`
+  ADD CONSTRAINT `fk_autorizadores_ruta_autorizacion1` FOREIGN KEY (`idruta`) REFERENCES `rutaxdocumento` (`idruta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_autorizadores_usuarios_suscriptores1` FOREIGN KEY (`idusuario`) REFERENCES `usuarios_suscriptores` (`idusuario_suscriptor`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `autorizadoresxproceso`
+--
+ALTER TABLE `autorizadoresxproceso`
+  ADD CONSTRAINT `fk_autorizadoresxproceso_rutaxsubproceso1` FOREIGN KEY (`idruta`) REFERENCES `rutaxsubproceso` (`idruta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_autorizadoresxproceso_usuarios_suscriptores1` FOREIGN KEY (`idusuario`) REFERENCES `usuarios_suscriptores` (`idusuario_suscriptor`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `avanceaccion`
+--
+ALTER TABLE `avanceaccion`
+  ADD CONSTRAINT `fk_avanceaccion_accionesdocumentos1` FOREIGN KEY (`idaccion`) REFERENCES `accionesdocumentos` (`idaccion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_avanceaccion_usuarios_suscriptores1` FOREIGN KEY (`idusuario`) REFERENCES `usuarios_suscriptores` (`idusuario_suscriptor`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `documentos`
+--
+ALTER TABLE `documentos`
+  ADD CONSTRAINT `fk_documentos_subprocesos1` FOREIGN KEY (`idsubproceso`) REFERENCES `subprocesos` (`idsubproceso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_documentos_usuarios_suscriptores1` FOREIGN KEY (`idusuarioresponsable`) REFERENCES `usuarios_suscriptores` (`idusuario_suscriptor`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `historicodocumentos`
+--
+ALTER TABLE `historicodocumentos`
+  ADD CONSTRAINT `fk_historicodocumentos_accionesdocumentos1` FOREIGN KEY (`idaccion`) REFERENCES `accionesdocumentos` (`idaccion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_historicodocumentos_documentos1` FOREIGN KEY (`iddocumento`) REFERENCES `documentos` (`iddocumento`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `papelera`
+--
+ALTER TABLE `papelera`
+  ADD CONSTRAINT `fk_papelera_documentos1` FOREIGN KEY (`iddocumento`) REFERENCES `documentos` (`iddocumento`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `procesos`
+--
+ALTER TABLE `procesos`
+  ADD CONSTRAINT `fk_procesos_suscriptores1` FOREIGN KEY (`idsuscriptor`) REFERENCES `suscriptores` (`idsuscriptor`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `rutaxdocumento`
+--
+ALTER TABLE `rutaxdocumento`
+  ADD CONSTRAINT `fk_rutapordocumento_documentos1` FOREIGN KEY (`iddocumento`) REFERENCES `documentos` (`iddocumento`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `rutaxsubproceso`
+--
+ALTER TABLE `rutaxsubproceso`
+  ADD CONSTRAINT `fk_rutaxsubproceso_subprocesos1` FOREIGN KEY (`idsubproceso`) REFERENCES `subprocesos` (`idsubproceso`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `subprocesos`
+--
+ALTER TABLE `subprocesos`
+  ADD CONSTRAINT `fk_subprocesos_procesos1` FOREIGN KEY (`idproceso`) REFERENCES `procesos` (`idproceso`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `usuarios_suscriptores`
