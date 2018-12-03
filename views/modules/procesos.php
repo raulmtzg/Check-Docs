@@ -24,23 +24,19 @@
 
           <div class="panel-body ocultar-contenido" id="formularioregistros">
               <form name="formulario" id="formulario" method="POST">
-
+                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                  <label>PROCESO:</label>
+                  <input type="hidden" name="idproceso" id="idproceso">
+                  <input type="text" class="form-control" name="proceso" id="proceso"  required autocomplete="off" autofocus maxlength="20">
+                </div>
 
                 <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                  <label>Nombre Proceso:</label>
-                  <input type="hidden" name="idproceso" id="idproceso">
-                  <input type="text" class="form-control" name="rfc" id="rfc" required autocomplete="off" autofocus maxlength="20">
+                  <label>SUBPROCESO:</label>
+                  <input type="text" class="form-control" name="subproceso" id="subproceso" onkeypress="insertarSubproceso(event)" autocomplete="off" autofocus maxlength="20">
                 </div>
-                <!-- <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                  <label>Contine Subprocesos:</label>
-                  <select class="form-control" id="consubprocesos" name="consubprocesos" required>
-                    <option value="">--Elije--</option>
-                    <option value="0">NO</option>
-                    <option value="1">SI</option>
-                  </select>
-                </div> -->
+
                 <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12 btnfrmline">
-                  <button class="btn btn-info" onclick="" type="button"><i class="fa fa-plus"></i> Agregar subproceso</button>
+                  <button class="btn btn-info" onclick="agregarSubproceso()" type="button"><i class="fa fa-plus"></i> Agregar </button>
                 </div>
 
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -54,43 +50,29 @@
                     <div id="exito-label" class="alert alert-success ocultar-contenido"></div>
                   </div>
                 </div>
-
               </form>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 table-responsive">
+                <table id="table-subprocesos" class="table table-condensed table-striped">
+                  <thead>
+                    <tr>
+                      <th># POSICIÓN</th>
+                      <th >SUBPROCESO</th>
+                      <th class="text-center">OPCIONES</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id="filaCero" class="default sin-partidas">
+                      <th class="text-center" colspan="5"><span class="sinDatos">No existen subprocesos<span> </th>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </div>
+
           </div>
 
-          <div class="panel-body ocultar-contenido" id="formulariousuariosuscriptor">
-              <form name="formularioAdmin" id="formularioAdmin" method="POST">
-                <div class="form-group col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                  <label>Nombre completo:</label>
-                  <input type="hidden" name="idsuscriptor_usuario" id="idsuscriptor_usuario">
-                  <input type="hidden" name="idadmin" id="idadmin">
-                  <input type="text" class="form-control" name="nombre_completo" id="nombre_completo" required autocomplete="off" autofocus>
-                </div>
-                <!-- <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                  <label>Nombre usuario:</label>
-                  <input type="text" class="form-control" name="nombre_usuario" id="nombre_usuario" required autocomplete="off" >
-                </div> -->
-                <div class="form-group col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                  <label>email:</label>
-                  <input type="email" class="form-control" name="email" id="email" required autocomplete="off" >
-                </div>
-                <!-- <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                  <label>Password:</label>
-                  <input type="text" class="form-control" name="password_usuario" id="password_usuario" required autocomplete="off" >
-                </div> -->
-                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <button class="btn btn-primary" type="submit" id="btnGuardarUsuario"><i class="fa fa-save"></i> Guardar</button>
-                  <button class="btn btn-danger" onclick="mostrarformUsuario(false)" type="button"><i class="fa fa-arrow-circle-left"></i> Cancelar</button>
-                </div>
-                <div class="row">
-                  <br>
-                  <div class="col-lg-12">
-                    <div id="fail-labelAdmin" class="alert alert-warning ocultar-contenido"></div>
-                    <div id="exito-labelAdmin" class="alert alert-success ocultar-contenido"></div>
-                  </div>
-                </div>
-              </form>
-          </div>
+
 
 
           <div class="panel-body table-responsive" id="listadoregistros">

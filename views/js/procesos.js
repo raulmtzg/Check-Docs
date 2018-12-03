@@ -1,4 +1,6 @@
 var tabla;
+var idx=0;
+var subprocesos= [];
 
 //Función que se ejecuta al inicio
 function init() {
@@ -18,7 +20,6 @@ function limpiar() {
 
   $('#formulario')[0].reset();
 
-  $("#carpeta").removeAttr('disabled');
 }
 
 //Función mostrar formulario
@@ -231,108 +232,48 @@ function confirmarActivar(idsuscriptor){
       return false;
 }
 
-//========================== Alta de usuario administrador suscriptor====================
-function mostrarUsuario(idsuscriptor){
-  $("#idsuscriptor_usuario").val(idsuscriptor);
-
-  $.post("views/ajax/admin_panel.php?op=mostrarAdmin", {
-    idsuscriptor: idsuscriptor
-  }, function(data, status) {
-    data = JSON.parse(data);
-
-    mostrarformUsuario(true);
-    //Como estan definidos los campos en la base de datos
-    $("#idusuario_suscriptor").val(data.idusuario_suscriptor);
-    $("#nombre_completo").val(data.nombre_completo);
-    $("#email").val(data.email);
-
-  });
-
-
+//=================== Funciones para insertar subprocesos======================
+function insertarSubproceso(e) {
+    if (e.keyCode === 13 && !e.shiftKey) {
+        e.preventDefault();
+        agregarSubproceso();
+    }
 }
-function mostrarformUsuario(flag) {
-  //limpiarUsuario();
-  if (flag) {
-    $("#listadoregistros").slideUp(500);
-    $("#formulariousuariosuscriptor").slideDown(500);
-    //$("#btnGuardar").prop("disabled", false);
-    //$("#btnagregar").hide();
-    $("#btnagregar").fadeOut("slow");
 
 
+function agregarSubproceso(){
 
-  } else {
-    $('#formularioAdmin')[0].reset();
-    $("#listadoregistros").slideDown(500);
-    $("#formulariousuariosuscriptor").slideUp(500);
-    //$("#btnagregar").show();
-    $("#btnagregar").fadeIn("slow");
+  idx++;
+
+  if ( $("#filaCero").length > 0 ) {
+
+    $("#filaCero").remove();
 
   }
-}
+  var data = $("#subproceso").val();
 
+  var filaPartida='<tr id="fila'+ idx +'">'+
+                     '<td>'+ idx +'</td>'+
+                     '<td>'+ data +'</td>'+
+                     '<td class="text-center ">'+
+                        '<button type="button" class="btn btn-sm btn-default partidaCompra" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick="eliminarPartidaSinGrabar('+idx+')">'+
+                            '<i class="fa fa-trash icon-color-danger"></i>'+
+                        '</button>'+
+                        '</td>'+
+                   '</tr>';
+   //Inserta la nueva fila de partida
+   $("#table-subprocesos tbody").append(filaPartida);
 
-function guardaryeditarAdmin(even){
-  even.preventDefault();
-  $("#btnGuardarUsuario").prop("disabled", true);
-  var formData = new FormData($("#formularioAdmin")[0]);
+   subprocesos.push({
+     idx : idx,
+     subproceso : data
+   });
 
-  $.ajax({
-    url: "views/ajax/admin_panel.php?op=guardaryeditarAdmin",
-    type: "POST",
-    data: formData,
-    contentType: false,
-    processData: false,
-    success: function(datos) {
-
-      if (datos == "1" ){
-
-        $("#exito-labelAdmin").html('<strong>¡Bien hecho!</strong> ¡Se recibió la información correctamente!.').fadeIn(1000);
-        $("#exito-labelAdmin").delay(2000).fadeOut("slow");
-        $('#nombre_completo').focus();
-        $("#btnGuardarUsuario").removeAttr("disabled");
-
-      }else{
-
-        $("#fail-labelAdmin").html('<strong>¡Atención!</strong> Ocurrio un error al grabar el registro. Intente nuevamente').fadeIn(1000);
-        $("#fail-labelAdmin").delay(2000).fadeOut("slow");
-        $('#nombre_completo').focus();
-        $("#btnGuardarUsuario").removeAttr("disabled");
-
-      }
-
-    }
-
-  });
+   //Limpia varlor de subproceso
+   $("#subproceso").val("").focus();
+   //$("#subproceso").focus();
+   console.log(subprocesos);
 
 }
-
-function crearArchivo(){
-
-  $.ajax({
-    url: "views/ajax/admin_panel.php?op=crearArchivo",
-    type: "POST",
-    //data: formData,
-    contentType: false,
-    processData: false,
-    success: function(datos) {
-      console.log(datos);
-      if (datos == "1" ){
-
-        console.log('ok');
-
-      }else{
-
-        console.log('fail');
-
-      }
-
-    }
-
-  });
-
-}
-
-
 
 init();
