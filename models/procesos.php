@@ -21,18 +21,13 @@
           $link2 = new PDO ("$server;$basedatos","$usuariobd","$passwordDb", array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
 
 
-          $stmt = $link2->prepare("INSERT INTO $tabla (descripcion,
-                                                       consubprocesos,
-                                                       usuarioalta,
-                                                       fechaalta,
-                                                       idsuscriptor
-                                                       )
-                                                 VALUES(:descripcion,
-                                                        :consubprocesos,
-                                                        :usuarioalta,
-                                                        :fechaalta,
-                                                        :idsuscriptor,
-                                                        )");
+          $stmt = $link2->prepare("INSERT INTO $tabla (descripcion, consubprocesos, usuarioalta, fechaalta, idsuscriptor)
+                                                      VALUES(:descripcion,
+                                                              :consubprocesos,
+                                                              :usuarioalta,
+                                                              :fechaalta,
+                                                              :idsuscriptor
+                                                              )");
 
           $stmt -> bindParam(":descripcion", $datosModel["descripcion"], PDO::PARAM_STR);
           $stmt -> bindParam(":consubprocesos", $datosModel["consubprocesos"], PDO::PARAM_INT);
@@ -50,6 +45,43 @@
           die ();
 
         }
+
+    }
+
+    public function insertarSubprocesosModel($listaSubprocesos, $idproceso, $fechaalta, $usuarioalta, $tabla){
+
+      $num_elementos=0;
+      $sw="Ok";
+
+      while ($num_elementos< count($listaSubprocesos)){
+
+        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (descripcion, index, usuarioalta, fechaalta ,idproceso)
+                                                    VALUES (:descripcion, :index, :usuarioalta, :fechaalta, :idproceso)");
+        $stmt -> bindParam(":descripcion", $listaSubprocesos[$num_elementos]->descripcion, PDO::PARAM_STR);
+        $stmt -> bindParam(":index", $listaSubprocesos[$num_elementos]->index, PDO::PARAM_INT);
+        $stmt -> bindParam(":usuarioalta", $usuarioalta, PDO::PARAM_STR);
+        $stmt -> bindParam(":fechaalta", $fechaalta, PDO::PARAM_STR);
+        $stmt -> bindParam(":idproceso", $idproceso, PDO::PARAM_INT);        
+
+
+
+        //$stmt ->execute();
+        if($stmt->execute()){
+          #Insertado correctamente
+        }
+        else{
+          #Error al insertar el registro partidas
+          $sw="ERR02";
+        }
+
+
+        $num_elementos=$num_elementos + 1;
+
+      }//Fin ciclo While
+
+      return $sw;
+
+
 
     }
 

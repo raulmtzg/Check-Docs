@@ -96,32 +96,32 @@ function guardaryeditar(e) {
             proceso,
             'array': JSON.stringify(subprocesos)
           },
-    success: function(datos) {
-      console.log(datos);
-      switch (datos) {
-        case "1":
-          $("#exito-label").html('<strong>¡Bien hecho!</strong> ¡Se recibió la información correctamente!.').fadeIn(1000);
+    success: function(data) {
+      console.log(data);
+      var datos = eval(data);
+
+        if(datos[0] == "Ok"){
+          $("#idcompra").val(datos[1]);
+          $("#exito-label").html('<strong>Bien hecho!</strong> Se ha guardado correctamente la información.').fadeIn(1000);
           $("#exito-label").delay(2000).fadeOut("slow");
-          $('#rfc').focus();
-          limpiar();
           $("#btnGuardar").removeAttr("disabled");
-          break;
-        case "2":
-          $("#fail-label").html('<strong>¡Atención!</strong> Ocurrio un error al grabar el registro. Intente nuevamente').fadeIn(1000);
-          $("#fail-label").delay(2000).fadeOut("slow");
-          $('#rfc').focus();
-          $("#btnGuardar").removeAttr("disabled");
-          break;
-        case "3":
-          $("#fail-label").html('<strong>¡Atención!</strong> No existe la empresa').fadeIn(1000);
-          $("#fail-label").delay(2000).fadeOut("slow");
-          $('#rfc').focus();
-          $("#btnGuardar").removeAttr("disabled");
-          break;
+          //estadoControles(true);
 
-        default:
+        }else if (datos[0]=="ERR01") {
+          console.log(datos[0]);
+          $("#fail-label").html('<strong>Atención!</strong> Ocurrio un error al grabar la información, intenta nuevamente.').fadeIn(1000);
+          $("#fail-label").delay(2000).fadeOut("slow");
+          $('#proceso').focus();
+          $("#btnGuardar").removeAttr("disabled");
 
-      }
+        }else{
+          console.log(datos[0]);
+          $("#fail-label").html('<strong>Atención!</strong> Algunos Subprocesos no fueron grabadas, verifica la información.').fadeIn(1000);
+          $("#fail-label").delay(2000).fadeOut("slow");
+          $("#btnGuardar").removeAttr("disabled");
+          $('#proceso').focus();
+
+        }
 
 
 
@@ -276,7 +276,7 @@ function agregarSubproceso(){
    $("#table-subprocesos tbody").append(filaPartida);
 
    subprocesos.push({
-     idx : idx,
+     index : idx,
      subproceso : data
    });
 
