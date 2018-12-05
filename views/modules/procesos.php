@@ -24,20 +24,29 @@
 
           <div class="panel-body ocultar-contenido" id="formularioregistros">
               <form name="formulario" id="formulario" method="POST">
-                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
                   <label>PROCESO:</label>
                   <input type="hidden" name="idproceso" id="idproceso">
-                  <input type="text" class="form-control" name="proceso" id="proceso"  required autocomplete="off" autofocus maxlength="20">
+                  <input type="text" class="form-control" name="proceso" id="proceso" required autocomplete="off" autofocus maxlength="20">
                 </div>
 
-                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
+
+                <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
                   <label>SUBPROCESO:</label>
-                  <input type="text" class="form-control" name="subproceso" id="subproceso" onkeypress="insertarSubproceso(event)" autocomplete="off" autofocus maxlength="20">
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="subproceso" id="subproceso" onkeypress="insertarSubproceso(event)">
+                    <span class="input-group-btn">
+                      <button class="btn btn-info" id="subproceso" onclick="agregarSubproceso()" type="button" >
+                        <i class="fa fa-plus"></i> Agregar
+                      </button>
+                    </span>
+                  </div>
+                  <!-- <input type="text" class="form-control" name="subproceso" id="subproceso" onkeypress="insertarSubproceso(event)" autocomplete="off" autofocus maxlength="20"> -->
                 </div>
 
-                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12 btnfrmline">
+                <!-- <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12 btnfrmline">
                   <button class="btn btn-info" onclick="agregarSubproceso()" type="button"><i class="fa fa-plus"></i> Agregar </button>
-                </div>
+                </div> -->
 
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>

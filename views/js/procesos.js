@@ -83,17 +83,21 @@ function listar() {
 
 function guardaryeditar(e) {
   e.preventDefault();
+  
   $("#btnGuardar").prop("disabled", true);
-  var formData = new FormData($("#formulario")[0]);
 
+  var idproceso = $("#idproceso").val();
+  var proceso = $("#proceso").val();
   $.ajax({
-    url: "views/ajax/admin_panel.php?op=guardaryeditar",
+    url: "views/ajax/procesos.php?op=guardaryeditar",
     type: "POST",
-    data: formData,
-    contentType: false,
-    processData: false,
+    data: {
+            idproceso,
+            proceso,
+            'array': JSON.stringify(subprocesos)
+          },
     success: function(datos) {
-      //console.log('Respuesta Guardar/Editar Centro: '+ datos);
+      console.log(datos);
       switch (datos) {
         case "1":
           $("#exito-label").html('<strong>¡Bien hecho!</strong> ¡Se recibió la información correctamente!.').fadeIn(1000);
@@ -242,6 +246,13 @@ function insertarSubproceso(e) {
 
 
 function agregarSubproceso(){
+
+  var subp = $("#subproceso").val();
+  if( subp == null || subp.length == 0 || /^\s+$/.test(subp) ){
+    $("#subproceso").focus();
+    return;
+  }
+
 
   idx++;
 

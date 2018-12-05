@@ -13,7 +13,7 @@
 
         //MySql para inserciones que requieran el lastInsertId
         $parametros['serverName']="mysql:host=localhost";
-        $parametros['dataBaseName']= "dbname=sipsanet;charset=utf8";
+        $parametros['dataBaseName']= "dbname=checkdocs;charset=utf8";
         $parametros['userDataBase']="root";
         $parametros['passwordDataBase']="";
 
