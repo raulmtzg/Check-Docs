@@ -61,18 +61,19 @@
                 </div>
               </form>
 
-              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 table-responsive">
+              <div id="listado-subprocesos" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 table-responsive">
                 <table id="table-subprocesos" class="table table-condensed table-striped">
                   <thead>
                     <tr>
                       <th># POSICIÓN</th>
-                      <th >SUBPROCESO</th>
-                      <th class="text-center">OPCIONES</th>
+                      <th class="text-center">SUBPROCESO</th>
+                      <th class="text-center">ESTADO</th>
+                      <th class="text-center col-sm-3">OPCIONES</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr id="filaCero" class="default sin-partidas">
-                      <th class="text-center" colspan="5"><span class="sinDatos">No existen subprocesos<span> </th>
+                      <th class="text-center" colspan="4"><span class="sinDatos">No existen subprocesos<span> </th>
                     </tr>
                   </tbody>
 

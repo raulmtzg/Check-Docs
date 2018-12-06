@@ -105,6 +105,7 @@ function guardaryeditar(e) {
           $("#exito-label").html('<strong>Bien hecho!</strong> Se ha guardado correctamente la información.').fadeIn(1000);
           $("#exito-label").delay(2000).fadeOut("slow");
           $("#btnGuardar").removeAttr("disabled");
+          $("#listado-subprocesos").html(datos[2]);
           //estadoControles(true);
 
         }else if (datos[0]=="ERR01") {
@@ -247,6 +248,7 @@ function insertarSubproceso(e) {
 
 function agregarSubproceso(){
 
+  //Evitar que inserte blanco o sin espacio o nulo
   var subp = $("#subproceso").val();
   if( subp == null || subp.length == 0 || /^\s+$/.test(subp) ){
     $("#subproceso").focus();
@@ -261,13 +263,14 @@ function agregarSubproceso(){
     $("#filaCero").remove();
 
   }
-  var data = $("#subproceso").val();
+  var data = $("#subproceso").val().toUpperCase();
 
   var filaPartida='<tr id="fila'+ idx +'">'+
-                     '<td>'+ idx +'</td>'+
-                     '<td>'+ data +'</td>'+
-                     '<td class="text-center ">'+
-                        '<button type="button" class="btn btn-sm btn-default partidaCompra" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick="eliminarPartidaSinGrabar('+idx+')">'+
+                     '<td >'+ idx +'</td>'+
+                     '<td >'+ data +'</td>'+
+                     '<td ><span class="label bg-primary">PENDIENTE</span></td>'+
+                     '<td class="text-center col-sm-3">'+
+                        '<button type="button" class="btn btn-sm btn-default partidaCompra" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick="eliminarSubprocesoSinGrabar('+idx+')">'+
                             '<i class="fa fa-trash icon-color-danger"></i>'+
                         '</button>'+
                         '</td>'+
@@ -284,6 +287,32 @@ function agregarSubproceso(){
    $("#subproceso").val("").focus();
    //$("#subproceso").focus();
    console.log(subprocesos);
+
+}
+
+function eliminarSubprocesoSinGrabar(idx){
+
+  //Actualizar el arreglo eliminando la partida seleccionada
+  for(var i = 0; i < subprocesos.length; i++) {
+    if (subprocesos[i].indice== idx) {
+        subprocesos.splice(i,1);
+        break;
+    }
+  }
+
+
+
+
+  $("#table-subprocesos").find("tbody tr#fila"+idx).remove();
+
+  
+  if ($('#table-subprocesos >tbody >tr').length == 0){
+    var fila='<tr id="filaCero" class="default sin-partidas" >' +
+              '<th class="text-center" colspan="4"><span class="sinDatos">No existen subprocesos<span> </th>' +
+            '</tr>';
+    $("#table-subprocesos tbody").append(fila);
+    
+  }
 
 }
 
