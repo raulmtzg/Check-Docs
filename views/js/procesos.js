@@ -2,6 +2,27 @@ var tabla;
 var idx=0;
 var subprocesos= [];
 
+// var fixHelperModified = function(e, tr) {
+//     var $originals = tr.children();
+//     var $helper = tr.clone();
+//     $helper.children().each(function(index) {
+//         $(this).width($originals.eq(index).width())
+//     });
+//     return $helper;
+// },
+//     updateIndex = function(e, ui) {
+//         $('td.index', ui.item.parent()).each(function (i) {
+//             $(this).html(i + 1);
+//         });
+//     };
+//
+// $("#table-autorizadores tbody").sortable({
+//     helper: fixHelperModified,
+//     stop: updateIndex
+// }).disableSelection();
+
+
+
 //Función que se ejecuta al inicio
 function init() {
   listar();
@@ -64,7 +85,7 @@ function listar() {
       'pdf'
     ],
     "ajax": {
-      url: 'views/ajax/admin_panel.php?op=listar',
+      url: 'views/ajax/procesos.php?op=listar',
       type: "get",
       dataType: "json",
       error: function(e) {
@@ -76,14 +97,19 @@ function listar() {
     "iDisplayLength": 5, //Paginación
     "order": [
       [0, "asc"]
-    ] //Ordenar (columna,orden)
+    ], //Ordenar (columna,orden)
+    "columnDefs": [
+            { "width": "50%", "targets": 0 },
+            { "width": "25%", "targets": 1 },
+            { "width": "25%", "targets": 2 }
+        ],
   }).DataTable();
 }
 //Función para guardar o editar
 
 function guardaryeditar(e) {
   e.preventDefault();
-  
+
   $("#btnGuardar").prop("disabled", true);
 
   var idproceso = $("#idproceso").val();
@@ -132,25 +158,13 @@ function guardaryeditar(e) {
 
 }
 
-function mostrar(idsuscriptor) {
+function mostrar(info) {
+  var result = info.split("|");
+  console.log(result);
+  mostrarform(true);
+  $("#proceso").val(result[1]);
 
-  $.post("views/ajax/admin_panel.php?op=mostrar", {
-    idsuscriptor: idsuscriptor
-  }, function(data, status) {
-    data = JSON.parse(data);
-    mostrarform(true);
 
-    //Como estan definidos los campos en la base de datos
-    $("#rfc").val(data.rfc);
-    $("#nombre_empresa").val(data.nombre_empresa);
-    $("#telefono").val(data.telefono);
-    $("#cantidad_admin").val(data.cantidad_admin);
-    $("#limite_usuarios").val(data.limite_usuarios);
-    $("#capacidad_almacenamiento").val(data.capacidad_almacenamiento);
-    $("#carpeta").val(data.carpeta);
-    $("#idsuscriptor").val(data.idsuscriptor);
-    $("#carpeta").attr('disabled', true);
-  });
 }
 
 //Función para desactivar registros
@@ -305,13 +319,13 @@ function eliminarSubprocesoSinGrabar(idx){
 
   $("#table-subprocesos").find("tbody tr#fila"+idx).remove();
 
-  
+
   if ($('#table-subprocesos >tbody >tr').length == 0){
     var fila='<tr id="filaCero" class="default sin-partidas" >' +
               '<th class="text-center" colspan="4"><span class="sinDatos">No existen subprocesos<span> </th>' +
             '</tr>';
     $("#table-subprocesos tbody").append(fila);
-    
+
   }
 
 }

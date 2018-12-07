@@ -88,20 +88,18 @@
           <div class="panel-body table-responsive" id="listadoregistros">
               <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
                 <thead>
-                  <th># Id</th>
-                  <th>Empresa</th>
-                  <th>RFC</th>
-                  <th>Estado</th>
-                  <th>Opciones</th>
+                  <!-- <th class="text-center">FECHA ALTA</th>                   -->
+                  <th>PROCESO</th>
+                  <th class="text-center">ESTADO</th>
+                  <th class="text-center">OPCIONES</th>
                 </thead>
                 <tbody>
                 </tbody>
                 <tfoot>
-                  <th># Id</th>
-                  <th>Empresa</th>
-                  <th>RFC</th>
-                  <th>Estado</th>
-                  <th>Opciones</th>
+                  <!-- <th class="text-center">FECHA ALTA</th> -->
+                  <th>PROCESO</th>
+                  <th class="text-center">ESTADO</th>
+                  <th class="text-center">OPCIONES</th>
                 </tfoot>
               </table>
           </div>

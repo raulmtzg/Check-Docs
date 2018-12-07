@@ -59,10 +59,8 @@
 
     public function mostrarSubprocesosController($idproceso){
 
-      
-
       $rows = ProcesosModels::mostrarSubprocesoModel($idproceso, "subprocesos");
-        
+
         $tabla="";
         $tabla.='<table id="table-subprocesos" class="table table-condensed table-striped">
           <thead>
@@ -89,17 +87,17 @@
 
                   $data="";
                   $data= "'".$row['idsubproceso']."|".$row['descripcion']."|".$row['idproceso']."'";
-                  
+
                   $tabla.='<tr>
-                    <td class="text-center" >'.$row['consecutivo'].'</td>
+                    <td id="'.$row['consecutivo'].'" class="text-center" >'.$row['consecutivo'].'</td>
                     <td >'.$row['descripcion'].'</td>';
-  
+
                   if( $row['condicion']==1 ){
                     $tabla.='<td class="text-center"><span class="label bg-success">ACTIVO</span></td>';
                   }else{
                     $tabla.='<td class="text-center"><span class="label bg-danger">BAJA</span></td>';
                   }
-  
+
                   $tabla.='
                     <td class="text-center">
                       <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="right" title="Editar registro" onclick="mostrarEdicionSubproceso('.$data.')"><i class="fa fa-pencil icon-color-info"></i></button>
@@ -117,5 +115,74 @@
           return $tabla;
 
     }
+
+    public function listarProcesosController(){
+      session_start();
+
+      $rows= ProcesosModels::listarProcesosModel($_SESSION['idsuscriptor'], "procesos");
+
+      $data= Array();
+      foreach ($rows as $row) {
+        $info="";
+        $info= "'".$row['idproceso']."|".$row['descripcion']."'";
+
+        if( $row['condicion'] == 1){
+          $estado =' <button class="btn  btn-sm btn-default"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Desactivar"
+                    onclick="desactivar('.$info.')">
+                      <i class="fa fa-ban"></i>
+                  </button> ';
+        }else{
+          $estado=' <button class="btn btn-sm btn-default"
+                          data-toggle="tooltip"
+                          data-placement="top"
+                          title="Activar"
+                          onclick="activar('.$info.')">
+                            <i class="fa fa-check"></i>
+                  </button> ';
+        }
+
+        if( $row['publicar']== 0){
+          $publicar=' <button class="btn  btn-sm btn-default"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Publicar"
+                    onclick="publicar('.$info.')">
+                      <i class="fa fa-globe"></i>
+                  </button> ';
+        }else{
+          $publicar=' <button class="btn btn-sm btn-default"
+                          data-toggle="tooltip"
+                          data-placement="top"
+                          title="Ocultar"
+                          onclick="ocultar('.$info.')">
+                            <i class="fa fa-power-off"></i>
+                  </button> ';
+        }
+
+        #$date = date_create($row["fechaalta"]);
+
+        $data[]=array(
+          //"0"=>'<p class="text-center">'.date_format($date, 'Y-m-d').'</p>',
+          "0"=>$row["descripcion"],
+          "1"=>($row['condicion']==1)?'<p class="text-center"><span class="label bg-green ">ACTIVO</span></p>':
+          '<span class="label bg-red text-center">BAJA</span>',
+          "2"=>'<p class="text-center"><button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Editar" onclick="mostrar('.$info.')"><i class="fa fa-pencil"></i></button>'.
+                $estado.
+                $publicar.
+                ' <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick="mostrar('.$row['idproceso'].')"><i class="fa fa-trash"></i></button></p>'
+          );
+      }
+      $results = array(
+   			"sEcho"=>1, //Información para el datatables
+   			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+   			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+   			"aaData"=>$data);
+ 		   echo json_encode($results);
+
+    }
+
 
   }

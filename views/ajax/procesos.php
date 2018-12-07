@@ -22,6 +22,10 @@
             $stmt -> editarController($idproceso, $proceso, $listaSubprocesos);
       		}
 	        break;
+    case 'listar':
+        $stmt = new Procesos();
+        $stmt -> listarProcesosController();
+        break;
 
 
   }
