@@ -45,7 +45,8 @@
       }
 
       #Obtener subprocesos insertados
-      $subprocesosInsertados = self::mostrarSubprocesosController( $respuesta );
+      $condicion = 1;
+      $subprocesosInsertados = self::mostrarSubprocesosController( $respuesta, $condicion );
 
       $envio= array(
         0=>$mensaje,
@@ -57,7 +58,7 @@
 
     }
 
-    public function mostrarSubprocesosController($idproceso){
+    public function mostrarSubprocesosController($idproceso, $condicion){
 
       $rows = ProcesosModels::mostrarSubprocesoModel($idproceso, "subprocesos");
 
@@ -112,7 +113,12 @@
                       </table>';
             }
 
-          return $tabla;
+          if ($condicion == 0){
+            echo $tabla;
+          }else{
+
+            return $tabla;
+          }
 
     }
 

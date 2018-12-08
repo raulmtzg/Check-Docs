@@ -162,8 +162,18 @@ function mostrar(info) {
   var result = info.split("|");
   console.log(result);
   mostrarform(true);
+  $("#idproceso").val(result[0]);
   $("#proceso").val(result[1]);
+  var idproceso = result[0];
+  var condicion = 0;
+  $.post("views/ajax/procesos.php?op=traerSubprocesos", {
+    idproceso: idproceso,
+    condicion: condicion
+  }, function(data, status) {
 
+    $("#listado-subprocesos").html(data);
+
+  });
 
 }
 
