@@ -66,9 +66,9 @@
         $tabla.='<table id="table-subprocesos" class="table table-condensed table-striped">
           <thead>
             <tr>
-              <th ># POSICIÓN</th>
+              <th class="text-center"># POSICIÓN</th>
               <th class="text-center">SUBPROCESO</th>
-              <th cclass="text-center">ESTADO</th>
+              <th class="text-center">ESTADO</th>
               <th class="text-center col-sm-3">OPCIONES</th>
             </tr>
           </thead>
@@ -89,7 +89,7 @@
                   $data="";
                   $data= "'".$row['idsubproceso']."|".$row['descripcion']."|".$row['idproceso']."'";
 
-                  $tabla.='<tr>
+                  $tabla.='<tr id="'.$row['consecutivo'].'">
                     <td id="'.$row['consecutivo'].'" class="text-center" >'.$row['consecutivo'].'</td>
                     <td >'.$row['descripcion'].'</td>';
 
