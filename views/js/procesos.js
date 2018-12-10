@@ -333,10 +333,6 @@ function eliminarSubprocesoSinGrabar(idx) {
         }
     }
 
-
-
-
-
     $("#table-subprocesos").find("tbody tr#" + idx).remove();
 
 
@@ -349,25 +345,27 @@ function eliminarSubprocesoSinGrabar(idx) {
     }
 
     //Recorrer filas para actualizar el consecutivo
-
-    console.log(subprocesos);
-    // $(this).find("td").eq(0).html(pk);
+    var cont = 1;
     $('#table-subprocesos >tbody >tr').each(function () {
 
-      //$this
-
-      var idx = $(this).find("td").eq(0).html();
       var valor = $(this).find("td").eq(1).html();
-      console.log({idx, valor});
+      // var idx = $(this).find("td").eq(0).html();
+      // console.log({idx, valor});
+      $(this).find("td:first").html(cont);
 
-      // if( idx > 1){
-      //   idx = idx-1;
-      //   $(this).find("td:first").html(idx);
-      // }
+      // subprocesos.map(function(dato){
+      //   if(dato.subproceso == valor){
+      //     dato.index = cont;
+      //   }
+      //
+      //   return dato;
+      // });
 
+      cont++;
 
     });
 
+    console.log(subprocesos);
 
 
 }
