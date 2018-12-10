@@ -324,13 +324,27 @@ function agregarSubproceso() {
 }
 
 function eliminarSubprocesoSinGrabar(idx) {
-
+    var indicador = 0;
     //Actualizar el arreglo eliminando la partida seleccionada
     for (var i = 0; i < subprocesos.length; i++) {
+        
         if (subprocesos[i].index == idx) {
+            indicador = subprocesos[i].index;
             subprocesos.splice(i, 1);
-            break;
+             break;
         }
+        // subprocesos[i].index = subprocesos[i].index -1 ;
+    }
+    
+    console.log('indicador: ', indicador);
+
+    for (var j = 0; j > subprocesos.length; j++) {
+        
+        if (subprocesos[j].index > indicador ) {
+            subprocesos[j].index = subprocesos[j].index - 1;
+           
+        }
+        // subprocesos[i].index = subprocesos[i].index -1 ;
     }
 
     $("#table-subprocesos").find("tbody tr#" + idx).remove();
@@ -352,6 +366,8 @@ function eliminarSubprocesoSinGrabar(idx) {
       // var idx = $(this).find("td").eq(0).html();
       // console.log({idx, valor});
       $(this).find("td:first").html(cont);
+
+      
 
       // subprocesos.map(function(dato){
       //   if(dato.subproceso == valor){
