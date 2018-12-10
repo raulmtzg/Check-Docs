@@ -299,7 +299,7 @@ function agregarSubproceso() {
     var data = $("#subproceso").val().toUpperCase();
 
     var filaPartida = '<tr id="' + idx + '">' +
-        '<td class="text-center">' + idx + '</td>' +
+        '<td class="text-center ">' + idx + '</td>' +
         '<td >' + data + '</td>' +
         '<td class="text-center"><span class="label bg-primary">PENDIENTE</span></td>' +
         '<td class="text-center">' +
@@ -327,13 +327,12 @@ function eliminarSubprocesoSinGrabar(idx) {
 
     //Actualizar el arreglo eliminando la partida seleccionada
     for (var i = 0; i < subprocesos.length; i++) {
-        if (subprocesos[i].indice == idx) {
+        if (subprocesos[i].index == idx) {
             subprocesos.splice(i, 1);
             break;
         }
-
-        
     }
+
 
 
 
@@ -346,8 +345,30 @@ function eliminarSubprocesoSinGrabar(idx) {
             '<th class="text-center" colspan="4"><span class="sinDatos">No existen subprocesos<span> </th>' +
             '</tr>';
         $("#table-subprocesos tbody").append(fila);
-
+        return;
     }
+
+    //Recorrer filas para actualizar el consecutivo
+
+    console.log(subprocesos);
+    // $(this).find("td").eq(0).html(pk);
+    $('#table-subprocesos >tbody >tr').each(function () {
+
+      //$this
+
+      var idx = $(this).find("td").eq(0).html();
+      var valor = $(this).find("td").eq(1).html();
+      console.log({idx, valor});
+
+      // if( idx > 1){
+      //   idx = idx-1;
+      //   $(this).find("td:first").html(idx);
+      // }
+
+
+    });
+
+
 
 }
 
