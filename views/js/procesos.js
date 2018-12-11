@@ -2,6 +2,9 @@ var tabla;
 //var idx=0;
 var subprocesos = [];
 
+
+
+
 // var fixHelperModified = function(e, tr) {
 //     var $originals = tr.children();
 //     var $helper = tr.clone();
@@ -303,7 +306,7 @@ function agregarSubproceso() {
         '<td >' + data + '</td>' +
         '<td class="text-center"><span class="label bg-primary">PENDIENTE</span></td>' +
         '<td class="text-center">' +
-        '<button type="button" class="btn btn-sm btn-default partidaCompra" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick="eliminarSubprocesoSinGrabar(' + idx + ')">' +
+        '<button type="button" class="eliminarfila btn btn-sm btn-default partidaCompra" data-toggle="tooltip" data-placement="top" title="Eliminar" >' +
         '<i class="fa fa-trash icon-color-danger"></i>' +
         '</button>' +
         '</td>' +
@@ -318,33 +321,30 @@ function agregarSubproceso() {
 
     //Limpia varlor de subproceso
     $("#subproceso").val("").focus();
-    //$("#subproceso").focus();
-    console.log(subprocesos);
 
 }
 
+//Se ejecuta la hacer clic en el boton de eliminar y toma el id de la fila a eliminar
+$(document).on("click", ".eliminarfila", function(){
+  var fila = $(this).parents("tr").attr("id");
+   eliminarSubprocesoSinGrabar(fila);
+});
+
+
 function eliminarSubprocesoSinGrabar(idx) {
+
+  var idUsuario = $("#table-subprocesos tbody").parents("tr").attr("id");
+
     var indicador = 0;
     //Actualizar el arreglo eliminando la partida seleccionada
     for (var i = 0; i < subprocesos.length; i++) {
-        
+
         if (subprocesos[i].index == idx) {
             indicador = subprocesos[i].index;
             subprocesos.splice(i, 1);
              break;
         }
-        // subprocesos[i].index = subprocesos[i].index -1 ;
-    }
-    
-    console.log('indicador: ', indicador);
 
-    for (var j = 0; j > subprocesos.length; j++) {
-        
-        if (subprocesos[j].index > indicador ) {
-            subprocesos[j].index = subprocesos[j].index - 1;
-           
-        }
-        // subprocesos[i].index = subprocesos[i].index -1 ;
     }
 
     $("#table-subprocesos").find("tbody tr#" + idx).remove();
@@ -359,31 +359,30 @@ function eliminarSubprocesoSinGrabar(idx) {
     }
 
     //Recorrer filas para actualizar el consecutivo
+    // var idx = $(this).find("td").eq(0).html();
+    // console.log({idx, valor});
     var cont = 1;
     $('#table-subprocesos >tbody >tr').each(function () {
-
       var valor = $(this).find("td").eq(1).html();
-      // var idx = $(this).find("td").eq(0).html();
-      // console.log({idx, valor});
       $(this).find("td:first").html(cont);
-
-      
-
-      // subprocesos.map(function(dato){
-      //   if(dato.subproceso == valor){
-      //     dato.index = cont;
-      //   }
-      //
-      //   return dato;
-      // });
-
+      $(this).attr('id', cont);
       cont++;
 
     });
 
+
+    if( subprocesos.length > 0 ){
+      for (var j = 0; j < subprocesos.length; j++) {
+
+        if (subprocesos[j].index > indicador ) {
+          subprocesos[j].index = subprocesos[j].index - 1;
+          console.log(subprocesos[j].index);
+        }
+      }
+
+    }
+
     console.log(subprocesos);
-
-
 }
 
 init();
