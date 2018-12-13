@@ -100,4 +100,145 @@
       $stmt ->close();
     }
 
+    public function editarModel($datosModel, $tabla){
+
+      #Validar que exista el id
+      $statement = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE idproceso = :idproceso");
+      $statement->execute(array(
+        ':idproceso' => $datosModel['idproceso']
+      ));
+
+      $resultado= $statement->fetch();
+      if($resultado != false){
+        #Si existe
+        //Validar que la clave no exista en otro registro
+          $statement="";
+          $statement = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE proceso = :proceso AND idproceso <> :idproceso ");
+
+          $statement->execute(array(
+            ':proceso'   => $datosModel['proceso'],
+            ':idproceso' => $datosModel['idproceso']
+          ));
+          $resp= $statement->fetch();
+          if($resp != false){
+            //Ya existe un codigo de categoria
+            return "3";
+          }else{
+
+            $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET descripcion              = :descripcion,
+                                                                     fechamodificacion    = :fechamodificacion,
+                                                                     usuariomodificacion  = :usuariomodificacion
+                                                   WHERE idproceso = :idproceso");
+
+            $stmt -> bindParam(":descripcion", $datosModel["proceso"], PDO::PARAM_STR);
+         		$stmt -> bindParam(":fechamodificacion", $datosModel["fechamodificacion"], PDO::PARAM_STR);
+         		$stmt -> bindParam(":usuariomodificacion", $datosModel["usuariomodificacion"], PDO::PARAM_STR);
+            $stmt -> bindParam(":idproceso", $datosModel["idproceso"], PDO::PARAM_INT);
+
+            if($stmt -> execute()){
+              #Se guardo correctamente
+              return "Ok";
+            }
+            else{
+              #Error al grabar un registro
+              return "2";
+            }
+
+          }
+
+      }else{
+        #No existe el id de la categoria
+        return "4";
+      }
+
+    }
+
+    public function actualizarSubprocesoModel($datosModel, $tabla){
+      #Validar que exista el id
+      $statement = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE idsubproceso = :idsubproceso");
+      $statement->execute(array(
+        ':idsubproceso' => $datosModel["idsubproceso"]
+      ));
+      $resultado= $statement->fetch();
+      if($resultado != false){
+        #Si existe
+
+        //Validar que la clave no exista en otro registro
+          $statement="";
+          $statement = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE descripcion = :descripcion AND idsubproceso <> :idsubproceso ");
+
+          $statement->execute(array(
+            ':descripcion'        => $datosModel["descripcion"],
+            ':idsubproceso'      => $datosModel["idsubproceso"]
+          ));
+          $resp= $statement->fetch();
+          if($resp != false){
+            //Ya existe un codigo de categoria
+            return "3";
+          }else{
+
+            $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET descripcion          = :descripcion,
+                                                                     fechamodificacion    = :fechamodificacion,
+                                                                     usuariomodificacion  = :usuariomodificacion
+                                                   WHERE idsubproceso = :idsubproceso");
+
+         		$stmt -> bindParam(":descripcion", $datosModel["descripcion"], PDO::PARAM_STR);
+         		$stmt -> bindParam(":fechamodificacion", $datosModel["fechamodificacion"], PDO::PARAM_STR);
+         		$stmt -> bindParam(":usuariomodificacion", $datosModel["usuariomodificacion"], PDO::PARAM_STR);
+            $stmt -> bindParam(":idsubproceso", $datosModel["idsubproceso"], PDO::PARAM_INT);
+
+            if($stmt -> execute()){
+              #Se guardo correctamente
+              return "1";
+            }
+            else{
+              #Error al grabar un registro
+              return "2";
+            }
+
+          }
+
+      }else{
+        #No existe el id de la categoria
+        return "4";
+      }
+
+    }
+
+    public function desactivarActivarSubModel($datosModel, $tabla){
+
+      $statement = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE idsubproceso = :idsubproceso ");
+      $statement->execute(array(
+        ':idsubproceso' => $datosModel["idsubproceso"]
+      ));
+      $resultado= $statement->fetch();
+      if($resultado != false){
+        #Si existe la categoria
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET condicion = :condicion,
+                                                                 fechamodificacion = :fechamodificacion,
+                                                                 usuariomodificacion = :usuariomodificacion
+                                               WHERE idsubproceso = :idsubproceso");
+
+        $stmt -> bindParam(":condicion", $datosModel["condicion"], PDO::PARAM_STR);
+        $stmt -> bindParam(":idsubproceso", $datosModel["idsubproceso"], PDO::PARAM_INT);
+        $stmt -> bindParam(":fechamodificacion", $datosModel["fechamodificacion"], PDO::PARAM_STR);
+        $stmt -> bindParam(":usuariomodificacion", $datosModel["usuariomodificacion"], PDO::PARAM_STR);
+
+        if($stmt -> execute()){
+          #Se guardo correctamente
+          return "1";
+        }
+        else{
+          #Error al grabar un registro
+          return "2";
+        }
+
+      }else{
+        //No existe la categoria
+        return "3";
+
+      }
+
+    }//Fin function desactivarModel
+
   }

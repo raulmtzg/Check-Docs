@@ -76,7 +76,6 @@
                       <th class="text-center" colspan="4"><span class="sinDatos">No existen subprocesos<span> </th>
                     </tr>
                   </tbody>
-
                 </table>
               </div>
 
@@ -109,6 +108,40 @@
     </div><!-- /.row -->
   </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
+
+<!-- Modal para editar subproceso -->
+<div class="modal fade" id="modalEditarSubproceso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Editar Subproceso</h4>
+      </div>
+      <div class="modal-body">
+        <form name="formSubproceso" id="formSubproceso" method="POST">
+          <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <label>SUBPROCESO:</label>
+            <input type="hidden" name="idsubproceso" id="idsubproceso">
+            <input type="hidden" name="idprocesomod" id="idprocesomod">
+            <input type="text" class="form-control" name="subprocesomod" id="subprocesomod" required autocomplete="off">
+          </div>
+          <div class="form-group col-md-12 text-right ">
+            <button class="btn btn-primary" type="submit" id="btnGuardarSub"><i class="fa fa-save"></i> Guardar</button>
+            <button class="btn btn-danger" data-dismiss="modal" type="button"><i class="fa fa-arrow-circle-left"></i> Cancelar</button>
+          </div>
+          <div class="row">
+            <br>
+            <div class="col-lg-12">
+              <div id="fail-editarSubproceso" class="alert alert-warning ocultar-contenido"></div>
+              <div id="exito-editarSubproceso" class="alert alert-success ocultar-contenido"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <?php
   include "footer.php";

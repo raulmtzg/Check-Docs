@@ -58,6 +58,54 @@
 
     }
 
+    public function editarController($idproceso, $proceso, $listaSubprocesos){
+
+       session_start();
+       $subprocesos=0;
+       $parametros = ParametrosModels::parametrosModel();
+       $fechaModificacion= date($parametros['formatoFecha']);
+       $datosController = array("proceso"             =>  $proceso,
+                                "idproceso"           =>  $idproceso,
+  	                            "fechamodificacion"   =>  $fechaModificacion,
+  	                            "usuariomodificacion" =>  $_SESSION['usuario']
+  								            );
+
+      $respuesta = ProcesosModels::editarModel($datosController, "procesos");
+
+      if( $respuesta == "Ok" ){
+
+        if( count($listaSubprocesos) > 0 ){
+
+          $subprocesos = ProcesosModels::insertarSubprocesosModel($listaSubprocesos, $idproceso, $fechaModificacion, $_SESSION['usuario'], "subprocesos");
+          $mensaje = $subprocesos;
+
+        }else{
+
+          $mensaje = $repuesta;
+
+        }
+      }else{
+
+        //No se pudo grabar el encabezado de la compra
+        $mensaje = "ERR01";
+
+      }
+
+      #Obtener subprocesos insertados
+      $condicion = 1;
+      $subprocesosInsertados = self::mostrarSubprocesosController( $idproceso, $condicion );
+
+      $envio= array(
+        0=>$mensaje,
+        1=>$respuesta,
+        2=> $subprocesosInsertados
+      );
+
+      echo json_encode($envio);
+
+
+    }
+
     public function mostrarSubprocesosController($idproceso, $condicion){
 
       $rows = ProcesosModels::mostrarSubprocesoModel($idproceso, "subprocesos");
@@ -94,16 +142,24 @@
                     <td >'.$row['descripcion'].'</td>';
 
                   if( $row['condicion']==1 ){
-                    $tabla.='<td class="text-center"><span class="label bg-success">ACTIVO</span></td>';
+                    $tabla.='<td class="text-center"><span class="label bg-success">ACTIVO</span></td>
+                              <td class="text-center">
+                                <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Editar" onclick="mostrarEdicionSubproceso('.$data.')"><i class="fa fa-pencil icon-color-info"></i></button>
+                                <button class="btn  btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Desactivar" onclick="desactivarSub('.$data.')"><i class="fa fa-ban"></i></button>
+                                <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick="eliminarSubproceso('.$data.')"><i class="fa fa-trash icon-color-danger"></i></button>
+                              </td>
+                              </tr>';
                   }else{
-                    $tabla.='<td class="text-center"><span class="label bg-danger">BAJA</span></td>';
+                    $tabla.='<td class="text-center"><span class="label bg-danger">BAJA</span></td>
+                              <td class="text-center">
+                                <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Editar" onclick="mostrarEdicionSubproceso('.$data.')"><i class="fa fa-pencil icon-color-info"></i></button>
+                                <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Activar" onclick="activarSub('.$data.')"><i class="fa fa-check"></i></button>
+                                <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick="eliminarSubproceso('.$data.')"><i class="fa fa-trash icon-color-danger"></i></button>
+                              </td>
+                              </tr>';
                   }
 
-                  $tabla.='
-                    <td class="text-center">
-                      <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="right" title="Editar registro" onclick="mostrarEdicionSubproceso('.$data.')"><i class="fa fa-pencil icon-color-info"></i></button>
-                      <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="right" title="Eliminar registro" onclick="eliminarSubproceso('.$data.')"><i class="fa fa-trash icon-color-danger"></i></button></td>
-                    </tr>';
+
 
                 }
 
@@ -190,5 +246,85 @@
 
     }
 
+    public function actualizarSubprocesoController($idsubproceso, $subproceso, $idproceso){
+
+       session_start();
+       $parametros = ParametrosModels::parametrosModel();
+       $fechaModificacion= date($parametros['formatoFecha']);
+       $datosController = array("idsubproceso"           =>  $idsubproceso,
+    							                "descripcion"           =>  $subproceso,
+                                  "fechamodificacion"     =>  $fechaModificacion,
+                                  "usuariomodificacion"   =>  $_SESSION['usuario']
+    							               );
+
+       $respuesta = ProcesosModels::actualizarSubprocesoModel($datosController, "subprocesos");
+
+       #Obtener subprocesos insertados
+       $condicion = 1;
+       $subprocesosInsertados = self::mostrarSubprocesosController( $idproceso, $condicion );
+
+       $envio= array(
+         0=>$respuesta,
+         1=> $subprocesosInsertados
+       );
+
+       echo json_encode($envio);
+
+       //echo $respuesta;
+
+
+    }
+
+    public function desactivarSubController($idsubproceso, $idproceso){
+
+        session_start();
+        $parametros = ParametrosModels::parametrosModel();
+        $fechaModificacion= date($parametros['formatoFecha']);
+        $datosController = array("idsubproceso"         =>  $idsubproceso,
+                                 "condicion"             => "0",
+                                 "fechamodificacion"     =>  $fechaModificacion,
+                                 "usuariomodificacion"   =>  $_SESSION['usuario']
+                                );
+
+        $respuesta = ProcesosModels::desactivarActivarSubModel($datosController, "subprocesos");
+        #Obtener subprocesos insertados
+        $condicion = 1;
+        $subprocesosInsertados = self::mostrarSubprocesosController( $idproceso, $condicion );
+
+        $envio= array(
+          0=>$respuesta,
+          1=> $subprocesosInsertados
+        );
+
+        echo json_encode($envio);
+        //echo $respuesta;
+
+      }
+
+      public function activarSubController($idsubproceso, $idproceso){
+
+          session_start();
+          $parametros = ParametrosModels::parametrosModel();
+          $fechaModificacion= date($parametros['formatoFecha']);
+          $datosController = array("idsubproceso"         =>  $idsubproceso,
+                                   "condicion"             => "1",
+                                   "fechamodificacion"     =>  $fechaModificacion,
+                                   "usuariomodificacion"   =>  $_SESSION['usuario']
+                                  );
+
+          $respuesta = ProcesosModels::desactivarActivarSubModel($datosController, "subprocesos");
+          #Obtener subprocesos insertados
+          $condicion = 1;
+          $subprocesosInsertados = self::mostrarSubprocesosController( $idproceso, $condicion );
+
+          $envio= array(
+            0=>$respuesta,
+            1=> $subprocesosInsertados
+          );
+
+          echo json_encode($envio);
+          //echo $respuesta;
+
+        }
 
   }

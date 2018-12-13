@@ -33,8 +33,8 @@ function init() {
         guardaryeditar(e);
     });
 
-    $("#formularioAdmin").on("submit", function(even) {
-        guardaryeditarAdmin(even);
+    $("#formSubproceso").on("submit", function(event) {
+        actualizarSubproceso(event);
     });
 
 }
@@ -53,6 +53,24 @@ function mostrarform(flag) {
         $("#listadoregistros").slideUp(500);
         $("#formularioregistros").slideDown(500);
         $("#btnGuardar").prop("disabled", false);
+
+        var tabla =
+                      '<thead>'+
+                        '<tr>'+
+                          '<th># POSICIÓN</th>'+
+                          '<th class="text-center">SUBPROCESO</th>'+
+                          '<th class="text-center">ESTADO</th>'+
+                          '<th class="text-center col-sm-3">OPCIONES</th>'+
+                        '</tr>'+
+                      '</thead>'+
+          '<tbody>'+
+          '  <tr id="filaCero" class="default sin-partidas">'+
+          '    <th class="text-center" colspan="4"><span class="sinDatos">No existen subprocesos<span> </th>'+
+          '  </tr>'+
+          '</tbody>';
+
+        //Inserta la nueva fila de partida
+        $("#table-subprocesos tbody").append(tabla);
         //$("#btnagregar").hide();
         $("#btnagregar").fadeOut("slow");
 
@@ -73,7 +91,6 @@ function cancelarform() {
     mostrarform(false);
     tabla.ajax.reload();
 }
-
 
 //Función Listar
 function listar() {
@@ -108,8 +125,8 @@ function listar() {
         ],
     }).DataTable();
 }
-//Función para guardar o editar
 
+//Función para guardar o editar
 function guardaryeditar(e) {
     e.preventDefault();
 
@@ -126,7 +143,7 @@ function guardaryeditar(e) {
             'array': JSON.stringify(subprocesos)
         },
         success: function(data) {
-            console.log(data);
+
             var datos = eval(data);
 
             if (datos[0] == "Ok") {
@@ -146,14 +163,12 @@ function guardaryeditar(e) {
 
             } else {
                 console.log(datos[0]);
-                $("#fail-label").html('<strong>Atención!</strong> Algunos Subprocesos no fueron grabadas, verifica la información.').fadeIn(1000);
+                $("#fail-label").html('<strong>Atención!</strong> Algunos Subprocesos no fueron grabados, verifica la información.').fadeIn(1000);
                 $("#fail-label").delay(2000).fadeOut("slow");
                 $("#btnGuardar").removeAttr("disabled");
                 $('#proceso').focus();
 
             }
-
-
 
         }
 
@@ -264,7 +279,7 @@ function confirmarActivar(idsuscriptor) {
     return false;
 }
 
-//=================== Funciones para insertar subprocesos======================
+//=================== Funciones para subprocesos======================
 function insertarSubproceso(e) {
     if (e.keyCode === 13 && !e.shiftKey) {
         e.preventDefault();
@@ -272,6 +287,78 @@ function insertarSubproceso(e) {
     }
 }
 
+function actualizarSubproceso(event){
+  event.preventDefault();
+  console.log('actualizar');
+
+  $("#btnGuardarSub").prop("disabled", true);
+  var formData = new FormData($("#formSubproceso")[0]);
+
+  $.ajax({
+    url: "views/ajax/procesos.php?op=actualizarSubproceso",
+    type: "POST",
+    data: formData,
+    contentType: false,
+    processData: false,
+    success: function(data) {
+      var datos = eval(data);
+      switch (datos[0]) {
+         case "1":
+           $("#exito-editarSubproceso").html('<strong>¡Bien hecho!</strong> ¡El Subproceso se actualizó correctamente!.').fadeIn(1000);
+           $("#exito-editarSubproceso").delay(2000).fadeOut("slow");
+           $('#subprocesomod').focus();
+           $("#btnGuardarSub").removeAttr("disabled");
+           $("#listado-subprocesos").html(datos[1]);
+           break;
+         case "2":
+           console.log(datos);
+           $("#fail-editarSubproceso").html('<strong>¡Atención!</strong> Lo sentimos, ocurrio un error al actualizar el registro').fadeIn(1000);
+           $("#fail-editarSubproceso").delay(2000).fadeOut("slow");
+           $('#subprocesomod').focus();
+           $("#btnGuardarSub").removeAttr("disabled");
+           break;
+         case "3":
+           console.log(datos);
+           $("#fail-editarSubproceso").html('<strong>¡Atención!</strong> Ya existe un Subproceso con ese nombre').fadeIn(1000);
+           $("#fail-editarSubproceso").delay(2000).fadeOut("slow");
+           $('#subprocesomod').focus();
+           $("#btnGuardarSub").removeAttr("disabled");
+           break;
+         case "4":
+           console.log(datos);
+           $("#fail-editarSubproceso").html('<strong>¡Atención!</strong> No existe el Id del Subproceso').fadeIn(1000);
+           $("#fail-editarSubproceso").delay(2000).fadeOut("slow");
+           $('#subprocesomod').focus();
+           $("#btnGuardarSub").removeAttr("disabled");
+           break;
+         default:
+           $("#fail-editarSubproceso").html('<strong>¡Atención!</strong> Ocurrio un error en el sistema. Intente nuevamente').fadeIn(1000);
+           $("#fail-editarSubproceso").delay(2000).fadeOut("slow");
+           $('#subprocesomod').focus();
+           $("#btnGuardarSub").removeAttr("disabled");
+           break;
+
+       }
+
+    }
+
+  });
+
+ return false;
+}
+
+function mostrarEdicionSubproceso (info){
+  console.log(info);
+  var result = info.split("|");
+  $('#modalEditarSubproceso').modal({
+    show: true
+  });
+
+  $("#idsubproceso").val(result[0]);
+  $("#subprocesomod").val(result[1]);
+  $("#idprocesomod").val(result[2]);
+
+}
 
 function agregarSubproceso() {
 
@@ -330,7 +417,6 @@ $(document).on("click", ".eliminarfila", function(){
    eliminarSubprocesoSinGrabar(fila);
 });
 
-
 function eliminarSubprocesoSinGrabar(idx) {
 
   var idUsuario = $("#table-subprocesos tbody").parents("tr").attr("id");
@@ -384,5 +470,99 @@ function eliminarSubprocesoSinGrabar(idx) {
 
     console.log(subprocesos);
 }
+
+function desactivarSub(info){
+
+  var result = info.split("|");
+  //console.log(result[0]);
+  swal({
+            title: "¿Estás seguro?",
+            text: "Se desactivará el Subproceso: "+ result[1] + " y no se podrá utilizar.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí, Continuar!",
+            cancelButtonText: "No, Cancelar",
+            closeOnConfirm: false,
+            showLoaderOnConfirm:true,
+            closeOnCancel: true
+      },
+      function(isConfirm){
+          if (isConfirm) {
+            confirmarDesactivarSub(result[0], result[2]);
+          }
+      });
+}
+
+function confirmarDesactivarSub(idsubproceso, idproceso){
+
+    var url = "views/ajax/procesos.php?op=desactivarSub";
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data:{
+            idsubproceso,
+            idproceso
+          },
+        success: function (respuesta) {
+            var datos = eval(respuesta);
+
+            if (datos[0] == 1) {
+                swal("¡Bien hecho!", "El Subproceso ha sido desactivado correctamente.", "success");
+                $("#listado-subprocesos").html(datos[1]);
+            }else{
+              swal("Atención", "Ocurrio un error al actualizar el registro, intente nuevamente", "error");
+            }
+        }
+      });
+      return false;
+}
+
+//Función para activar registros
+function activarSub(info) {
+  var result = info.split("|");
+  //console.log(result[0]);
+  swal({
+            title: "¿Estás seguro?",
+            text: "Se activará el Subproceso: "+ result[1] + ", y podrá ser utilizado.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí, Continuar!",
+            cancelButtonText: "No, Cancelar",
+            closeOnConfirm: false,
+            showLoaderOnConfirm:true,
+            closeOnCancel: true
+      },
+      function(isConfirm){
+          if (isConfirm) {
+            confirmarActivarSub(result[0], result[2]);
+          }
+      });
+}
+
+function confirmarActivarSub(idsubproceso, idproceso){
+
+    var url = "views/ajax/procesos.php?op=activarSub";
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data:{
+            idsubproceso,
+            idproceso
+          },
+        success: function (respuesta) {
+          var datos = eval(respuesta);
+          if (datos[0] == 1) {
+              swal("¡Bien hecho!", "El Subproceso ha sido activado correctamente.", "success");
+              $("#listado-subprocesos").html(datos[1]);
+          }else{
+            swal("Atención", "Ocurrio un error al actualizar el registro, intente nuevamente", "error");
+          }
+        }
+      });
+      return false;
+}
+
 
 init();

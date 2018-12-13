@@ -8,6 +8,10 @@
   //$descripcion=isset($_POST["descripcion"])? trim(mb_strtoupper(filter_var($_POST['descripcion'],FILTER_SANITIZE_STRING), 'UTF-8')):"";
   $condicion=isset($_POST["condicion"])? trim(filter_var($_POST['condicion'], FILTER_SANITIZE_NUMBER_INT)):"";
 
+  $idsubproceso=isset($_POST["idsubproceso"])? trim(filter_var($_POST['idsubproceso'], FILTER_SANITIZE_NUMBER_INT)):"";
+  $subprocesomod=isset($_POST["subprocesomod"])? trim(mb_strtoupper(filter_var($_POST['subprocesomod'],FILTER_SANITIZE_STRING), 'UTF-8')):"";
+  $idprocesomod=isset($_POST["idprocesomod"])? trim(filter_var($_POST['idprocesomod'], FILTER_SANITIZE_NUMBER_INT)):"";
+
 
   switch ($_GET["op"]){
     case 'guardaryeditar':
@@ -30,6 +34,18 @@
         $stmt = new Procesos();
         $stmt -> mostrarSubprocesosController($idproceso, $condicion);
         break;
+    case 'actualizarSubproceso':
+        $stmt = new Procesos();
+        $stmt -> actualizarSubprocesoController($idsubproceso, $subprocesomod, $idprocesomod);
+        break;
+    case 'desactivarSub':
+      $stmt = new Procesos();
+      $stmt -> desactivarSubController($idsubproceso, $idproceso);
+   		break;
+    case 'activarSub':
+      $stmt = new Procesos();
+      $stmt -> activarSubController($idsubproceso, $idproceso);
+      break;
 
 
   }
