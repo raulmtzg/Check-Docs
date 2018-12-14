@@ -22,8 +22,9 @@
       		}
       		else {
             $listaSubprocesos= json_decode($_POST['array']);
-            $stmt = new Procesos();
-            $stmt -> editarController($idproceso, $proceso, $listaSubprocesos);
+            //var_dump($listaSubprocesos);
+             $stmt = new Procesos();
+             $stmt -> editarController($idproceso, $proceso, $listaSubprocesos);
       		}
 	        break;
     case 'listar':

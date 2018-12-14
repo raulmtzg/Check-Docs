@@ -54,23 +54,6 @@ function mostrarform(flag) {
         $("#formularioregistros").slideDown(500);
         $("#btnGuardar").prop("disabled", false);
 
-        var tabla =
-                      '<thead>'+
-                        '<tr>'+
-                          '<th># POSICIÓN</th>'+
-                          '<th class="text-center">SUBPROCESO</th>'+
-                          '<th class="text-center">ESTADO</th>'+
-                          '<th class="text-center col-sm-3">OPCIONES</th>'+
-                        '</tr>'+
-                      '</thead>'+
-          '<tbody>'+
-          '  <tr id="filaCero" class="default sin-partidas">'+
-          '    <th class="text-center" colspan="4"><span class="sinDatos">No existen subprocesos<span> </th>'+
-          '  </tr>'+
-          '</tbody>';
-
-        //Inserta la nueva fila de partida
-        $("#table-subprocesos tbody").append(tabla);
         //$("#btnagregar").hide();
         $("#btnagregar").fadeOut("slow");
 
@@ -88,6 +71,16 @@ function mostrarform(flag) {
 //Función cancelarform
 function cancelarform() {
     limpiar();
+    subprocesos = [];
+    $("#table-subprocesos").find("tbody tr").remove();
+
+    var filacero = '<tr id="filaCero" class="default sin-partidas">'+
+          '<th class="text-center" colspan="4"><span class="sinDatos">No existen subprocesos<span> </th>'+
+        '</tr>';
+    $("#table-subprocesos tbody").append(filacero);
+
+
+
     mostrarform(false);
     tabla.ajax.reload();
 }
@@ -147,12 +140,13 @@ function guardaryeditar(e) {
             var datos = eval(data);
 
             if (datos[0] == "Ok") {
-                $("#idcompra").val(datos[1]);
+                $("#idproceso").val(datos[1]);
                 $("#exito-label").html('<strong>Bien hecho!</strong> Se ha guardado correctamente la información.').fadeIn(1000);
                 $("#exito-label").delay(2000).fadeOut("slow");
                 $("#btnGuardar").removeAttr("disabled");
                 $("#listado-subprocesos").html(datos[2]);
                 //estadoControles(true);
+                subprocesos = [];
 
             } else if (datos[0] == "ERR01") {
                 console.log(datos[0]);
@@ -178,7 +172,7 @@ function guardaryeditar(e) {
 
 function mostrar(info) {
     var result = info.split("|");
-    console.log(result);
+
     mostrarform(true);
     $("#idproceso").val(result[0]);
     $("#proceso").val(result[1]);
@@ -289,7 +283,7 @@ function insertarSubproceso(e) {
 
 function actualizarSubproceso(event){
   event.preventDefault();
-  console.log('actualizar');
+
 
   $("#btnGuardarSub").prop("disabled", true);
   var formData = new FormData($("#formSubproceso")[0]);
@@ -348,7 +342,7 @@ function actualizarSubproceso(event){
 }
 
 function mostrarEdicionSubproceso (info){
-  console.log(info);
+
   var result = info.split("|");
   $('#modalEditarSubproceso').modal({
     show: true
@@ -369,9 +363,6 @@ function agregarSubproceso() {
         return;
     }
 
-
-    // idx++;
-
     var idx = $('#table-subprocesos tr:last').attr('id');
     if ( idx == "filaCero"){
         idx = 1;
@@ -386,30 +377,56 @@ function agregarSubproceso() {
         $("#filaCero").remove();
 
     }
-    var data = $("#subproceso").val().toUpperCase();
+    //Obtiene el valor a ingresar
+    var txtSub = $("#subproceso").val().toUpperCase();
+    var data = $.trim(txtSub);
 
-    var filaPartida = '<tr id="' + idx + '">' +
-        '<td class="text-center ">' + idx + '</td>' +
-        '<td >' + data + '</td>' +
-        '<td class="text-center"><span class="label bg-primary">PENDIENTE</span></td>' +
-        '<td class="text-center">' +
-        '<button type="button" class="eliminarfila btn btn-sm btn-default partidaCompra" data-toggle="tooltip" data-placement="top" title="Eliminar" >' +
-        '<i class="fa fa-trash icon-color-danger"></i>' +
-        '</button>' +
-        '</td>' +
-        '</tr>';
-    //Inserta la nueva fila de partida
-    $("#table-subprocesos tbody").append(filaPartida);
+    //Valida si ya existe el proceso
+    var yaexiste = false
+    $("#table-subprocesos tbody tr").find('td:eq(1)').each(function () {
+       //obtenemos el codigo de la celda
+      codigo = $(this).html();
+       //comparamos para ver si el código es igual a la busqueda
+       if(codigo == data){
+          yaexiste = true;
+       }
 
-    subprocesos.push({
-        index: idx,
-        subproceso: data
-    });
+     });
 
-    //Limpia varlor de subproceso
-    $("#subproceso").val("").focus();
+    if ( yaexiste ){
+
+      $("#fail-label").html('<strong>Atención!</strong> Ya existe el Subproceso, intenta nuevamente.').fadeIn(1000);
+      $("#fail-label").delay(2000).fadeOut("slow");
+      $("#subproceso").focus();
+      return false;
+
+    }else{
+
+      var filaPartida = '<tr id="' + idx + '">' +
+          '<td class="text-center ">' + idx + '</td>' +
+          '<td >' + data + '</td>' +
+          '<td class="text-center"><span class="label bg-primary">PENDIENTE</span></td>' +
+          '<td class="text-center">' +
+          '<button type="button" class="eliminarfila btn btn-sm btn-default partidaCompra" data-toggle="tooltip" data-placement="top" title="Eliminar" >' +
+          '<i class="fa fa-trash icon-color-danger"></i>' +
+          '</button>' +
+          '</td>' +
+          '</tr>';
+      //Inserta la nueva fila de partida
+      $("#table-subprocesos tbody").append(filaPartida);
+
+      subprocesos.push({
+          index: idx,
+          subproceso: data
+      });
+
+      //Limpia varlor de subproceso
+      $("#subproceso").val("").focus();
+
+    }
 
 }
+
 
 //Se ejecuta la hacer clic en el boton de eliminar y toma el id de la fila a eliminar
 $(document).on("click", ".eliminarfila", function(){
@@ -462,13 +479,13 @@ function eliminarSubprocesoSinGrabar(idx) {
 
         if (subprocesos[j].index > indicador ) {
           subprocesos[j].index = subprocesos[j].index - 1;
-          console.log(subprocesos[j].index);
+
         }
       }
 
     }
 
-    console.log(subprocesos);
+
 }
 
 function desactivarSub(info){

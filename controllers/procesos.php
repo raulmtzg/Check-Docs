@@ -97,7 +97,7 @@
 
       $envio= array(
         0=>$mensaje,
-        1=>$respuesta,
+        1=>$idproceso,
         2=> $subprocesosInsertados
       );
 
