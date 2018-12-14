@@ -581,5 +581,49 @@ function confirmarActivarSub(idsubproceso, idproceso){
       return false;
 }
 
+function eliminarSubproceso(info){
+  var result = info.split("|");
+  console.log(result);
+  swal({
+            title: "¿Estás seguro?",
+            text: "Se enviará a la bandeja de recicle el Subproceso: "+ result[1] + ".",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí, Continuar!",
+            cancelButtonText: "No, Cancelar",
+            closeOnConfirm: false,
+            showLoaderOnConfirm:true,
+            closeOnCancel: true
+      },
+      function(isConfirm){
+          if (isConfirm) {
+            confirmarEliminarSub(result[0], result[2]);
+          }
+      });
+}
+
+function confirmarEliminarSub(idsubproceso, idproceso){
+
+    var url = "views/ajax/procesos.php?op=eliminarSub";
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data:{
+            idsubproceso,
+            idproceso
+          },
+        success: function (respuesta) {
+          var datos = eval(respuesta);
+          if (datos[0] == 1) {
+              swal("¡Bien hecho!", "El Subproceso ha sido eliminado correctamente.", "success");
+              $("#listado-subprocesos").html(datos[1]);
+          }else{
+            swal("Atención", "Ocurrio un error al actualizar el registro, intente nuevamente", "error");
+          }
+        }
+      });
+      return false;
+}
 
 init();

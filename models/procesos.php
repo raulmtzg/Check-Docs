@@ -85,9 +85,14 @@
 
     public function mostrarSubprocesoModel($idproceso, $tabla){
 
-      $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE idproceso = :idproceso");
-      $stmt ->bindParam(":idproceso", $idproceso, PDO::PARAM_INT);
-      $stmt -> execute();
+      $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE idproceso = :idproceso AND condicion <> :condicion");
+      $stmt->execute(array(
+        ':idproceso' => $idproceso,
+        ':condicion' => 2
+      ));
+
+      // $stmt ->bindParam(":idproceso", $idproceso, PDO::PARAM_INT);
+      // $stmt -> execute();
       return $stmt->fetchAll();
       $stmt ->close();
 

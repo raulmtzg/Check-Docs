@@ -47,6 +47,10 @@
       $stmt = new Procesos();
       $stmt -> activarSubController($idsubproceso, $idproceso);
       break;
+    case 'eliminarSub':
+      $stmt = new Procesos();
+      $stmt -> eliminarSubController($idsubproceso, $idproceso);
+      break;
 
 
   }

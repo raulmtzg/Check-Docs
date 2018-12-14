@@ -301,7 +301,7 @@
 
       }
 
-      public function activarSubController($idsubproceso, $idproceso){
+    public function activarSubController($idsubproceso, $idproceso){
 
           session_start();
           $parametros = ParametrosModels::parametrosModel();
@@ -326,5 +326,31 @@
           //echo $respuesta;
 
         }
+
+    public function eliminarSubController($idsubproceso, $idproceso){
+
+        session_start();
+        $parametros = ParametrosModels::parametrosModel();
+        $fechaModificacion= date($parametros['formatoFecha']);
+        $datosController = array("idsubproceso"         =>  $idsubproceso,
+                                 "condicion"             => "2",
+                                 "fechamodificacion"     =>  $fechaModificacion,
+                                 "usuariomodificacion"   =>  $_SESSION['usuario']
+                                );
+
+        $respuesta = ProcesosModels::desactivarActivarSubModel($datosController, "subprocesos");
+        #Obtener subprocesos insertados
+        $condicion = 1;
+        $subprocesosInsertados = self::mostrarSubprocesosController( $idproceso, $condicion );
+
+        $envio= array(
+          0=>$respuesta,
+          1=> $subprocesosInsertados
+        );
+
+        echo json_encode($envio);
+        //echo $respuesta;
+
+    }
 
   }
