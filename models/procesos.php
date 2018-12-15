@@ -85,7 +85,7 @@
 
     public function mostrarSubprocesoModel($idproceso, $tabla){
 
-      $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE idproceso = :idproceso AND condicion <> :condicion");
+      $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE idproceso = :idproceso AND condicion <> :condicion ORDER BY consecutivo ASC");
       $stmt->execute(array(
         ':idproceso' => $idproceso,
         ':condicion' => 2
@@ -245,5 +245,22 @@
       }
 
     }//Fin function desactivarModel
+
+    #================ Funciones para reorder subprocesos despuesde eliminarlo=============
+    public function getSubprocesosDeleteModel($idproceso, $tabla){
+
+      $stmt = Conexion::conectar()->prepare("SELECT idsubproceso, consecutivo, descripcion FROM $tabla WHERE idproceso = :idproceso AND condicion <> :condicion AND consecutivo > :consecutivo ORDER BY consecutivo ASC");
+      $stmt->execute(array(
+        ':idproceso' => $idproceso,
+        ':condicion' => 2,
+        ':consecutivo' => 0
+      ));
+
+      // $stmt ->bindParam(":idproceso", $idproceso, PDO::PARAM_INT);
+      // $stmt -> execute();
+      return $stmt->fetchAll();
+      $stmt ->close();
+
+    }
 
   }

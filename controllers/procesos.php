@@ -81,7 +81,7 @@
 
         }else{
 
-          $mensaje = $repuesta;
+          $mensaje = $respuesta;
 
         }
       }else{
@@ -329,27 +329,53 @@
 
     public function eliminarSubController($idsubproceso, $idproceso){
 
-        session_start();
-        $parametros = ParametrosModels::parametrosModel();
-        $fechaModificacion= date($parametros['formatoFecha']);
-        $datosController = array("idsubproceso"         =>  $idsubproceso,
-                                 "condicion"             => "2",
-                                 "fechamodificacion"     =>  $fechaModificacion,
-                                 "usuariomodificacion"   =>  $_SESSION['usuario']
-                                );
+      #Obtiene todos los subprocesos existentes
+      $rows = ProcesosModels::getSubprocesosDeleteModel($idproceso, "subprocesos");
 
-        $respuesta = ProcesosModels::desactivarActivarSubModel($datosController, "subprocesos");
-        #Obtener subprocesos insertados
-        $condicion = 1;
-        $subprocesosInsertados = self::mostrarSubprocesosController( $idproceso, $condicion );
+      #identificar el consecutivo eliminado para reordenar a partir de ahi
+      $inicio = 0;
+      $valor = "";
 
-        $envio= array(
-          0=>$respuesta,
-          1=> $subprocesosInsertados
-        );
+      foreach ($rows as $key => $row) {
+        if( $idsubproceso == $row['idsubproceso']){
+          $inicio = $key;
+          $valor = $row['consecutivo'];
+          break;
+        }
+      }
 
-        echo json_encode($envio);
-        //echo $respuesta;
+      foreach ($rows as $key => $row) {
+        if( $valor > $row['consecutivo']){
+          $inicio = $key;
+          $row['consecutivo'] = $row['consecutivo'] -1;
+        }
+      }
+
+      var_dump($rows);
+
+
+      
+      // session_start();
+      // $parametros = ParametrosModels::parametrosModel();
+      // $fechaModificacion= date($parametros['formatoFecha']);
+      // $datosController = array("idsubproceso"         =>  $idsubproceso,
+      //                          "condicion"             => "2",
+      //                          "fechamodificacion"     =>  $fechaModificacion,
+      //                          "usuariomodificacion"   =>  $_SESSION['usuario']
+      //                         );
+      //
+      // $respuesta = ProcesosModels::desactivarActivarSubModel($datosController, "subprocesos");
+      // #Obtener subprocesos insertados
+      // $condicion = 1;
+      // $subprocesosInsertados = self::mostrarSubprocesosController( $idproceso, $condicion );
+      //
+      // $envio= array(
+      //   0=>$respuesta,
+      //   1=> $subprocesosInsertados
+      // );
+      //
+      // echo json_encode($envio);
+      //echo $respuesta;
 
     }
 

@@ -136,7 +136,7 @@ function guardaryeditar(e) {
             'array': JSON.stringify(subprocesos)
         },
         success: function(data) {
-
+          
             var datos = eval(data);
 
             if (datos[0] == "Ok") {
