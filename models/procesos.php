@@ -118,11 +118,12 @@
         #Si existe
         //Validar que la clave no exista en otro registro
           $statement="";
-          $statement = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE proceso = :proceso AND idproceso <> :idproceso ");
+          $statement = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE proceso = :proceso AND idproceso <> :idproceso  ");
 
           $statement->execute(array(
-            ':proceso'   => $datosModel['proceso'],
-            ':idproceso' => $datosModel['idproceso']
+            ':proceso'      => $datosModel['proceso'],
+            ':idproceso'    => $datosModel['idproceso'],
+
           ));
           $resp= $statement->fetch();
           if($resp != false){
@@ -170,11 +171,12 @@
 
         //Validar que la clave no exista en otro registro
           $statement="";
-          $statement = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE descripcion = :descripcion AND idsubproceso <> :idsubproceso ");
+          $statement = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE descripcion = :descripcion AND idsubproceso <> :idsubproceso AND consecutivo > :consecutivo ");
 
           $statement->execute(array(
-            ':descripcion'        => $datosModel["descripcion"],
-            ':idsubproceso'      => $datosModel["idsubproceso"]
+            ':descripcion'    => $datosModel["descripcion"],
+            ':idsubproceso'   => $datosModel["idsubproceso"],
+            ':consecutivo'    => 0
           ));
           $resp= $statement->fetch();
           if($resp != false){
@@ -262,5 +264,120 @@
       $stmt ->close();
 
     }
+
+    public function actualizarConsecutivosSubModel($datosModel, $tabla){
+
+      $statement = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE idsubproceso = :idsubproceso ");
+      $statement->execute(array(
+        ':idsubproceso' => $datosModel["idsubproceso"]
+      ));
+      $resultado= $statement->fetch();
+      if($resultado != false){
+        #Si existe la categoria
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET consecutivo = :consecutivo,
+                                                                 fechamodificacion = :fechamodificacion,
+                                                                 usuariomodificacion = :usuariomodificacion
+                                               WHERE idsubproceso = :idsubproceso");
+
+        $stmt -> bindParam(":consecutivo", $datosModel["consecutivo"], PDO::PARAM_STR);
+        $stmt -> bindParam(":idsubproceso", $datosModel["idsubproceso"], PDO::PARAM_INT);
+        $stmt -> bindParam(":fechamodificacion", $datosModel["fechamodificacion"], PDO::PARAM_STR);
+        $stmt -> bindParam(":usuariomodificacion", $datosModel["usuariomodificacion"], PDO::PARAM_STR);
+
+        if($stmt -> execute()){
+          #Se guardo correctamente
+          return "1";
+        }
+        else{
+          #Error al grabar un registro
+          return "2";
+        }
+
+      }else{
+        //No existe la categoria
+        return "3";
+
+      }
+
+    }//Fin function desactivarModel
+
+    public function eliminarSubModel($datosModel, $tabla){
+
+      $statement = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE idsubproceso = :idsubproceso ");
+      $statement->execute(array(
+        ':idsubproceso' => $datosModel["idsubproceso"]
+      ));
+      $resultado= $statement->fetch();
+      if($resultado != false){
+        #Si existe la categoria
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET condicion = :condicion,
+                                                                 consecutivo = :consecutivo,
+                                                                 fechamodificacion = :fechamodificacion,
+                                                                 usuariomodificacion = :usuariomodificacion
+                                               WHERE idsubproceso = :idsubproceso");
+
+        $stmt -> bindParam(":condicion", $datosModel["condicion"], PDO::PARAM_STR);
+        $stmt -> bindParam(":consecutivo", $datosModel["consecutivo"], PDO::PARAM_INT);
+        $stmt -> bindParam(":idsubproceso", $datosModel["idsubproceso"], PDO::PARAM_INT);
+        $stmt -> bindParam(":fechamodificacion", $datosModel["fechamodificacion"], PDO::PARAM_STR);
+        $stmt -> bindParam(":usuariomodificacion", $datosModel["usuariomodificacion"], PDO::PARAM_STR);
+
+        if($stmt -> execute()){
+          #Se guardo correctamente
+          return "1";
+        }
+        else{
+          #Error al grabar un registro
+          return "2";
+        }
+
+      }else{
+        //No existe la categoria
+        return "3";
+
+      }
+
+    }//Fin function desactivarModel
+
+    #============== Funciones para crear el archivo del Proceso con Subprocesos ============
+    public function crearProcesoModel($proceso, $carpeta){
+
+      $ruta = "../modules/".$carpeta."/".$proceso.".php";
+      $miArchivo = fopen($ruta, "w+") or die("No se puede abrir/crear el archivo!");
+      #Creamos una variable personalizada
+      $var = 'testDatosPersonalizados';
+
+      $php='<?php
+              include "header.php";
+              include "menu.php";
+            ?>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+              <!-- Main content -->
+              <section class="content">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="box">
+                      <div class="box-header with-border">
+                        <h1 class="box-title">'.$proceso.'</h1>
+                      </div>
+                    </div><!-- /.box -->
+                  </div><!-- /.col -->
+                </div><!-- /.row -->
+              </section><!-- /.content -->
+            </div><!-- /.content-wrapper -->
+
+            <?php
+              include "footer.php";
+             ?>
+              </body>';
+
+      fwrite($miArchivo, $php);
+      fclose($miArchivo);
+      return "1";
+
+    }
+
+
 
   }

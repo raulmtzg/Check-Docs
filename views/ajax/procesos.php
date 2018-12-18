@@ -51,6 +51,10 @@
       $stmt = new Procesos();
       $stmt -> eliminarSubController($idsubproceso, $idproceso);
       break;
+    case 'publicarProceso':
+      $stmt = new Procesos();
+      $stmt -> publicarProcesoController($idproceso, $proceso);
+      break;
 
 
   }

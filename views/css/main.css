@@ -148,6 +148,29 @@ table#table-autorizadores tbody tr{
   cursor: move;
 }
 
+.icon-color-info {
+    color: #314a92 !important;
+}
+
+.icon-color-warning {
+    color: #F39C12 !important;
+}
+
+.icon-color-danger {
+    color: #DD4B39 !important;
+}
+
+.icon-color-success {
+    color: #00A65A !important;
+}
+
+.icon-color-start {
+    color: #FFE900 !important;
+}
+
+.icon-color-inform {
+    color: #00C0EF !important;
+}
 
 
 

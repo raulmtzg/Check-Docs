@@ -125,7 +125,7 @@
             if(count($rows)==1){
 
               $tabla.='<tr id="filaCero" class="default sin-partidas">
-                          <th class="text-center" colspan="3"><span class="sinDatos">No existen subprocesos<span> </th>
+                          <th class="text-center" colspan="4"><span class="sinDatos">No existen subprocesos<span> </th>
                         </tr>
                       </tbody>
                     </table>';
@@ -145,7 +145,7 @@
                     $tabla.='<td class="text-center"><span class="label bg-success">ACTIVO</span></td>
                               <td class="text-center">
                                 <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Editar" onclick="mostrarEdicionSubproceso('.$data.')"><i class="fa fa-pencil icon-color-info"></i></button>
-                                <button class="btn  btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Desactivar" onclick="desactivarSub('.$data.')"><i class="fa fa-ban"></i></button>
+                                <button class="btn  btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Desactivar" onclick="desactivarSub('.$data.')"><i class="fa fa-ban icon-color-warning"></i></button>
                                 <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick="eliminarSubproceso('.$data.')"><i class="fa fa-trash icon-color-danger"></i></button>
                               </td>
                               </tr>';
@@ -153,7 +153,7 @@
                     $tabla.='<td class="text-center"><span class="label bg-danger">BAJA</span></td>
                               <td class="text-center">
                                 <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Editar" onclick="mostrarEdicionSubproceso('.$data.')"><i class="fa fa-pencil icon-color-info"></i></button>
-                                <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Activar" onclick="activarSub('.$data.')"><i class="fa fa-check"></i></button>
+                                <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Activar" onclick="activarSub('.$data.')"><i class="fa fa-check icon-color-success"></i></button>
                                 <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick="eliminarSubproceso('.$data.')"><i class="fa fa-trash icon-color-danger"></i></button>
                               </td>
                               </tr>';
@@ -188,23 +188,23 @@
         $info="";
         $info= "'".$row['idproceso']."|".$row['descripcion']."'";
 
-        if( $row['condicion'] == 1){
-          $estado =' <button class="btn  btn-sm btn-default"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Desactivar"
-                    onclick="desactivar('.$info.')">
-                      <i class="fa fa-ban"></i>
-                  </button> ';
-        }else{
-          $estado=' <button class="btn btn-sm btn-default"
-                          data-toggle="tooltip"
-                          data-placement="top"
-                          title="Activar"
-                          onclick="activar('.$info.')">
-                            <i class="fa fa-check"></i>
-                  </button> ';
-        }
+        // if( $row['condicion'] == 1){
+        //   $estado =' <button class="btn  btn-sm btn-default"
+        //             data-toggle="tooltip"
+        //             data-placement="top"
+        //             title="Desactivar"
+        //             onclick="desactivar('.$info.')">
+        //               <i class="fa fa-ban"></i>
+        //           </button> ';
+        // }else{
+        //   $estado=' <button class="btn btn-sm btn-default"
+        //                   data-toggle="tooltip"
+        //                   data-placement="top"
+        //                   title="Activar"
+        //                   onclick="activar('.$info.')">
+        //                     <i class="fa fa-check"></i>
+        //           </button> ';
+        // }
 
         if( $row['publicar']== 0){
           $publicar=' <button class="btn  btn-sm btn-default"
@@ -212,7 +212,7 @@
                     data-placement="top"
                     title="Publicar"
                     onclick="publicar('.$info.')">
-                      <i class="fa fa-globe"></i>
+                      <i class="fa fa-globe icon-color-success"></i>
                   </button> ';
         }else{
           $publicar=' <button class="btn btn-sm btn-default"
@@ -220,7 +220,7 @@
                           data-placement="top"
                           title="Ocultar"
                           onclick="ocultar('.$info.')">
-                            <i class="fa fa-power-off"></i>
+                            <i class="fa fa-power-off icon-color-danger"></i>
                   </button> ';
         }
 
@@ -231,10 +231,10 @@
           "0"=>$row["descripcion"],
           "1"=>($row['condicion']==1)?'<p class="text-center"><span class="label bg-green ">ACTIVO</span></p>':
           '<span class="label bg-red text-center">BAJA</span>',
-          "2"=>'<p class="text-center"><button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Editar" onclick="mostrar('.$info.')"><i class="fa fa-pencil"></i></button>'.
-                $estado.
+          "2"=>'<p class="text-center"><button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Editar" onclick="mostrar('.$info.')"><i class="fa fa-pencil icon-color-info"></i></button>'.
+                //$estado.
                 $publicar.
-                ' <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick="mostrar('.$row['idproceso'].')"><i class="fa fa-trash"></i></button></p>'
+                ' <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick="mostrar('.$row['idproceso'].')"><i class="fa fa-trash icon-color-danger"></i></button></p>'
           );
       }
       $results = array(
@@ -329,6 +329,7 @@
 
     public function eliminarSubController($idsubproceso, $idproceso){
 
+      session_start();
       #Obtiene todos los subprocesos existentes
       $rows = ProcesosModels::getSubprocesosDeleteModel($idproceso, "subprocesos");
 
@@ -336,47 +337,71 @@
       $inicio = 0;
       $valor = "";
 
-      foreach ($rows as $key => $row) {
-        if( $idsubproceso == $row['idsubproceso']){
-          $inicio = $key;
-          $valor = $row['consecutivo'];
-          break;
+      $parametros = ParametrosModels::parametrosModel();
+      $fechaModificacion= date($parametros['formatoFecha']);
+      $datosController = array("idsubproceso"          =>  $idsubproceso,
+                               "condicion"             => "2",
+                               "consecutivo"           => "0",
+                               "fechamodificacion"     =>  $fechaModificacion,
+                               "usuariomodificacion"   =>  $_SESSION['usuario']
+                              );
+
+      $respuesta = ProcesosModels::eliminarSubModel($datosController, "subprocesos");
+
+      if( $respuesta == "1"){
+
+
+        foreach ($rows as $key => $row) {
+          if( $idsubproceso == $row['idsubproceso']){
+            $inicio = $key;
+            $valor = $row['consecutivo'];
+            break;
+          }
         }
+        #Actualiza el valor del consecutivo
+        foreach ($rows as $row) {
+          if($row['consecutivo'] > $valor ){
+            $consec = $row['consecutivo'];
+            $parametros = ParametrosModels::parametrosModel();
+            $fechaModificacion= date($parametros['formatoFecha']);
+            $datosController = array("idsubproceso"          =>  $row['idsubproceso'],
+                                     "consecutivo"           => $consec - 1,
+                                     "fechamodificacion"     =>  $fechaModificacion,
+                                     "usuariomodificacion"   =>  $_SESSION['usuario']
+                                    );
+
+            $respuesta = ProcesosModels::actualizarConsecutivosSubModel($datosController, "subprocesos");
+
+          }
+        }
+
       }
 
-      foreach ($rows as $key => $row) {
-        if( $valor > $row['consecutivo']){
-          $inicio = $key;
-          $row['consecutivo'] = $row['consecutivo'] -1;
-        }
-      }
 
-      var_dump($rows);
+      #Obtener subprocesos insertados
+      $condicion = 1;
+      $subprocesosInsertados = self::mostrarSubprocesosController( $idproceso, $condicion );
 
+      $envio= array(
+        0=>$respuesta,
+        1=> $subprocesosInsertados
+      );
 
-      
-      // session_start();
-      // $parametros = ParametrosModels::parametrosModel();
-      // $fechaModificacion= date($parametros['formatoFecha']);
-      // $datosController = array("idsubproceso"         =>  $idsubproceso,
-      //                          "condicion"             => "2",
-      //                          "fechamodificacion"     =>  $fechaModificacion,
-      //                          "usuariomodificacion"   =>  $_SESSION['usuario']
-      //                         );
-      //
-      // $respuesta = ProcesosModels::desactivarActivarSubModel($datosController, "subprocesos");
-      // #Obtener subprocesos insertados
-      // $condicion = 1;
-      // $subprocesosInsertados = self::mostrarSubprocesosController( $idproceso, $condicion );
-      //
-      // $envio= array(
-      //   0=>$respuesta,
-      //   1=> $subprocesosInsertados
-      // );
-      //
-      // echo json_encode($envio);
-      //echo $respuesta;
+      echo json_encode($envio);
+
 
     }
 
-  }
+    #================= Funciones para Publicar Procesos y Subprocesos =======================
+    public function publicarProcesoController($idproceso, $proceso){
+      session_start();
+      $buscar = array("Á", "É", "Í", "Ó", "Ú", "Ñ");
+      $cambiar   = array("A", "E","I","O","U","N");
+      $newproceso = strtolower(str_replace($buscar, $cambiar, $proceso));
+
+      $crearproceso = ProcesosModels::crearProcesoModel($newproceso, $_SESSION['carpeta']);
+      echo $crearproceso;
+    }
+
+
+  } //Fin Class

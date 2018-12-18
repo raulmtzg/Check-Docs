@@ -136,7 +136,7 @@ function guardaryeditar(e) {
             'array': JSON.stringify(subprocesos)
         },
         success: function(data) {
-          
+
             var datos = eval(data);
 
             if (datos[0] == "Ok") {
@@ -619,7 +619,57 @@ function confirmarEliminarSub(idsubproceso, idproceso){
               swal("¡Bien hecho!", "El Subproceso ha sido eliminado correctamente.", "success");
               $("#listado-subprocesos").html(datos[1]);
           }else{
+            console.log(datos);
             swal("Atención", "Ocurrio un error al actualizar el registro, intente nuevamente", "error");
+          }
+        }
+      });
+      return false;
+}
+
+
+//===================== Funciones para Publicar Proceso y Subprocesos
+
+function publicar(info){
+  var result = info.split("|");
+  //console.log(result[0]);
+  swal({
+            title: "¿Estás seguro?",
+            text: "Se publicará el Proceso: "+ result[1] + ", y será visible a los usuarios del sistema.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí, Continuar!",
+            cancelButtonText: "No, Cancelar",
+            closeOnConfirm: false,
+            showLoaderOnConfirm:true,
+            closeOnCancel: true
+      },
+      function(isConfirm){
+          if (isConfirm) {
+            confirmarPublicarProceso(result[0], result[1]);
+          }
+      });
+}
+
+function confirmarPublicarProceso(idproceso, proceso){
+
+    var url = "views/ajax/procesos.php?op=publicarProceso";
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data:{
+            idproceso,
+            proceso
+          },
+        success: function (respuesta) {
+          //console.log(respuesta);
+          // var datos = eval(respuesta);
+          if (respuesta == 1) {
+              swal("¡Bien hecho!", "El Subproceso ha sido publicado correctamente, en el siguiente inicio de sesión será visible.", "success");
+
+          }else{
+            swal("Atención", "Ocurrio un error al publicar el proceso, intente nuevamente", "error");
           }
         }
       });
