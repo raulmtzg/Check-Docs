@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-12-2018 a las 07:00:47
+-- Tiempo de generación: 27-12-2018 a las 06:48:08
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.4
 
@@ -169,13 +169,24 @@ CREATE TABLE `procesos` (
   `idproceso` int(11) NOT NULL,
   `descripcion` varchar(60) NOT NULL,
   `consubprocesos` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 No\n1 Si\n',
+  `publicar` tinyint(4) NOT NULL DEFAULT '0' COMMENT '1 Si\n0 No',
   `condicion` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 Baja\n1 Activo',
+  `identificadorproceso` varchar(45) NOT NULL,
   `usuarioalta` varchar(15) NOT NULL,
   `fechaalta` datetime NOT NULL,
   `usuariomodificacion` varchar(15) DEFAULT NULL,
   `fechamodificacion` datetime DEFAULT NULL,
   `idsuscriptor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `procesos`
+--
+
+INSERT INTO `procesos` (`idproceso`, `descripcion`, `consubprocesos`, `publicar`, `condicion`, `identificadorproceso`, `usuarioalta`, `fechaalta`, `usuariomodificacion`, `fechamodificacion`, `idsuscriptor`) VALUES
+(3, 'ADMINISTRACION', 1, 0, 1, '5c245b99d7173', 'RMARTINEZ', '2018-12-27 05:56:00', NULL, NULL, 1),
+(4, 'MANTENIMIENTO', 0, 0, 1, 'proc-5c2464b89d7a6', 'RMARTINEZ', '2018-12-27 06:35:00', 'RMARTINEZ', '2018-12-27 06:36:00', 1),
+(5, 'OPERACIONES', 0, 0, 1, 'proc-5c24667a42de5', 'RMARTINEZ', '2018-12-27 06:43:00', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -215,13 +226,31 @@ CREATE TABLE `rutaxsubproceso` (
 CREATE TABLE `subprocesos` (
   `idsubproceso` int(11) NOT NULL,
   `descripcion` varchar(60) NOT NULL,
-  `condicion` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 Baja\n1 Activo',
+  `condicion` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 Baja\n1 Activo\n2 Eliminar',
+  `consecutivo` int(11) NOT NULL,
+  `identificadorsubproceso` varchar(45) NOT NULL,
   `usuarioalta` varchar(15) NOT NULL,
   `fechaalta` datetime NOT NULL,
   `usuariomodificacion` varchar(15) DEFAULT NULL,
   `fechamodificacion` datetime DEFAULT NULL,
+  `fechaeliminacion` datetime DEFAULT NULL,
+  `usuarioeliminacion` varchar(15) DEFAULT NULL,
   `idproceso` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `subprocesos`
+--
+
+INSERT INTO `subprocesos` (`idsubproceso`, `descripcion`, `condicion`, `consecutivo`, `identificadorsubproceso`, `usuarioalta`, `fechaalta`, `usuariomodificacion`, `fechamodificacion`, `fechaeliminacion`, `usuarioeliminacion`, `idproceso`) VALUES
+(5, 'ADMINISTRACION', 1, 0, '5c245b9a0a688', 'RMARTINEZ', '2018-12-27 05:56:00', NULL, NULL, NULL, NULL, 3),
+(6, 'RECHUM', 1, 1, '5c245b9a188ab', 'RMARTINEZ', '2018-12-27 05:56:00', NULL, NULL, NULL, NULL, 3),
+(7, 'COMPRAS', 1, 2, '5c245b9a29607', 'RMARTINEZ', '2018-12-27 05:56:00', NULL, NULL, NULL, NULL, 3),
+(8, 'NOMINAS', 1, 3, '5c245b9a4e6cc', 'RMARTINEZ', '2018-12-27 05:56:00', NULL, NULL, NULL, NULL, 3),
+(9, 'MANTENIMIENTO', 1, 0, 'sub-5c2464b8afe91', 'RMARTINEZ', '2018-12-27 06:35:00', NULL, NULL, NULL, NULL, 4),
+(10, 'ELECTRICO', 1, 1, 'sub-5c2464e59b35a', 'RMARTINEZ', '2018-12-27 06:36:00', NULL, NULL, NULL, NULL, 4),
+(11, 'MECANICO', 1, 2, 'sub-5c2464e5bc40f', 'RMARTINEZ', '2018-12-27 06:36:00', NULL, NULL, NULL, NULL, 4),
+(12, 'OPERACIONES', 1, 0, 'sub-5c24667a5542e', 'RMARTINEZ', '2018-12-27 06:43:00', NULL, NULL, NULL, NULL, 5);
 
 -- --------------------------------------------------------
 
@@ -288,7 +317,7 @@ CREATE TABLE `usuarios_suscriptores` (
 --
 
 INSERT INTO `usuarios_suscriptores` (`idusuario_suscriptor`, `nombre_completo`, `nombre_usuario`, `password_usuario`, `perfil`, `email`, `foto`, `intentos`, `condicion`, `fecha_alta`, `usuario_alta`, `usuario_modificacion`, `fecha_modificacion`, `idsuscriptor`) VALUES
-(3, 'RAUL MARTINEZ GONZALEZ', NULL, '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 1, 'raul.martinez@sacsi.com.mx', NULL, 0, 1, '2018-11-11 04:48:00', 'SISTEMA', NULL, NULL, 1),
+(3, 'RAUL MARTINEZ GONZALEZ', 'RMARTINEZ', '5b40171489659251097e7790fc2f1892e2183a72546fe1df283d07865db9149c', 1, 'raul.martinez@sacsi.com.mx', NULL, 0, 1, '2018-11-11 04:48:00', 'SISTEMA', NULL, NULL, 1),
 (4, 'FERNANDO AMBROSIO', NULL, '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 1, 'fambrosio@correo.com', NULL, 0, 1, '2018-11-22 06:38:00', 'SISTEMA', NULL, NULL, 3),
 (5, 'DAVID RODRIGUEZ', NULL, 'chk2wrs0', 1, 'david@mail.com', NULL, 0, 1, '2018-11-24 05:13:00', 'SISTEMA', NULL, NULL, 4);
 
@@ -399,6 +428,7 @@ ALTER TABLE `papelera`
 --
 ALTER TABLE `procesos`
   ADD PRIMARY KEY (`idproceso`),
+  ADD UNIQUE KEY `identificadorproceso_UNIQUE` (`identificadorproceso`),
   ADD KEY `fk_procesos_suscriptores1_idx` (`idsuscriptor`);
 
 --
@@ -420,6 +450,7 @@ ALTER TABLE `rutaxsubproceso`
 --
 ALTER TABLE `subprocesos`
   ADD PRIMARY KEY (`idsubproceso`),
+  ADD UNIQUE KEY `idenfiticadorsubproceso_UNIQUE` (`identificadorsubproceso`),
   ADD KEY `fk_subprocesos_procesos1_idx` (`idproceso`);
 
 --
@@ -469,13 +500,13 @@ ALTER TABLE `historicodocumentos`
 -- AUTO_INCREMENT de la tabla `procesos`
 --
 ALTER TABLE `procesos`
-  MODIFY `idproceso` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idproceso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `subprocesos`
 --
 ALTER TABLE `subprocesos`
-  MODIFY `idsubproceso` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idsubproceso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `suscriptores`
@@ -563,7 +594,7 @@ ALTER TABLE `rutaxsubproceso`
 -- Filtros para la tabla `subprocesos`
 --
 ALTER TABLE `subprocesos`
-  ADD CONSTRAINT `fk_subprocesos_procesos1` FOREIGN KEY (`idproceso`) REFERENCES `procesos` (`idproceso`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_subprocesos_procesos1` FOREIGN KEY (`idproceso`) REFERENCES `procesos` (`idproceso`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `usuarios_suscriptores`
