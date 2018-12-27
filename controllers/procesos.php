@@ -394,13 +394,26 @@
 
     #================= Funciones para Publicar Procesos y Subprocesos =======================
     public function publicarProcesoController($idproceso, $proceso){
+
       session_start();
       $buscar = array("Á", "É", "Í", "Ó", "Ú", "Ñ");
       $cambiar   = array("A", "E","I","O","U","N");
       $newproceso = strtolower(str_replace($buscar, $cambiar, $proceso));
 
-      $crearproceso = ProcesosModels::crearProcesoModel($newproceso, $_SESSION['carpeta']);
-      echo $crearproceso;
+      #Obtener los subprocesos
+      $getSubprocesos = ProcesosModels::getSubprocesosModel($idproceso, "subprocesos");
+      var_dump($getSubprocesos);
+      // if( count($getSubprocesos) > 1 ){
+      //   #Aqui crear cada archivo del subproceso
+      //   echo "Mas de uno";
+      // }else{
+      //   #Solo crea el archivo del proceso
+      //   echo "solo uno";
+      //   //$crearproceso = ProcesosModels::crearProcesoModel($newproceso, $_SESSION['carpeta']);
+      // }
+
+      //echo $crearproceso;
+
     }
 
 

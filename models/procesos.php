@@ -17,12 +17,13 @@
       $passwordDb=$datosModel["passwordDataBase"];
 
       try{
-
+          $identificadorproceso = uniqid();
           $link2 = new PDO ("$server;$basedatos","$usuariobd","$passwordDb", array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
 
-          $stmt = $link2->prepare("INSERT INTO $tabla (descripcion, consubprocesos, usuarioalta, fechaalta, idsuscriptor)
+          $stmt = $link2->prepare("INSERT INTO $tabla (descripcion, consubprocesos, identificadorproceso, usuarioalta, fechaalta, idsuscriptor)
                                                       VALUES(:descripcion,
                                                               :consubprocesos,
+                                                              :identificadorproceso,
                                                               :usuarioalta,
                                                               :fechaalta,
                                                               :idsuscriptor
@@ -30,6 +31,7 @@
 
           $stmt -> bindParam(":descripcion", $datosModel["descripcion"], PDO::PARAM_STR);
           $stmt -> bindParam(":consubprocesos", $datosModel["consubprocesos"], PDO::PARAM_INT);
+          $stmt -> bindParam(":identificadorproceso", $identificadorproceso, PDO::PARAM_STR);
           $stmt -> bindParam(":usuarioalta", $datosModel["usuarioalta"], PDO::PARAM_STR);
           $stmt -> bindParam(":fechaalta", $datosModel["fechaalta"], PDO::PARAM_STR);
           $stmt -> bindParam(":idsuscriptor", $datosModel["idsuscriptor"], PDO::PARAM_INT);
@@ -53,16 +55,18 @@
       $sw="Ok";
 
       while ($num_elementos< count($listaSubprocesos)){
-
-            $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (descripcion, consecutivo, usuarioalta, fechaalta, idproceso)
+            $identificadorsubproceso = uniqid();
+            $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (descripcion, consecutivo, identificadorsubproceso, usuarioalta, fechaalta, idproceso)
                                                         VALUES (:descripcion,
                                                                 :consecutivo,
+                                                                :identificadorsubproceso,
                                                                 :usuarioalta,
                                                                 :fechaalta,
                                                                 :idproceso
                                                               )");
             $stmt -> bindParam(":descripcion", $listaSubprocesos[$num_elementos]->subproceso, PDO::PARAM_STR);
             $stmt -> bindParam(":consecutivo", $listaSubprocesos[$num_elementos]->index, PDO::PARAM_INT);
+            $stmt -> bindParam(":identificadorsubproceso", $identificadorsubproceso, PDO::PARAM_STR);
             $stmt -> bindParam(":usuarioalta", $usuarioalta, PDO::PARAM_STR);
             $stmt -> bindParam(":fechaalta", $fechaalta, PDO::PARAM_STR);
             $stmt -> bindParam(":idproceso", $idproceso, PDO::PARAM_INT);
@@ -340,6 +344,16 @@
     }//Fin function desactivarModel
 
     #============== Funciones para crear el archivo del Proceso con Subprocesos ============
+
+    public function getSubprocesosModel($idproceso, $tabla){
+      $stmt = Conexion::conectar()->prepare("SELECT descripcion, consecutivo, identificadorsubproceso FROM $tabla WHERE idproceso = :idproceso AND condicion = :condicion ORDER BY descripcion ASC");
+      $stmt->execute(array(
+        ':idproceso' => $idproceso,
+        ':condicion' => 1
+      ));
+      return $stmt->fetchAll();
+      $stmt ->close();
+    }
     public function crearProcesoModel($proceso, $carpeta){
 
       $ruta = "../modules/".$carpeta."/".$proceso.".php";
