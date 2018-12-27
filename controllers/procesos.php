@@ -402,17 +402,20 @@
 
       #Obtener los subprocesos
       $getSubprocesos = ProcesosModels::getSubprocesosModel($idproceso, "subprocesos");
-      var_dump($getSubprocesos);
-      // if( count($getSubprocesos) > 1 ){
-      //   #Aqui crear cada archivo del subproceso
-      //   echo "Mas de uno";
-      // }else{
-      //   #Solo crea el archivo del proceso
-      //   echo "solo uno";
-      //   //$crearproceso = ProcesosModels::crearProcesoModel($newproceso, $_SESSION['carpeta']);
-      // }
 
-      //echo $crearproceso;
+      $crearproceso = ProcesosModels::crearProcesoModel($getSubprocesos, $_SESSION['carpeta']);
+
+      #Actualizar a publicado el proceso
+      $parametros = ParametrosModels::parametrosModel();
+      $fechaModificacion= date($parametros['formatoFecha']);
+      $datosController = array("idproceso"          =>  $idproceso,
+                               "publicar"           => "1",
+                               "ultimapublicacion"  =>  $fechaModificacion,
+                               "usuariopublica"     =>  $_SESSION['usuario']
+                              );
+      $publicarProceso = ProcesosModels::publicarProcesoModel($datosController, "procesos");
+
+      echo $crearproceso;
 
     }
 

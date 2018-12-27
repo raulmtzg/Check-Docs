@@ -54,7 +54,7 @@
       $num_elementos=0;
       $sw="Ok";
 
-      while ($num_elementos< count($listaSubprocesos)){
+      while ($num_elementos < count($listaSubprocesos)){
             $identificadorsubproceso = uniqid();
             $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (descripcion, consecutivo, identificadorsubproceso, usuarioalta, fechaalta, idproceso)
                                                         VALUES (:descripcion,
@@ -346,7 +346,7 @@
     #============== Funciones para crear el archivo del Proceso con Subprocesos ============
 
     public function getSubprocesosModel($idproceso, $tabla){
-      $stmt = Conexion::conectar()->prepare("SELECT descripcion, consecutivo, identificadorsubproceso FROM $tabla WHERE idproceso = :idproceso AND condicion = :condicion ORDER BY descripcion ASC");
+      $stmt = Conexion::conectar()->prepare("SELECT descripcion, identificadorsubproceso FROM $tabla WHERE idproceso = :idproceso AND condicion = :condicion ORDER BY descripcion ASC");
       $stmt->execute(array(
         ':idproceso' => $idproceso,
         ':condicion' => 1
@@ -354,44 +354,88 @@
       return $stmt->fetchAll();
       $stmt ->close();
     }
-    public function crearProcesoModel($proceso, $carpeta){
 
-      $ruta = "../modules/".$carpeta."/".$proceso.".php";
-      $miArchivo = fopen($ruta, "w+") or die("No se puede abrir/crear el archivo!");
-      #Creamos una variable personalizada
-      $var = 'testDatosPersonalizados';
+    public function crearProcesoModel($archivos, $carpeta){
+      $sw = 0;
+      $a = 0;
+      while ($a < count($archivos)) {
 
-      $php='<?php
-              include "header.php";
-              include "menu.php";
-            ?>
-            <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
-              <!-- Main content -->
-              <section class="content">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="box">
-                      <div class="box-header with-border">
-                        <h1 class="box-title">'.$proceso.'</h1>
-                      </div>
-                    </div><!-- /.box -->
-                  </div><!-- /.col -->
-                </div><!-- /.row -->
-              </section><!-- /.content -->
-            </div><!-- /.content-wrapper -->
+        $ruta = "../modules/".$carpeta."/".$archivos[$a]['identificadorsubproceso'].".php";
+        $miArchivo = fopen($ruta, "w+") or die("No se puede abrir/crear el archivo!");
+        #Creamos una variable personalizada
+        $var = 'testDatosPersonalizados';
 
-            <?php
-              include "footer.php";
-             ?>
-              </body>';
+        $php='<?php
+                include "header.php";
+                include "menu.php";
+              ?>
+              <!-- Content Wrapper. Contains page content -->
+              <div class="content-wrapper">
+                <!-- Main content -->
+                <section class="content">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="box">
+                        <div class="box-header with-border">
+                          <h1 class="box-title">'.$archivos[$a]['descripcion'].'</h1>
+                        </div>
+                      </div><!-- /.box -->
+                    </div><!-- /.col -->
+                  </div><!-- /.row -->
+                </section><!-- /.content -->
+              </div><!-- /.content-wrapper -->
 
-      fwrite($miArchivo, $php);
-      fclose($miArchivo);
-      return "1";
+              <?php
+                include "footer.php";
+               ?>
+                </body>';
+
+        fwrite($miArchivo, $php);
+        fclose($miArchivo);
+        $sw = 1;
+        $a++;
+
+      }
+
+      return $sw;
 
     }
 
+    public function publicarProcesoModel($datosModel, $tabla){
+
+      $statement = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE idproceso = :idproceso ");
+      $statement->execute(array(
+        ':idproceso' => $datosModel["idproceso"]
+      ));
+      $resultado= $statement->fetch();
+      if($resultado != false){
+        #Si existe la categoria
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET publicar = :publicar,
+                                                                 ultimapublicacion = :ultimapublicacion,
+                                                                 usuariopublica = :usuariopublica
+                                               WHERE idproceso = :idproceso");
+
+        $stmt -> bindParam(":publicar", $datosModel["publicar"], PDO::PARAM_STR);
+        $stmt -> bindParam(":idproceso", $datosModel["idproceso"], PDO::PARAM_INT);
+        $stmt -> bindParam(":ultimapublicacion", $datosModel["ultimapublicacion"], PDO::PARAM_STR);
+        $stmt -> bindParam(":usuariopublica", $datosModel["usuariopublica"], PDO::PARAM_STR);
+
+        if($stmt -> execute()){
+          #Se guardo correctamente
+          return "1";
+        }
+        else{
+          #Error al grabar un registro
+          return "2";
+        }
+
+      }else{
+        //No existe la categoria
+        return "3";
+
+      }
+
+    }//Fin function desactivarModel
 
 
   }

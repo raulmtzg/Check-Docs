@@ -666,10 +666,10 @@ function confirmarPublicarProceso(idproceso, proceso){
           //console.log(respuesta);
           // var datos = eval(respuesta);
           if (respuesta == 1) {
-              swal("¡Bien hecho!", "El Subproceso ha sido publicado correctamente, en el siguiente inicio de sesión será visible.", "success");
-
+              swal("¡Bien hecho!", "El Proceso y Subprocesos han sido publicados correctamente, en el siguiente inicio de sesión serán visibles.", "success");
+              tabla.ajax.reload();
           }else{
-            swal("Atención", "Ocurrio un error al publicar el proceso, intente nuevamente", "error");
+            swal("Atención", "Algunos Procesos o Subprocesos no fueron creados, intente nuevamente", "error");
           }
         }
       });
