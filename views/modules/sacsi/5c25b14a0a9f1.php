@@ -10,7 +10,7 @@
                     <div class="col-md-12">
                       <div class="box">
                         <div class="box-header with-border">
-                          <h1 class="box-title">ELECTRICO</h1>
+                          <h1 class="box-title">ADMIN</h1>
                         </div>
                       </div><!-- /.box -->
                     </div><!-- /.col -->

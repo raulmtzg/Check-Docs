@@ -346,10 +346,13 @@
     #============== Funciones para crear el archivo del Proceso con Subprocesos ============
 
     public function getSubprocesosModel($idproceso, $tabla){
-      $stmt = Conexion::conectar()->prepare("SELECT descripcion, identificadorsubproceso FROM $tabla WHERE idproceso = :idproceso AND condicion = :condicion ORDER BY descripcion ASC");
+      $stmt = Conexion::conectar()->prepare("SELECT idsubproceso, descripcion, identificadorsubproceso FROM $tabla
+                                             WHERE idproceso = :idproceso AND condicion = :condicion AND archivocreado = :archivocreado
+                                             ORDER BY descripcion ASC");
       $stmt->execute(array(
         ':idproceso' => $idproceso,
-        ':condicion' => 1
+        ':condicion' => 1,
+        ':archivocreado' => 0
       ));
       return $stmt->fetchAll();
       $stmt ->close();
@@ -393,11 +396,31 @@
         fwrite($miArchivo, $php);
         fclose($miArchivo);
         $sw = 1;
+
         $a++;
 
       }
 
       return $sw;
+
+    }
+
+    public function actualizarCrearArchivoModel($idproceso, $archivocreado, $tabla){
+
+      $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET archivocreado = :archivocreado
+                                             WHERE idproceso = :idproceso");
+
+      $stmt -> bindParam(":archivocreado", $archivocreado, PDO::PARAM_INT);
+      $stmt -> bindParam(":idproceso", $idproceso, PDO::PARAM_INT);
+
+      if($stmt -> execute()){
+        #Se guardo correctamente
+        return "1";
+      }
+      else{
+        #Error al grabar un registro
+        return "2";
+      }
 
     }
 
@@ -435,7 +458,43 @@
 
       }
 
-    }//Fin function desactivarModel
+    }
+
+    public function ocultarProcesoModel($datosModel, $tabla){
+
+      $statement = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE idproceso = :idproceso ");
+      $statement->execute(array(
+        ':idproceso' => $datosModel["idproceso"]
+      ));
+      $resultado= $statement->fetch();
+      if($resultado != false){
+        #Si existe la categoria
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET publicar = :publicar,
+                                                                 fechamodificacion = :fechamodificacion,
+                                                                 usuariomodificacion = :usuariomodificacion
+                                               WHERE idproceso = :idproceso");
+
+        $stmt -> bindParam(":publicar", $datosModel["publicar"], PDO::PARAM_STR);
+        $stmt -> bindParam(":idproceso", $datosModel["idproceso"], PDO::PARAM_INT);
+        $stmt -> bindParam(":fechamodificacion", $datosModel["fechamodificacion"], PDO::PARAM_STR);
+        $stmt -> bindParam(":usuariomodificacion", $datosModel["usuariomodificacion"], PDO::PARAM_STR);
+
+        if($stmt -> execute()){
+          #Se guardo correctamente
+          return "1";
+        }
+        else{
+          #Error al grabar un registro
+          return "2";
+        }
+
+      }else{
+        //No existe la categoria
+        return "3";
+
+      }
+
+    }
 
 
   }

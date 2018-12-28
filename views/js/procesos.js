@@ -136,7 +136,7 @@ function guardaryeditar(e) {
             'array': JSON.stringify(subprocesos)
         },
         success: function(data) {
-
+            subprocesos = [];
             var datos = eval(data);
 
             if (datos[0] == "Ok") {
@@ -146,7 +146,7 @@ function guardaryeditar(e) {
                 $("#btnGuardar").removeAttr("disabled");
                 $("#listado-subprocesos").html(datos[2]);
                 //estadoControles(true);
-                subprocesos = [];
+
 
             } else if (datos[0] == "ERR01") {
                 console.log(datos[0]);
@@ -655,6 +655,52 @@ function publicar(info){
 function confirmarPublicarProceso(idproceso, proceso){
 
     var url = "views/ajax/procesos.php?op=publicarProceso";
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data:{
+            idproceso,
+            proceso
+          },
+        success: function (respuesta) {
+          //console.log(respuesta);
+          // var datos = eval(respuesta);
+          if (respuesta == 1) {
+              swal("¡Bien hecho!", "El Proceso y Subprocesos han sido publicados correctamente, en el siguiente inicio de sesión serán visibles.", "success");
+              tabla.ajax.reload();
+          }else{
+            swal("Atención", "Algunos Procesos o Subprocesos no fueron creados, intente nuevamente", "error");
+          }
+        }
+      });
+      return false;
+}
+
+function ocultar(info){
+  var result = info.split("|");
+  //console.log(result[0]);
+  swal({
+            title: "¿Estás seguro?",
+            text: "Se ocultará el Proceso: "+ result[1] + ", y no será visible a los usuarios del sistema.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí, Continuar!",
+            cancelButtonText: "No, Cancelar",
+            closeOnConfirm: false,
+            showLoaderOnConfirm:true,
+            closeOnCancel: true
+      },
+      function(isConfirm){
+          if (isConfirm) {
+            confirmarOcultarProceso(result[0], result[1]);
+          }
+      });
+}
+
+function confirmarOcultarProceso(idproceso, proceso){
+
+    var url = "views/ajax/procesos.php?op=ocultarProceso";
       $.ajax({
         type: 'POST',
         url: url,

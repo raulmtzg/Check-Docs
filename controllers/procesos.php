@@ -3,7 +3,7 @@
   class Procesos {
 
     public function insertarController($proceso, $listaSubprocesos){
-
+      //var_dump($listaSubprocesos);
       session_start();
 
       if( count($listaSubprocesos) > 0 ){
@@ -48,6 +48,9 @@
       $condicion = 1;
       $subprocesosInsertados = self::mostrarSubprocesosController( $respuesta, $condicion );
 
+      #Crear archivos
+      $crearArchivos = self::crearArchivosController( $respuesta );
+
       $envio= array(
         0=>$mensaje,
         1=>$respuesta,
@@ -91,9 +94,13 @@
 
       }
 
+      #Crear archivos
+      $crearArchivos = self::crearArchivosController( $idproceso );
+
       #Obtener subprocesos insertados
       $condicion = 1;
       $subprocesosInsertados = self::mostrarSubprocesosController( $idproceso, $condicion );
+
 
       $envio= array(
         0=>$mensaje,
@@ -392,19 +399,29 @@
 
     }
 
-    #================= Funciones para Publicar Procesos y Subprocesos =======================
-    public function publicarProcesoController($idproceso, $proceso){
-
-      session_start();
-      $buscar = array("Á", "É", "Í", "Ó", "Ú", "Ñ");
-      $cambiar   = array("A", "E","I","O","U","N");
-      $newproceso = strtolower(str_replace($buscar, $cambiar, $proceso));
+    public function crearArchivosController($idproceso){
+      // session_start();
+      // $buscar = array("Á", "É", "Í", "Ó", "Ú", "Ñ");
+      // $cambiar   = array("A", "E","I","O","U","N");
+      // $newproceso = strtolower(str_replace($buscar, $cambiar, $proceso));
 
       #Obtener los subprocesos
       $getSubprocesos = ProcesosModels::getSubprocesosModel($idproceso, "subprocesos");
 
       $crearproceso = ProcesosModels::crearProcesoModel($getSubprocesos, $_SESSION['carpeta']);
 
+      if( $crearproceso == 1){
+        $actualizarCrearArchivo = ProcesosModels::actualizarCrearArchivoModel($idproceso, "1", "subprocesos");
+      }
+
+      return $crearproceso;
+
+    }
+
+    #================= Funciones para Publicar Procesos y Subprocesos =======================
+
+    public function publicarProcesoController($idproceso, $proceso){
+      session_start();
       #Actualizar a publicado el proceso
       $parametros = ParametrosModels::parametrosModel();
       $fechaModificacion= date($parametros['formatoFecha']);
@@ -415,9 +432,24 @@
                               );
       $publicarProceso = ProcesosModels::publicarProcesoModel($datosController, "procesos");
 
-      echo $crearproceso;
+      echo $publicarProceso;
 
     }
 
+    public function ocultarProcesoController($idproceso, $proceso){
+      session_start();
+      #Actualizar a publicado el proceso
+      $parametros = ParametrosModels::parametrosModel();
+      $fechaModificacion= date($parametros['formatoFecha']);
+      $datosController = array("idproceso"          =>  $idproceso,
+                               "publicar"           => "0",
+                               "fechamodificacion"  =>  $fechaModificacion,
+                               "usuariomodificacion"     =>  $_SESSION['usuario']
+                              );
+      $ocultarProceso = ProcesosModels::ocultarProcesoModel($datosController, "procesos");
+
+      echo $ocultarProceso;
+
+    }
 
   } //Fin Class

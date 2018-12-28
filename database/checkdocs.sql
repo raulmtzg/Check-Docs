@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-12-2018 a las 06:48:08
+-- Tiempo de generación: 28-12-2018 a las 06:45:45
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.4
 
@@ -176,6 +176,8 @@ CREATE TABLE `procesos` (
   `fechaalta` datetime NOT NULL,
   `usuariomodificacion` varchar(15) DEFAULT NULL,
   `fechamodificacion` datetime DEFAULT NULL,
+  `ultimapublicacion` datetime DEFAULT NULL,
+  `usuariopublica` varchar(15) DEFAULT NULL,
   `idsuscriptor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -183,10 +185,12 @@ CREATE TABLE `procesos` (
 -- Volcado de datos para la tabla `procesos`
 --
 
-INSERT INTO `procesos` (`idproceso`, `descripcion`, `consubprocesos`, `publicar`, `condicion`, `identificadorproceso`, `usuarioalta`, `fechaalta`, `usuariomodificacion`, `fechamodificacion`, `idsuscriptor`) VALUES
-(3, 'ADMINISTRACION', 1, 0, 1, '5c245b99d7173', 'RMARTINEZ', '2018-12-27 05:56:00', NULL, NULL, 1),
-(4, 'MANTENIMIENTO', 0, 0, 1, 'proc-5c2464b89d7a6', 'RMARTINEZ', '2018-12-27 06:35:00', 'RMARTINEZ', '2018-12-27 06:36:00', 1),
-(5, 'OPERACIONES', 0, 0, 1, 'proc-5c24667a42de5', 'RMARTINEZ', '2018-12-27 06:43:00', NULL, NULL, 1);
+INSERT INTO `procesos` (`idproceso`, `descripcion`, `consubprocesos`, `publicar`, `condicion`, `identificadorproceso`, `usuarioalta`, `fechaalta`, `usuariomodificacion`, `fechamodificacion`, `ultimapublicacion`, `usuariopublica`, `idsuscriptor`) VALUES
+(1, 'SISTEMAS', 1, 0, 1, '5c25b1364265d', 'RMARTINEZ', '2018-12-28 06:14:00', 'RMARTINEZ', '2018-12-28 06:15:00', NULL, NULL, 1),
+(2, 'ADMIN', 1, 0, 1, '5c25b149bff89', 'RMARTINEZ', '2018-12-28 06:14:00', 'RMARTINEZ', '2018-12-28 06:37:00', '2018-12-28 06:37:00', 'RMARTINEZ', 1),
+(3, 'MANTTO', 1, 0, 1, '5c25b167b70c4', 'RMARTINEZ', '2018-12-28 06:15:00', 'RMARTINEZ', '2018-12-28 06:17:00', NULL, NULL, 1),
+(4, 'OPER', 1, 0, 1, '5c25b18ec9ac4', 'RMARTINEZ', '2018-12-28 06:15:00', NULL, NULL, NULL, NULL, 1),
+(5, 'BASCULA', 1, 0, 1, '5c25b1cf24058', 'RMARTINEZ', '2018-12-28 06:17:00', 'RMARTINEZ', '2018-12-28 06:37:00', '2018-12-28 06:37:00', 'RMARTINEZ', 1);
 
 -- --------------------------------------------------------
 
@@ -229,6 +233,7 @@ CREATE TABLE `subprocesos` (
   `condicion` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 Baja\n1 Activo\n2 Eliminar',
   `consecutivo` int(11) NOT NULL,
   `identificadorsubproceso` varchar(45) NOT NULL,
+  `archivocreado` tinyint(4) NOT NULL DEFAULT '0',
   `usuarioalta` varchar(15) NOT NULL,
   `fechaalta` datetime NOT NULL,
   `usuariomodificacion` varchar(15) DEFAULT NULL,
@@ -242,15 +247,30 @@ CREATE TABLE `subprocesos` (
 -- Volcado de datos para la tabla `subprocesos`
 --
 
-INSERT INTO `subprocesos` (`idsubproceso`, `descripcion`, `condicion`, `consecutivo`, `identificadorsubproceso`, `usuarioalta`, `fechaalta`, `usuariomodificacion`, `fechamodificacion`, `fechaeliminacion`, `usuarioeliminacion`, `idproceso`) VALUES
-(5, 'ADMINISTRACION', 1, 0, '5c245b9a0a688', 'RMARTINEZ', '2018-12-27 05:56:00', NULL, NULL, NULL, NULL, 3),
-(6, 'RECHUM', 1, 1, '5c245b9a188ab', 'RMARTINEZ', '2018-12-27 05:56:00', NULL, NULL, NULL, NULL, 3),
-(7, 'COMPRAS', 1, 2, '5c245b9a29607', 'RMARTINEZ', '2018-12-27 05:56:00', NULL, NULL, NULL, NULL, 3),
-(8, 'NOMINAS', 1, 3, '5c245b9a4e6cc', 'RMARTINEZ', '2018-12-27 05:56:00', NULL, NULL, NULL, NULL, 3),
-(9, 'MANTENIMIENTO', 1, 0, 'sub-5c2464b8afe91', 'RMARTINEZ', '2018-12-27 06:35:00', NULL, NULL, NULL, NULL, 4),
-(10, 'ELECTRICO', 1, 1, 'sub-5c2464e59b35a', 'RMARTINEZ', '2018-12-27 06:36:00', NULL, NULL, NULL, NULL, 4),
-(11, 'MECANICO', 1, 2, 'sub-5c2464e5bc40f', 'RMARTINEZ', '2018-12-27 06:36:00', NULL, NULL, NULL, NULL, 4),
-(12, 'OPERACIONES', 1, 0, 'sub-5c24667a5542e', 'RMARTINEZ', '2018-12-27 06:43:00', NULL, NULL, NULL, NULL, 5);
+INSERT INTO `subprocesos` (`idsubproceso`, `descripcion`, `condicion`, `consecutivo`, `identificadorsubproceso`, `archivocreado`, `usuarioalta`, `fechaalta`, `usuariomodificacion`, `fechamodificacion`, `fechaeliminacion`, `usuarioeliminacion`, `idproceso`) VALUES
+(1, 'SISTEMAS', 1, 0, '5c25b1367e1a7', 1, 'RMARTINEZ', '2018-12-28 06:14:00', NULL, NULL, NULL, NULL, 1),
+(2, 'A', 1, 1, '5c25b136c0edb', 1, 'RMARTINEZ', '2018-12-28 06:14:00', NULL, NULL, NULL, NULL, 1),
+(3, 'B', 1, 2, '5c25b136f3f88', 1, 'RMARTINEZ', '2018-12-28 06:14:00', NULL, NULL, NULL, NULL, 1),
+(4, 'C', 1, 3, '5c25b13768d39', 1, 'RMARTINEZ', '2018-12-28 06:14:00', NULL, NULL, NULL, NULL, 1),
+(5, 'ADMIN', 1, 0, '5c25b14a0a9f1', 1, 'RMARTINEZ', '2018-12-28 06:14:00', NULL, NULL, NULL, NULL, 2),
+(6, 'ADM1', 1, 1, '5c25b14a91e97', 1, 'RMARTINEZ', '2018-12-28 06:14:00', NULL, NULL, NULL, NULL, 2),
+(7, 'ADM2', 1, 2, '5c25b14ab8705', 1, 'RMARTINEZ', '2018-12-28 06:14:00', NULL, NULL, NULL, NULL, 2),
+(8, 'ADM3', 1, 3, '5c25b14ad98d9', 1, 'RMARTINEZ', '2018-12-28 06:14:00', NULL, NULL, NULL, NULL, 2),
+(9, 'D', 1, 4, '5c25b158f4146', 1, 'RMARTINEZ', '2018-12-28 06:15:00', NULL, NULL, NULL, NULL, 1),
+(10, 'MANTTO', 1, 0, '5c25b167f40df', 1, 'RMARTINEZ', '2018-12-28 06:15:00', NULL, NULL, NULL, NULL, 3),
+(11, 'A', 1, 1, '5c25b168634e5', 1, 'RMARTINEZ', '2018-12-28 06:15:00', NULL, NULL, NULL, NULL, 3),
+(12, 'B', 1, 2, '5c25b168c401a', 1, 'RMARTINEZ', '2018-12-28 06:15:00', NULL, NULL, NULL, NULL, 3),
+(13, 'C', 1, 3, '5c25b1789e495', 1, 'RMARTINEZ', '2018-12-28 06:15:00', NULL, NULL, NULL, NULL, 3),
+(14, 'OPER', 1, 0, '5c25b18f121e2', 1, 'RMARTINEZ', '2018-12-28 06:15:00', NULL, NULL, NULL, NULL, 4),
+(15, 'OP1', 1, 1, '5c25b18f80525', 1, 'RMARTINEZ', '2018-12-28 06:15:00', NULL, NULL, NULL, NULL, 4),
+(16, 'OP2', 1, 2, '5c25b18fee3a0', 1, 'RMARTINEZ', '2018-12-28 06:15:00', NULL, NULL, NULL, NULL, 4),
+(17, 'OP3', 1, 3, '5c25b19026864', 1, 'RMARTINEZ', '2018-12-28 06:15:00', NULL, NULL, NULL, NULL, 4),
+(18, 'ADM4', 2, 0, '5c25b19ebd427', 1, 'RMARTINEZ', '2018-12-28 06:16:00', 'RMARTINEZ', '2018-12-28 06:42:00', NULL, NULL, 2),
+(19, 'BASCULA', 1, 0, '5c25b1cf4be8e', 1, 'RMARTINEZ', '2018-12-28 06:17:00', NULL, NULL, NULL, NULL, 5),
+(20, 'B1', 1, 1, '5c25b1cfb4d16', 1, 'RMARTINEZ', '2018-12-28 06:17:00', NULL, NULL, NULL, NULL, 5),
+(21, 'B2', 1, 2, '5c25b1d02404f', 1, 'RMARTINEZ', '2018-12-28 06:17:00', NULL, NULL, NULL, NULL, 5),
+(22, 'D', 1, 4, '5c25b1dc1c11a', 1, 'RMARTINEZ', '2018-12-28 06:17:00', NULL, NULL, NULL, NULL, 3),
+(23, 'B3', 1, 3, '5c25b1efcf707', 1, 'RMARTINEZ', '2018-12-28 06:17:00', NULL, NULL, NULL, NULL, 5);
 
 -- --------------------------------------------------------
 
@@ -506,7 +526,7 @@ ALTER TABLE `procesos`
 -- AUTO_INCREMENT de la tabla `subprocesos`
 --
 ALTER TABLE `subprocesos`
-  MODIFY `idsubproceso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idsubproceso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `suscriptores`

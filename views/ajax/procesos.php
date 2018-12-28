@@ -55,6 +55,10 @@
       $stmt = new Procesos();
       $stmt -> publicarProcesoController($idproceso, $proceso);
       break;
+    case 'ocultarProceso':
+      $stmt = new Procesos();
+      $stmt -> ocultarProcesoController($idproceso, $proceso);
+      break;
 
 
   }
