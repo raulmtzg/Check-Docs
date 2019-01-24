@@ -5,18 +5,25 @@
 
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
-      <li class="header">OPCIONES DE MENU</li>
+      <!-- <li class="header">OPCIONES DE MENU</li> -->
       <li>
         <a href="inicio">
           <i class="fa fa-home"></i> <span>Inicio</span>
         </a>
       </li>
-      <!-- Aquí van todas las opciones de procesos creador dinamicamente -->
 
+      <!-- Aquí van todas las opciones de procesos creador dinamicamente -->
+      <li class="header">PROCESOS</li>
+      <?php
+        $procesos = new MenuProcesos();
+        $procesos ->listarOpcionesMenuController();
+
+      ?>
 
 
 
       <!-- Esta seccion solo será para el administrador del sistema -->
+        <li class="header">CONFIGURACIONES</li>
       <?php
 
       if($_SESSION['perfil']=="1") {
@@ -25,7 +32,7 @@
           $administracion.='<li class="treeview">
             <a href="#">
               <i class="fa fa-bug"></i>
-              <span>Administración</span>
+              <span>ADMINISTRACIÓN</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -44,7 +51,7 @@
 
       <li>
         <a href="salir">
-          <i class="fa fa-sign-out"></i> <span>Cerrar sesión</span>
+          <i class="fa fa-sign-out"></i> <span>CERRAR SESIÓN</span>
         </a>
       </li>
 

@@ -10,7 +10,7 @@
 }
 
 .skin-blue-light .main-header .navbar .sidebar-toggle:hover {
-    background-color: #20A8D8;
+    background-color: #086ec5;
 }
 
 .skin-blue-light .main-header .logo {
@@ -25,7 +25,7 @@
 }
 .skin-blue-light .sidebar-menu>li:hover>a, .skin-blue-light .sidebar-menu>li.active>a {
     color: #fff;
-    background: #20A8D8;
+    background: #086ec5;
 }
 
 .main-footer {

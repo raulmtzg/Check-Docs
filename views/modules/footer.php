@@ -29,4 +29,4 @@
     <script src="assets/sweetalert/sweetalert.min.js"></script>
 
     <!-- CONFIGURACIONES GLOBALES  -->
-    <script src="views/js/globals.js"></script>
+    <!-- <script src="views/js/globals.js"></script> -->
