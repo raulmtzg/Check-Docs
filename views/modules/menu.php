@@ -33,9 +33,8 @@
             <a href="#">
               <i class="fa fa-bug"></i>
               <span>ADMINISTRACIÓN</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+              <i class="fa fa-angle-left pull-right"></i>
+              
             </a>
             <ul class="treeview-menu">
               <li><a href="#"><i class="fa fa-circle-o"></i> Tablero</a></li>

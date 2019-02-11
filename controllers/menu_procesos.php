@@ -19,9 +19,7 @@
                       <a href="#">
                         <i class="fa fa-folder-o"></i>
                         <span>'.$procesos[$a]['descripcion'].'</span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
+                        <i class="fa fa-angle-left pull-right"></i>                        
                       </a>
                       <ul class="treeview-menu">';
             $j = 1;
