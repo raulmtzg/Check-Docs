@@ -3,6 +3,7 @@
   class EnlacesModels{
 
     public function enlacesModel($enlaces){
+
       if($enlaces=="inicio"               ||
          $enlaces=="actualizar_password"  ||
          $enlaces=="admin_panel"          ||
@@ -14,23 +15,57 @@
 
            $module ="views/modules/".$enlaces.".php";
 
+           $respuesta = array('0' => 1,
+                              '1' => $module);
+
          }
           else if($enlaces =="index"){
 
             $module ="views/modules/ingreso.php";
 
-          }else{
-
-            $module ="views/modules/ingreso.php";
+            $respuesta = array('0' => 1,
+                               '1' => $module);
 
           }
-          return $module;
+          else{
+
+            $module = $enlaces;
+            $respuesta = array('0' => 0,
+                               '1' => $module);
+
+          }
+
+          return $respuesta;
 
     }
 
-    public function getEnlacesDinamicos( $enlaces, $carpeta ){
-      $module ="views/modules/".$carpeta."/".$enlaces.".php";
+    public function getEnlacesDinamicos($enlacesDinamicos, $enlaces, $carpeta ){
+
+      if( count($enlacesDinamicos) > 0 ){
+        $ban = false;
+        $i = 0;
+        while ($i < count($enlacesDinamicos)) {
+
+          if($enlaces == $enlacesDinamicos[$i]['identificadorsubproceso']){
+            $ban = true;
+          }
+          $i++;
+
+        }
+        if( $ban == true ){
+
+          $module ="views/modules/".$carpeta."/".$enlaces.".php";
+
+        }else{
+          $module ="views/modules/ingreso.php";
+        }
+
+      }else{
+
+         $module ="views/modules/ingreso.php";
+      }
       return $module;
+
     }
 
     public function getOpcionesDinamicas($idsuscriptor, $condicionsubproceso, $tabla){

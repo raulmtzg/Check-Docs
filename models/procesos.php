@@ -369,8 +369,8 @@
         $var = 'testDatosPersonalizados';
 
         $php='<?php
-                include "header.php";
-                include "menu.php";
+                include "./views/modules/header.php";
+                include "./views/modules/menu.php";
               ?>
               <!-- Content Wrapper. Contains page content -->
               <div class="content-wrapper">
@@ -389,7 +389,7 @@
               </div><!-- /.content-wrapper -->
 
               <?php
-                include "footer.php";
+                include "./views/modules/footer.php";
                ?>
                 </body>';
 

@@ -3,45 +3,37 @@
 
     public function enlacesController(){
 
-      $ban = false;
-
       if(isset($_GET["action"])){
-
         $enlaces =$_GET["action"];
-
       }
       else{
         $enlaces = "index";
       }
 
-      if( isset($_SESSION['idsuscriptor']) ){
+      $respuesta = EnlacesModels::enlacesModel($enlaces);
 
-        $enlacesDinamicos = EnlacesModels::getOpcionesDinamicas($_SESSION['idsuscriptor'], "1", "vwopciones_menu");
+      if ($respuesta[0] == 1){
 
-        $i = 0;
-        while ($i < count($enlacesDinamicos)) {
-
-          if($enlaces == $enlacesDinamicos[$i]['identificadorsubproceso']){
-            $ban = true;
-          }
-          $i++;
-
-        }
-        echo "<pre>";
-          print_r($enlacesDinamicos);
-        echo "</pre>";
-
-      }
-
-      if( $ban == true ){
-        $respuesta = EnlacesModels::getEnlacesDinamicos($enlaces, $_SESSION['carpeta']);
+        include $respuesta[1];
 
       }else{
-        $respuesta = EnlacesModels::enlacesModel($enlaces);
-        echo $respuesta;
+
+        session_start();
+        if( isset($_SESSION['validar']) ){
+
+          $enlacesDinamicos = EnlacesModels::getOpcionesDinamicas($_SESSION['idsuscriptor'], "1", "vwopciones_menu");
+          $resp = EnlacesModels::getEnlacesDinamicos($enlacesDinamicos, $enlaces, $_SESSION['carpeta']);
+          include $resp;
+
+        }else{
+
+          $module ="views/modules/ingreso.php";
+          include $module;
+
+        }
+
       }
 
-      include $respuesta;
-
     }
+    
   }
