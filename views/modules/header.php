@@ -32,6 +32,9 @@
     <!-- SWEET ALERT -->
     <link rel="stylesheet" href="assets/sweetalert/sweetalert.css">
 
+    <!-- SUPER CONTEXT-MENU -->
+    <link rel="stylesheet" href="assets/supercontextmenu/context-menu.min.css">
+
     <!-- ESTILOS PERSONALIZADOS -->
     <link rel="stylesheet" href="views/css/main.css">
     <link rel="stylesheet" href="views/css/comentarios.css">

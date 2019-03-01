@@ -28,5 +28,8 @@
     <!-- SWEET ALERT  -->
     <script src="assets/sweetalert/sweetalert.min.js"></script>
 
+    <!-- SUPER CONTEXT-MENU  -->
+    <script src="assets/supercontextmenu/context-menu.min.js"></script>
+
     <!-- CONFIGURACIONES GLOBALES  -->
-    <!-- <script src="views/js/globals.js"></script> -->
+    <script src="views/js/globals.js"></script>
