@@ -1,29 +1,22 @@
-var fila;
+var filaDocumento;
 
-$(document).ready(function(){
-
-    $('.fila-proceso').on('contextmenu',function () {
-        filaDocumento = $(this).data("id");
-    });
-
-});
-
-$(document).on('contextmenu', function(e) {
+$('.derecho').on('contextmenu', function(e) {
   e.preventDefault();
+  filaDocumento = $(this).data("id");
   superCm.createMenu([
     {
-      icon: 'fa fa-plus',
-      label: 'Nuevo',
-      opc:'Nuevo',
+      icon: 'fa fa-eye',
+      label: 'Ver documento',
+      opc:'verDocto',
       action: process,
       identificador: filaDocumento
     },
     {
-      icon: 'fa fa-user',
-      label: 'User 2',
+      icon: 'fa fa-print',
+      label: 'Imprimir',
+      opc: 'print',
       action: process,
-      userId: 'U8484PL',
-      role: 'Member'
+      identificador: filaDocumento
     }
   ], e);
 });
@@ -32,8 +25,11 @@ function process(option) {
   // alert('Processing user with ID ' + option.idRow + ' and role ' + option.role);
 
   switch (option.opc) {
-    case 'Nuevo':
-      accionUno(option.identificador);
+    case 'verDocto':
+      verDocto(option.identificador);
+      break;
+    case 'print':
+      printDocto(option.identificador);
       break;
     default:
 
@@ -42,10 +38,32 @@ function process(option) {
   superCm.destroyMenu();
 }
 
-function accionUno(identificador){
-  console.log('El documento es: ', identificador);
+function verDocto(identificador){
+  console.log('Ver el documento: ', identificador);
 }
 
+function printDocto(identificador){
+  console.log('Imprimir el documento: ', identificador);
+}
+
+
+function mostrarform(flag) {
+  //limpiar();
+  if (flag) {
+    $("#listadoregistros").slideUp(500);
+    $("#formularioregistros").slideDown(500);
+    $("#btnNuevoDocto").fadeOut("slow");
+
+  } else {
+    $("#listadoregistros").slideDown(500);
+    $("#formularioregistros").slideUp(500);
+    $("#btnNuevoDocto").fadeIn("slow");
+
+  }
+}
 function nuevoDocumento(){
-  $('#nuevo-documento').modal('show');
+  //$('#nuevo-documento').modal('show');
+  $("#listadoregistros").slideUp(500);
+  $("#formularioregistros").slideDown(500);
+  $("#btnNuevoDocto").fadeOut("slow");
 }

@@ -15,8 +15,14 @@
               <ol class="breadcrumb ">
                 <li>Sistemas</li>
                 <li>Procedimientos</li>
-                <li class="active"><a href="javascript:nuevoDocumento();"><i class="fa fa-plus-circle"></i> Nuevo</a></li>
+                <li class="active"><a id="btnNuevoDocto" href="javascript:mostrarform(true);"><i class="fa fa-plus-circle"></i> Nuevo</a></li>
               </ol>
+            </div>
+
+            <div class="panel-body ocultar-contenido"  id="formularioregistros">
+              <?php
+                require 'views/modules/documento_nuevo.php';
+              ?>
             </div>
 
             <div class="panel-body table-responsive" id="listadoregistros">
@@ -30,7 +36,7 @@
                     <th class="text-center">Versión</th>
                     <th class="text-center">Tipo</th>
                     <th class="text-center">Última revisión</th>
-                    <th class="text-center">Opciones</th>
+                    <!-- <th class="text-center">Opciones</th> -->
 
                   </thead>
                   <tbody>
@@ -42,9 +48,9 @@
                       <td>0</td>
                       <td>Procedimiento</td>
                       <td>2019-01-25</td>
-                      <td>
+                      <!-- <td>
                         <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Ver" onclick=""><i class="fa fa-eye"></i></button>
-                      </td>
+                      </td> -->
                     </tr>
                     <tr class="derecho fila-proceso" data-id="dos">
                       <td><i class="fa fa-file-text-o" aria-hidden="true"></i> 4852 </td>
@@ -54,9 +60,9 @@
                       <td>0</td>
                       <td>Procedimiento</td>
                       <td>2019-01-25</td>
-                      <td>
+                      <!-- <td>
                         <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Ver" onclick=""><i class="fa fa-eye"></i></button>
-                      </td>
+                      </td> -->
                     </tr>
                   </tbody>
 
