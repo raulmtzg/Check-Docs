@@ -10,13 +10,8 @@
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <!-- <h1 class="box-title">PROCEDIMIENTOS</h1>
-              <button type="button" class="btn bg-navy margin"> <i class="fa fa-plus-circle"></i> Nuevo</button> -->
-              <ol class="breadcrumb ">
-                <li>Sistemas</li>
-                <li>Procedimientos</li>
-                <li class="active"><a id="btnNuevoDocto" href="javascript:mostrarform(true);"><i class="fa fa-plus-circle"></i> Nuevo</a></li>
-              </ol>
+              <h1 class="box-title"> LISTA DE PROCEDIMIENTOS</h1>
+
             </div>
 
             <div class="panel-body ocultar-contenido"  id="formularioregistros">
@@ -26,9 +21,15 @@
             </div>
 
             <div class="panel-body table-responsive" id="listadoregistros">
+              <ol class="breadcrumb ">
+                <li>Sistemas</li>
+                <li>Procedimientos</li>
+                <li class="active"><a id="btnNuevoDocto" href="javascript:mostrarform(true);"><i class="fa fa-plus-circle"></i> Nuevo</a></li>
+              </ol>
                 <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
                   <thead>
                     <!-- <th class="text-center">FECHA ALTA</th>                   -->
+                    <th></th>
                     <th>ID</th>
                     <th class="text-center">Código</th>
                     <th class="text-center">Nombre</th>
@@ -41,32 +42,47 @@
                   </thead>
                   <tbody>
                     <tr class="derecho fila-proceso" data-id="uno">
-                      <td><i class="fa fa-file-text-o" aria-hidden="true"></i> 4852 </td>
+                      <td class="documento-aprobado">
+                        <!-- <span data-toggle="tooltip" data-placement="top" title="Aprobado">&nbsp;</span> -->
+                      </td>
+                      <td ><i class="fa fa-file-text-o icon-color-info" aria-hidden="true"></i> 4852 </td>
                       <td>SIS-PROD-1</td>
                       <td>Procedimiento de Sistemas</td>
                       <td>Admin</td>
                       <td>0</td>
                       <td>Procedimiento</td>
                       <td>2019-01-25</td>
-                      <!-- <td>
-                        <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Ver" onclick=""><i class="fa fa-eye"></i></button>
-                      </td> -->
                     </tr>
                     <tr class="derecho fila-proceso" data-id="dos">
-                      <td><i class="fa fa-file-text-o" aria-hidden="true"></i> 4852 </td>
+                      <td class="documento-revision">
+                        <!-- <span data-toggle="tooltip" data-placement="top" title="Revisión">&nbsp;</span> -->
+                      </td>
+                      <td><i class="fa fa-file-text-o icon-color-info" aria-hidden="true"></i> 4852 </td>
                       <td>SIS-PROD-2</td>
                       <td>Procedimiento de Sistemas</td>
                       <td>Admin</td>
                       <td>0</td>
                       <td>Procedimiento</td>
                       <td>2019-01-25</td>
-                      <!-- <td>
-                        <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Ver" onclick=""><i class="fa fa-eye"></i></button>
-                      </td> -->
+                    </tr>
+                    <tr class="derecho fila-proceso" data-id="tres">
+                      <td class="documento-edicion">
+                        <!-- <span data-toggle="tooltip" data-placement="top" title="Edición">&nbsp;</span> -->
+                      </td>
+                      <td><i class="fa fa-file-text-o icon-color-info" aria-hidden="true"></i> 4852 </td>
+                      <td>SIS-PROD-2</td>
+                      <td>Procedimiento de Sistemas</td>
+                      <td>Admin</td>
+                      <td>0</td>
+                      <td>Procedimiento</td>
+                      <td>2019-01-25</td>
                     </tr>
                   </tbody>
 
                 </table>
+                <div class="relleno">
+                  <span>&nbsp;</span>
+                </div>
             </div>
 
           </div><!-- /.box -->

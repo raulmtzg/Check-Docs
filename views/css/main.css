@@ -172,6 +172,25 @@ table#table-autorizadores tbody tr{
     color: #00C0EF !important;
 }
 
+.documento-aprobado{
+  width: 1px !important;
+  background-color: #00A65A !important;
+}
+
+.documento-revision{
+  width: 1px !important;
+  background-color: #F39C12 !important;
+}
+
+.documento-edicion{
+  width: 1px !important;
+  background-color: #00C0EF !important;
+}
+.relleno{
+  height: 200px;
+}
+
+
 
 
 

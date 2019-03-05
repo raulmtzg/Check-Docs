@@ -12,12 +12,90 @@ $('.derecho').on('contextmenu', function(e) {
       identificador: filaDocumento
     },
     {
+      icon: 'fa fa-edit',
+      label: 'Editar documento',
+      opc:'verDocto',
+      action: process,
+      identificador: filaDocumento
+    },
+
+    {
+      icon: 'fa fa-upload',
+      label: 'Subir nueva versión',
+      opc:'versionDocto',
+      action: process,
+      identificador: filaDocumento
+    },
+    {
+      icon: 'fa fa-download',
+      label: 'Descargar original',
+      opc:'versionDocto',
+      action: process,
+      identificador: filaDocumento
+    },
+    {
       icon: 'fa fa-print',
       label: 'Imprimir',
       opc: 'print',
       action: process,
       identificador: filaDocumento
-    }
+    },
+    {
+      icon: 'fa fa-pencil',
+      label: 'Cambios',
+      opc: 'print',
+      action: process,
+      identificador: filaDocumento
+    },
+    {
+      icon: 'fa fa-thumb-tack',
+      label: 'Propuestas',
+      opc: 'print',
+      action: process,
+      identificador: filaDocumento
+    },
+    {
+      icon: 'fa fa-check',
+      label: 'Revisión actual',
+      opc: 'print',
+      action: process,
+      identificador: filaDocumento
+    },
+    {
+      icon: 'fa fa-archive',
+      label: 'Versiones obsoletas',
+      opc: 'print',
+      action: process,
+      identificador: filaDocumento
+    },
+    {
+      icon: 'fa fa-clock-o',
+      label: 'Historial de revisiones',
+      opc: 'print',
+      action: process,
+      identificador: filaDocumento
+    },
+    {
+      icon: 'fa fa-print',
+      label: 'Impresiones',
+      opc: 'print',
+      action: process,
+      identificador: filaDocumento
+    },
+    {
+      icon: 'fa fa-users',
+      label: 'Usuarios',
+      opc: 'print',
+      action: process,
+      identificador: filaDocumento
+    },
+    {
+      icon: 'fa fa-times',
+      label: 'Eliminar',
+      opc: 'print',
+      action: process,
+      identificador: filaDocumento
+    },
   ], e);
 });
 
@@ -25,6 +103,7 @@ function process(option) {
   // alert('Processing user with ID ' + option.idRow + ' and role ' + option.role);
 
   switch (option.opc) {
+
     case 'verDocto':
       verDocto(option.identificador);
       break;
@@ -34,7 +113,7 @@ function process(option) {
     default:
 
   }
-
+  superCm.updateMenu(allowHorzReposition = true, allowVertReposition = true);
   superCm.destroyMenu();
 }
 
