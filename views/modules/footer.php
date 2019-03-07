@@ -9,6 +9,7 @@
     <script src="assets/jquery/js/jquery-ui.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
     <!-- AdminLTE App -->
     <script src="assets/adminlte/js/app.min.js"></script>
 
@@ -24,6 +25,10 @@
 
     <!-- SELECT BOOTSTRAP  -->
     <script src="assets/bootstrap/js/bootstrap-select.min.js"></script>
+
+    <!-- BOOTSTRAP DATEPICKER  -->
+    <script src="assets/bootstrap/js/bootstrap-datepicker.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap-datepicker.es.js"></script>
 
     <!-- SWEET ALERT  -->
     <script src="assets/sweetalert/sweetalert.min.js"></script>

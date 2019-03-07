@@ -10,7 +10,7 @@
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h1 class="box-title"> LISTA DE PROCEDIMIENTOS</h1>
+              <h1 class="box-title"> LISTADO DE DOCUMENTOS</h1>
 
             </div>
 
@@ -21,10 +21,10 @@
             </div>
 
             <div class="panel-body table-responsive" id="listadoregistros">
-              <ol class="breadcrumb ">
-                <li>Sistemas</li>
+              <ol id="ruta-documento" class="breadcrumb ">
+                <!-- <li>Sistemas</li>
                 <li>Procedimientos</li>
-                <li class="active"><a id="btnNuevoDocto" href="javascript:mostrarform(true);"><i class="fa fa-plus-circle"></i> Nuevo</a></li>
+                <li class="active"><a id="btnNuevoDocto" href="javascript:mostrarform(true);"><i class="fa fa-plus-circle"></i> Nuevo</a></li> -->
               </ol>
                 <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
                   <thead>
@@ -92,7 +92,6 @@
   </div><!-- /.content-wrapper -->
 
   <?php
-    require "./views/modules/modal_nuevo_documento.php";
     include "./views/modules/footer.php";
    ?>
     </body>

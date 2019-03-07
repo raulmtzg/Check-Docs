@@ -190,6 +190,9 @@ table#table-autorizadores tbody tr{
   height: 200px;
 }
 
+.derecho{
+  z-index: 10000;
+}
 
 
 

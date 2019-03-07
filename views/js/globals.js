@@ -1,4 +1,17 @@
 var filaDocumento;
+$(document).ready(function(){
+  var URLactual = window.location;
+  getUbicacion(URLactual.pathname);
+
+$('#fecharevision').datepicker({
+    autoclose: true,
+    language: 'es',
+    startDate: '01/01/2018',
+    format: 'dd/mm/yyyy'
+  });
+
+});
+
 
 $('.derecho').on('contextmenu', function(e) {
   e.preventDefault();
@@ -125,7 +138,6 @@ function printDocto(identificador){
   console.log('Imprimir el documento: ', identificador);
 }
 
-
 function mostrarform(flag) {
   //limpiar();
   if (flag) {
@@ -140,9 +152,28 @@ function mostrarform(flag) {
 
   }
 }
+
 function nuevoDocumento(){
   //$('#nuevo-documento').modal('show');
   $("#listadoregistros").slideUp(500);
   $("#formularioregistros").slideDown(500);
   $("#btnNuevoDocto").fadeOut("slow");
+}
+
+function getUbicacion(ruta){
+
+  var url = "views/ajax/globals.php?op=getRuta";
+
+  $.ajax({
+    url: url,
+    type: "POST",
+    data: {ruta},
+    success: function(datos) {
+      $("#ruta-documento").html(datos);
+    }
+
+  });
+
+return false;
+
 }

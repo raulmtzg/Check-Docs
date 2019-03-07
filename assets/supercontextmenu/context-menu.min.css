@@ -10,7 +10,9 @@
   vertical-align: top;
   overflow: hidden;
   user-select: none;
-  animation: 0.1s context-popup
+  animation: 0.1s context-popup;
+  z-index: 10000;
+
 }
 
 .context-menu-search {

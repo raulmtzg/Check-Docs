@@ -12,6 +12,8 @@
 
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <!-- Bootstrap datapicker -->
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-datepicker.min.css">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="assets/font-awesome-4.7.0/css/font-awesome.css">
