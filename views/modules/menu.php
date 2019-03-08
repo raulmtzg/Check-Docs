@@ -34,12 +34,12 @@
               <i class="fa fa-bug"></i>
               <span>ADMINISTRACIÓN</span>
               <i class="fa fa-angle-left pull-right"></i>
-              
+
             </a>
             <ul class="treeview-menu">
               <li><a href="#"><i class="fa fa-circle-o"></i> Tablero</a></li>
               <li><a href="admin_inicio"><i class="fa fa-circle-o"></i> Página inicio</a></li>
-              <li><a href="#"><i class="fa fa-circle-o"></i> Usuarios</a></li>
+              <li><a href="usuarios"><i class="fa fa-circle-o"></i> Usuarios</a></li>
               <li><a href="procesos"><i class="fa fa-circle-o"></i> Procesos</a></li>
             </ul>
           </li>';

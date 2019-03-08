@@ -9,6 +9,7 @@
          $enlaces=="admin_panel"          ||
          $enlaces=="admin_inicio"         ||
          $enlaces== "procesos"            ||
+         $enlaces== "usuarios"            ||
          $enlaces=="salir")
 
          {

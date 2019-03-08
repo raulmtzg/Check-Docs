@@ -3,7 +3,7 @@
 class Ingreso{
 
   public function iniciarSesionController($email_usuario, $pass_usuario){
-
+      
       #240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9
       $claveHash= hash("SHA256",$pass_usuario);
       //echo $claveHash;
@@ -54,7 +54,7 @@ class Ingreso{
         }
         else{
           ++$intentos;
-          
+
           $datosController = array("emailActual" => $emailActual, "actualizarIntentos" => $intentos);
           $respuestaActualizarIntentos = IngresoModels::intentosModel($datosController, "administradores");
 
