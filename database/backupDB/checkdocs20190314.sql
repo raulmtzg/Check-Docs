@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-01-2019 a las 16:34:14
--- Versión del servidor: 10.1.37-MariaDB
--- Versión de PHP: 7.2.12
+-- Tiempo de generación: 15-03-2019 a las 05:40:29
+-- Versión del servidor: 10.1.31-MariaDB
+-- Versión de PHP: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -113,11 +113,14 @@ CREATE TABLE `avanceaccion` (
 
 CREATE TABLE `documentos` (
   `iddocumento` int(11) NOT NULL,
+  `codigodocumento` varchar(20) NOT NULL,
   `nombredocumento` text NOT NULL,
   `estado` varchar(45) NOT NULL,
   `version` varchar(10) NOT NULL,
+  `tipodocumento` varchar(45) NOT NULL,
   `condicion` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 = Inactivo\n1 = Activo\n3 = Papelera',
   `usuarioresponsable` varchar(15) NOT NULL,
+  `fechaultimarevision` datetime NOT NULL,
   `conruta` tinyint(4) NOT NULL COMMENT '0 = ruta por proceso\n1 = ruta por documento',
   `usuarioalta` varchar(15) NOT NULL,
   `fechaalta` datetime NOT NULL,
@@ -320,11 +323,11 @@ CREATE TABLE `usuarios_suscriptores` (
   `nombre_completo` varchar(60) NOT NULL,
   `nombre_usuario` varchar(15) DEFAULT NULL,
   `password_usuario` varchar(256) NOT NULL,
-  `perfil` int(11) NOT NULL COMMENT '1:SuperAdministrador\n2:Adiministrador\n3:Editor\n4:Consultor',
+  `perfil` int(11) NOT NULL COMMENT '1:SuperAdministrador\n2:Adiministrador\n3:Usuario Básico',
   `email` varchar(100) NOT NULL,
   `foto` text,
   `intentos` tinyint(4) NOT NULL DEFAULT '0',
-  `condicion` tinyint(4) NOT NULL DEFAULT '0',
+  `condicion` tinyint(4) NOT NULL DEFAULT '1',
   `fecha_alta` datetime NOT NULL,
   `usuario_alta` varchar(15) NOT NULL,
   `usuario_modificacion` datetime DEFAULT NULL,
@@ -339,7 +342,9 @@ CREATE TABLE `usuarios_suscriptores` (
 INSERT INTO `usuarios_suscriptores` (`idusuario_suscriptor`, `nombre_completo`, `nombre_usuario`, `password_usuario`, `perfil`, `email`, `foto`, `intentos`, `condicion`, `fecha_alta`, `usuario_alta`, `usuario_modificacion`, `fecha_modificacion`, `idsuscriptor`) VALUES
 (3, 'RAUL MARTINEZ GONZALEZ', 'RMARTINEZ', '5b40171489659251097e7790fc2f1892e2183a72546fe1df283d07865db9149c', 1, 'raul.martinez@sacsi.com.mx', NULL, 0, 1, '2018-11-11 04:48:00', 'SISTEMA', NULL, NULL, 1),
 (4, 'FERNANDO AMBROSIO', NULL, '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 1, 'fambrosio@correo.com', NULL, 0, 1, '2018-11-22 06:38:00', 'SISTEMA', NULL, NULL, 3),
-(5, 'DAVID RODRIGUEZ', NULL, 'chk2wrs0', 1, 'david@mail.com', NULL, 0, 1, '2018-11-24 05:13:00', 'SISTEMA', NULL, NULL, 4);
+(5, 'DAVID RODRIGUEZ', NULL, 'chk2wrs0', 1, 'david@mail.com', NULL, 0, 1, '2018-11-24 05:13:00', 'SISTEMA', NULL, NULL, 4),
+(6, 'ROBERTO GOMEZ FLORES', 'RGOMEZ', '', 2, 'RGOMEZ@SACSI.COM.MX', NULL, 0, 1, '2019-03-15 05:27:00', 'RMARTINEZ', NULL, NULL, 1),
+(7, 'JULIO ROBLES  SUAREZ', 'JROBLES', 'chk2bMkl', 2, 'JROBLES@SACSI.COM.MX', NULL, 0, 1, '2019-03-15 05:38:00', 'RMARTINEZ', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -567,7 +572,7 @@ ALTER TABLE `suscriptores`
 -- AUTO_INCREMENT de la tabla `usuarios_suscriptores`
 --
 ALTER TABLE `usuarios_suscriptores`
-  MODIFY `idusuario_suscriptor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idusuario_suscriptor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
