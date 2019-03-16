@@ -17,7 +17,7 @@
       <div class="col-md-12">
         <div class="box">
           <div class="box-header with-border">
-                <h1 class="box-title">Crear usuario <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Nuevo</button></h1>
+                <h1 class="box-title">Crear usuario <button class="btn btn-success" id="btnagregar" onclick="mostrarformu(true)"><i class="fa fa-plus-circle"></i> Nuevo</button></h1>
               <div class="box-tools pull-right">
               </div>
           </div>
@@ -26,7 +26,7 @@
               <form name="formulario" id="formulario" method="POST">
                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <label>NOMBRE COMPLETO:</label>
-                  <input type="hidden" name="idusuario" id="idusuario">
+                  <input type="hidden" name="idusuario_suscriptor" id="idusuario_suscriptor">
                   <input type="text" class="form-control" name="nombre_completo" id="nombre_completo" placeholder="p.ej. JUAN PÉREZ FLORES" required autocomplete="off" autofocus maxlength="60">
                 </div>
 
@@ -68,7 +68,10 @@
               <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
                 <thead>
                   <!-- <th class="text-center">FECHA ALTA</th>                   -->
-                  <th>PROCESO</th>
+                  <th>NOMBRE COMPLETO</th>
+                  <th>NOMBRE USUARIO</th>
+                  <th>PERFIL</th>
+                  <th>EMAIL</th>
                   <th class="text-center">ESTADO</th>
                   <th class="text-center">OPCIONES</th>
                 </thead>
@@ -76,7 +79,10 @@
                 </tbody>
                 <tfoot>
                   <!-- <th class="text-center">FECHA ALTA</th> -->
-                  <th>PROCESO</th>
+                  <th>NOMBRE COMPLETO</th>
+                  <th>NOMBRE USUARIO</th>
+                  <th>PERFIL</th>
+                  <th>EMAIL</th>
                   <th class="text-center">ESTADO</th>
                   <th class="text-center">OPCIONES</th>
                 </tfoot>

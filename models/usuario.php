@@ -3,6 +3,16 @@
 
   class UsuarioModels{
 
+    public function listarModel($idsuscriptor, $tabla){
+      $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE idsuscriptor = :idsuscriptor
+                                              AND perfil > 1
+                                             ORDER BY nombre_completo ASC");
+      $stmt ->bindParam(":idsuscriptor", $idsuscriptor, PDO::PARAM_INT);
+      $stmt -> execute();
+      return $stmt->fetchAll();  #Si es mas de una fila es fetchAll
+      $stmt ->close();
+    }
+
     public function insertarModel($datosModel, $tabla){
 
       $statement = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE email = :email AND idsuscriptor = :idsuscriptor");
@@ -42,6 +52,14 @@
       }
 
 
+    }
+
+    public function mostrarModel($idusuario_suscriptor, $tabla){
+      $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE idusuario_suscriptor = :idusuario_suscriptor");
+      $stmt ->bindParam(":idusuario_suscriptor", $idusuario_suscriptor, PDO::PARAM_INT);
+      $stmt -> execute();
+      return $stmt->fetch();  #Si es mas de una fila es fetchAll
+      $stmt ->close();
     }
 
   }

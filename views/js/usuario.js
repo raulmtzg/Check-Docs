@@ -1,7 +1,8 @@
+var tabla;
 
 function init(){
 
-  //listar();
+  listar();
   console.log('entro');
   $("#formulario").on("submit", function(e) {
     guardaryeditar(e);
@@ -9,6 +10,58 @@ function init(){
 
 }
 
+//=======================================
+// Listar usuarios
+//=======================================
+function listar() {
+  tabla = $('#tbllistado').dataTable({
+    "aProcessing": true, //Activamos el procesamiento del datatables
+    "aServerSide": true, //Paginación y filtrado realizados por el servidor
+    dom: 'Bfrtip', //Definimos los elementos del control de tabla
+    buttons: [
+      'copyHtml5',
+      'excelHtml5',
+      'csvHtml5',
+      'pdf'
+    ],
+    "ajax": {
+      url: 'views/ajax/usuario.php?op=listar',
+      type: "get",
+      dataType: "json",
+      error: function(e) {
+        console.log(e.responseText);
+      }
+    },
+
+    "bDestroy": true,
+    "iDisplayLength": 5, //Paginación
+    "order": [
+      [0, "asc"]
+    ] //Ordenar (columna,orden)
+  }).DataTable();
+}
+
+//=======================================
+// mostrar / ocultar formulario
+//=======================================
+function mostrarformu(flag) {
+  //limpiar();
+  if (flag) {
+    $("#listadoregistros").slideUp(500);
+    $("#formularioregistros").slideDown(500);
+    $("#btnNuevoDocto").fadeOut("slow");
+
+  } else {
+    $("#listadoregistros").slideDown(500);
+    $("#formularioregistros").slideUp(500);
+    $("#btnNuevoDocto").fadeIn("slow");
+
+  }
+}
+
+//=======================================
+// Insertar / editar usuario
+//=======================================
 function guardaryeditar(e){
   e.preventDefault();
   $("#btnGuardar").prop("disabled", true);
@@ -55,5 +108,37 @@ function guardaryeditar(e){
   });
 
 }
+
+//=======================================
+// Cancelar nuevo / edicion de usuario
+//=======================================
+function cancelarform(){
+  $('#formulario')[0].reset();
+  //limpiar();
+  mostrarform(false);
+}
+
+//=======================================
+// Mostrar fomrulario para editar usuario
+//=======================================
+function mostrarDatosUsuario(idusuario_suscriptor){
+  $.post("views/ajax/usuario.php?op=mostrar", {
+    idusuario_suscriptor: idusuario_suscriptor
+  }, function(data, status) {
+    data = JSON.parse(data);
+    console.log(data);
+    //Como estan definidos los campos en la base de datos
+    $("#idusuario_suscriptor").val(data.idusuario_suscriptor);
+    $("#nombre_completo").val(data.nombre_completo);
+    $("#nombre_usuario").val(data.nombre_usuario);
+    $("#perfil").val(data.perfil);
+    $("#email").val(data.email);
+
+    mostrarform(true);
+
+  });
+
+}
+
 
 init();
