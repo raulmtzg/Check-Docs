@@ -7,8 +7,8 @@
   require_once "models/enlaces.php";
   require_once "models/ingreso.php";
 
-  //Catalogos
-
+  //Usuarios
+  require_once "models/usuario.php";
 
   //Permisos
 
@@ -25,8 +25,8 @@
   require_once "controllers/enlaces.php";
   require_once "controllers/ingreso.php";
 
-  //Catalogos
-
+  //Usuarios
+  require_once "controllers/usuario.php";
 
   //Permisos
 

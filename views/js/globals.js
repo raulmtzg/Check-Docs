@@ -161,7 +161,7 @@ function nuevoDocumento(){
 }
 
 function getUbicacion(ruta){
-
+  
   var url = "views/ajax/globals.php?op=getRuta";
 
   $.ajax({

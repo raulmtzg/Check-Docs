@@ -3,7 +3,7 @@ var tabla;
 function init(){
 
   listar();
-  console.log('entro');
+  
   $("#formulario").on("submit", function(e) {
     guardaryeditar(e);
   });
@@ -77,7 +77,7 @@ function guardaryeditar(e){
 
       if (datos == "1" ){
 
-        $("#exito-label").html('<strong>¡Bien hecho!</strong> ¡Se creo correctamente el registro!.').fadeIn(1000);
+        $("#exito-label").html('<strong>¡Bien hecho!</strong> ¡Se grabo correctamente el registro!.').fadeIn(1000);
         $("#exito-label").delay(2000).fadeOut("slow");
         $('#nombre_completo').focus();
         $("#btnGuardar").removeAttr("disabled");
@@ -94,6 +94,13 @@ function guardaryeditar(e){
         $("#fail-label").delay(2000).fadeOut("slow");
         $('#nombre_completo').focus();
         $("#btnGuardar").removeAttr("disabled");
+
+      }else if (datos == "4") {
+        $("#fail-label").html('<strong>¡Atención!</strong> No existe un usuario con ese identificador. Intente más tarde.').fadeIn(1000);
+        $("#fail-label").delay(2000).fadeOut("slow");
+        $('#nombre_completo').focus();
+        $("#btnGuardar").removeAttr("disabled");
+
       }else{
 
         $("#fail-label").html('<strong>¡Atención!</strong> Ocurrio un error. Intente nuevamente').fadeIn(1000);
@@ -116,6 +123,7 @@ function cancelarform(){
   $('#formulario')[0].reset();
   //limpiar();
   mostrarform(false);
+  tabla.ajax.reload();
 }
 
 //=======================================
@@ -138,6 +146,95 @@ function mostrarDatosUsuario(idusuario_suscriptor){
 
   });
 
+}
+
+//=======================================
+// Desactivar usuario
+//=======================================
+function desactivar(info){
+  console.log(info);
+  var result = info.split("|");
+  swal({
+            title: "¿Estás seguro?",
+            text: "Se desactivará el usuario: "+ result[1] + " con todos sus permisos y no lo podrá ser utilizado en Check-Docs.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí, Continuar!",
+            cancelButtonText: "No, Cancelar",
+            closeOnConfirm: false,
+            showLoaderOnConfirm:true,
+            closeOnCancel: true
+      },
+      function(isConfirm){
+          if (isConfirm) {
+            confirmarDesactivar(result[0]);
+          }
+      });
+}
+
+function confirmarDesactivar(idusuario_suscriptor){
+
+    var url = "views/ajax/usuario.php?op=desactivar";
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data:('idusuario_suscriptor='+ idusuario_suscriptor),
+        success: function (respuesta) {
+            if (respuesta == 1) {
+                swal("¡Bien hecho!", "El usuario ha sido desactivado correctamente.", "success");
+                tabla.ajax.reload();
+            }else{
+              swal("Atención", "Ocurrio un error al actualizar el registro, intente nuevamente", "error");
+            }
+        }
+      });
+      return false;
+}
+
+//=======================================
+// Activar usuario
+//=======================================
+
+
+function activar(info) {
+  var result = info.split("|");
+  swal({
+            title: "¿Estás seguro?",
+            text: "Se activará el usuario: "+ result[1] + ", con sus permisos asignados en Check-Docs.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí, Continuar!",
+            cancelButtonText: "No, Cancelar",
+            closeOnConfirm: false,
+            showLoaderOnConfirm:true,
+            closeOnCancel: true
+      },
+      function(isConfirm){
+          if (isConfirm) {
+            confirmarActivar(result[0]);
+          }
+      });
+}
+
+function confirmarActivar(idusuario_suscriptor){
+
+    var url = "views/ajax/usuario.php?op=activar";
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data:('idusuario_suscriptor='+ idusuario_suscriptor),
+        success: function (respuesta) {
+            if (respuesta == 1) {
+                swal("¡Bien hecho!", "El usuario ha sido activado correctamente.", "success");
+                tabla.ajax.reload();
+            }else{
+              swal("Atención", "Ocurrio un error al actualizar el registro, intente nuevamente", "error");
+            }
+        }
+      });
+      return false;
 }
 
 

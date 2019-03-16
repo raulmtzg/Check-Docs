@@ -3,9 +3,11 @@
   class Globals {
 
     public function getRutaController($identificadorsubproceso){
-      $identificadorsubproceso = substr($identificadorsubproceso,1);
+      $ruta = explode("/", $identificadorsubproceso);
+      $total = count($ruta) -1;
+      $identificador = $ruta[$total];
 
-      $respuesta = GlobalsModels::getRutaModels($identificadorsubproceso, "vwopciones_menu");
+      $respuesta = GlobalsModels::getRutaModels($identificador, "vwopciones_menu");
       $html="";
       $html.='<li>'.$respuesta['proceso'].'</li>
         <li>'.$respuesta['subproceso'].'</li>

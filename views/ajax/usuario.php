@@ -12,7 +12,7 @@
 
   switch ($_GET["op"]){
     case 'guardaryeditar':
-      		if (empty($idusuario)){
+      		if (empty($idusuario_suscriptor)){
             $stmt = new Usuario();
             $stmt -> insertarController($nombre_completo, $nombre_usuario, $perfil, $email);
             break;
@@ -33,33 +33,12 @@
           $stmt -> mostrarController($idusuario_suscriptor);
           break;
     case 'desactivar':
-          $stmt = new AdminPanel();
-          $stmt -> desactivarController($idsuscriptor);
+          $stmt = new Usuario();
+          $stmt -> desactivarController($idusuario_suscriptor);
        		break;
     case 'activar':
-          $stmt = new AdminPanel();
-          $stmt -> activarController($idsuscriptor);
+          $stmt = new Usuario();
+          $stmt -> activarController($idusuario_suscriptor);
        		break;
-    case 'guardaryeditarAdmin':
-      		if (empty($idadmin)){
-            $stmt = new AdminPanel();
-            $stmt -> insertarAdminController($idadmin, $idsuscriptor_usuario, $nombre_completo, $email);
-            break;
-      		}
-      		else {
-            $stmt = new AdminPanel();
-            $stmt -> editarAdminController($idadmin, $nombre_completo, $email);
-            break;
-
-      		}
-	        break;
-    case 'mostrarAdmin':
-          $stmt = new AdminPanel();
-          $stmt -> mostrarAdminController($idsuscriptor);
-          break;
-    case 'crearArchivo':
-          $stmt = new AdminPanel();
-          $stmt -> crearArchivoController();
-          break;
 
   }

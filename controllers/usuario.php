@@ -10,7 +10,7 @@
       foreach ($rows as $row) {
         $info="";
         $perfil="";
-        $info= "'".$row['idusuario_suscriptor']."-".$row['nombre_completo']."'";
+        $info= "'".$row['idusuario_suscriptor']."|".$row['nombre_completo']."'";
         if($row['perfil']=="1"){
           $perfil = "SUPER ADMINISTRADOR";
           $clase = "disabled";
@@ -78,5 +78,72 @@
       echo json_encode($respuesta);
 
     }
+
+    public function editarController($idusuario_suscriptor, $nombre_completo, $nombre_usuario, $perfil, $email){
+
+      session_start();
+      $parametros = ParametrosModels::parametrosModel();
+      $fecha_modificacion= date($parametros['formatoFecha']);
+      $datosController = array("nombre_completo"          =>  $nombre_completo,
+  								              "nombre_usuario"          =>  $nombre_usuario,
+                                "perfil"                  =>  $perfil,
+                                "email"                   =>  $email,
+                                "idusuario_suscriptor"    =>  $idusuario_suscriptor,
+  	                             "fecha_modificacion"     =>  $fecha_modificacion,
+  	                             "usuario_modificacion"   =>  $_SESSION['usuario']
+  								             );
+
+      $respuesta = UsuarioModels::editarModel($datosController, "usuarios_suscriptores");
+      echo $respuesta;
+
+    }
+
+    public function desactivarController($idusuario_suscriptor){
+        session_start();
+        $parametros = ParametrosModels::parametrosModel();
+        $fecha_modificacion= date($parametros['formatoFecha']);
+        $datosController = array("idusuario_suscriptor"   =>  $idusuario_suscriptor,
+                                 "condicion"              => "0",
+                                 "fecha_modificacion"     =>  $fecha_modificacion,
+                                 "usuario_modificacion"   =>  $_SESSION['usuario']
+                                );
+
+        $respuesta = UsuarioModels::desactivarActivarModel($datosController, "usuarios_suscriptores");
+
+        echo $respuesta;
+
+      }
+
+      public function activarController($idusuario_suscriptor){
+        session_start();
+        $parametros = ParametrosModels::parametrosModel();
+        $fecha_modificacion= date($parametros['formatoFecha']);
+        $datosController = array("idusuario_suscriptor"   =>  $idusuario_suscriptor,
+                                 "condicion"              => "1",
+                                 "fecha_modificacion"     =>  $fecha_modificacion,
+                                 "usuario_modificacion"   =>  $_SESSION['usuario']
+                                );
+
+        $respuesta = UsuarioModels::desactivarActivarModel($datosController, "usuarios_suscriptores");
+
+        echo $respuesta;
+
+      }
+
+      #==============================================================================
+      # Esta funcion es consumida en:
+      # -Cargar un nuevo documento
+      #==============================================================================
+      public function listarUsuariosActivosController(){
+          session_start();
+          $rows= UsuarioModels::listarUsuariosActivosModel($_SESSION['idsuscriptor'], "1", "usuarios_suscriptores");
+          $html="";
+          foreach($rows as $row){
+            $html.='<option value="'.$row['idusuario_suscriptor'].'">'.$row['nombre_completo'].'</option>';
+          }
+          echo $html;
+
+
+      }
 
   }

@@ -26,7 +26,7 @@
               <form name="formulario" id="formulario" method="POST">
                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <label>NOMBRE COMPLETO:</label>
-                  <input type="hidden" name="idusuario_suscriptor" id="idusuario_suscriptor">
+                  <input type="text" name="idusuario_suscriptor" id="idusuario_suscriptor">
                   <input type="text" class="form-control" name="nombre_completo" id="nombre_completo" placeholder="p.ej. JUAN PÉREZ FLORES" required autocomplete="off" autofocus maxlength="60">
                 </div>
 
