@@ -1,13 +1,13 @@
 <?php
 
-  class Globals {
+  class Documentos {
 
     public function getRutaController($identificadorsubproceso){
       $ruta = explode("/", $identificadorsubproceso);
       $total = count($ruta) -1;
       $identificador = $ruta[$total];
 
-      $respuesta = GlobalsModels::getRutaModels($identificador, "vwopciones_menu");
+      $respuesta = DocumentosModels::getRutaModels($identificador, "vwopciones_menu");
       $html="";
       $html.='<li>'.$respuesta['proceso'].'</li>
         <li>'.$respuesta['subproceso'].'</li>
@@ -17,6 +17,10 @@
           </a>
         </li>';
       echo $html;
+    }
+
+    public function insertarController($codigodocumento, $nombredocumento, $responsable, $fecharevision, $version, $tipodocumento, $file){
+      echo $codigodocumento;
     }
 
   }

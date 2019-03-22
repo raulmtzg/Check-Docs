@@ -2,7 +2,7 @@
 
   require_once "conexion.php";
 
-  class GlobalsModels{
+  class DocumentosModels{
 
     public function getRutaModels($identificadorsubproceso, $tabla){
 

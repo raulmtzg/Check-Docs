@@ -94,4 +94,5 @@
   <?php
     include "./views/modules/footer.php";
    ?>
+   <script src="./views/js/documentos.js"></script>
     </body>

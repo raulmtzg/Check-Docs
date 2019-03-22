@@ -4,15 +4,15 @@
     <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
       <label>Código documento:</label>
       <input type="hidden" name="iddocumento" id="iddocumento">
-      <input type="text" class="form-control" name="documentoId" id="documentoId" placeholder="" maxlength="10" required>
+      <input type="text" class="form-control" name="codigodocumento" id="codigodocumento" placeholder="" maxlength="10" required>
     </div>
     <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
       <label>Nombre documento:</label>
-      <input type="text" class="form-control" name="nombreDocumento" id="nombreDocumento" placeholder="" maxlength="60" required>
+      <input type="text" class="form-control" name="nombredocumento" id="nombredocumento" placeholder="" maxlength="60" required>
     </div>
     <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
       <label>Usuario responsable:</label>
-      <select id="idcentrocosto" name="idcentrocosto" class="form-control selectpicker" data-live-search="true" required>
+      <select id="responsable" name="responsable" class="form-control selectpicker" data-live-search="true" required>
         <option value="">-- Elije --</option>
         <?php
         $usuarios = new Usuario();
@@ -35,7 +35,7 @@
 
     <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
       <label>Versión:</label>
-      <input type="text" class="form-control" name="version" id="version" placeholder="" required>
+      <input type="text" class="form-control" name="version" id="version" placeholder="" required autocomplete="off">
     </div>
     <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
       <label>Tipo documento:</label>
