@@ -10,6 +10,9 @@
   //Usuarios
   require_once "models/usuario.php";
 
+  //Tipos Documento
+  require_once "models/tipo_documento.php";
+
   //Permisos
 
 
@@ -27,6 +30,10 @@
 
   //Usuarios
   require_once "controllers/usuario.php";
+
+  //Tipos Documento
+  require_once "controllers/tipo_documento.php";
+
 
   //Permisos
 

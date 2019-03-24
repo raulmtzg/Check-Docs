@@ -1,3 +1,4 @@
+
 var tabla;
 
 function init(){
@@ -10,8 +11,9 @@ function init(){
 
 }
 
+
 //=======================================
-// Listar usuarios
+// Listar TIPOS Documentos
 //=======================================
 function listar() {
   tabla = $('#tbllistado').dataTable({
@@ -25,7 +27,7 @@ function listar() {
       'pdf'
     ],
     "ajax": {
-      url: 'views/ajax/usuario.php?op=listar',
+      url: 'views/ajax/tipo_documento.php?op=listar',
       type: "get",
       dataType: "json",
       error: function(e) {
@@ -41,23 +43,6 @@ function listar() {
   }).DataTable();
 }
 
-//=======================================
-// mostrar / ocultar formulario
-//=======================================
-function mostrarformu(flag) {
-  //limpiar();
-  if (flag) {
-    $("#listadoregistros").slideUp(500);
-    $("#formularioregistros").slideDown(500);
-    $("#btnNuevo").fadeOut("slow");
-
-  } else {
-    $("#listadoregistros").slideDown(500);
-    $("#formularioregistros").slideUp(500);
-    $("#btnNuevo").fadeIn("slow");
-
-  }
-}
 
 //=======================================
 // Insertar / editar usuario
@@ -68,7 +53,7 @@ function guardaryeditar(e){
   var formData = new FormData($("#formulario")[0]);
 
   $.ajax({
-    url: "views/ajax/usuario.php?op=guardaryeditar",
+    url: "views/ajax/tipo_documento.php?op=guardaryeditar",
     type: "POST",
     data: formData,
     contentType: false,
@@ -90,13 +75,13 @@ function guardaryeditar(e){
         $("#btnGuardar").removeAttr("disabled");
 
       }else if (datos == "3") {
-        $("#fail-label").html('<strong>¡Atención!</strong> Ya existe un usuario con el correo ingresado. Intente nuevamente.').fadeIn(1000);
+        $("#fail-label").html('<strong>¡Atención!</strong> Ya existe un tipo con esa descripción. Intente nuevamente.').fadeIn(1000);
         $("#fail-label").delay(2000).fadeOut("slow");
         $('#nombre_completo').focus();
         $("#btnGuardar").removeAttr("disabled");
 
       }else if (datos == "4") {
-        $("#fail-label").html('<strong>¡Atención!</strong> No existe un usuario con ese identificador. Intente más tarde.').fadeIn(1000);
+        $("#fail-label").html('<strong>¡Atención!</strong> Ocurrio un error al grabar el registro. Intente nuevamente.').fadeIn(1000);
         $("#fail-label").delay(2000).fadeOut("slow");
         $('#nombre_completo').focus();
         $("#btnGuardar").removeAttr("disabled");
@@ -117,46 +102,61 @@ function guardaryeditar(e){
 }
 
 //=======================================
-// Cancelar nuevo / edicion de usuario
-//=======================================
-function cancelarform(){
-  $('#formulario')[0].reset();
-  //limpiar();
-  mostrarformu(false);
-  tabla.ajax.reload();
-}
-
-//=======================================
 // Mostrar fomrulario para editar usuario
 //=======================================
-function mostrarDatosUsuario(idusuario_suscriptor){
-  $.post("views/ajax/usuario.php?op=mostrar", {
-    idusuario_suscriptor: idusuario_suscriptor
+function mostrarDatos(idtipodocumento){
+  $.post("views/ajax/tipo_documento.php?op=mostrar", {
+    idtipodocumento: idtipodocumento
   }, function(data, status) {
     data = JSON.parse(data);
-    console.log(data);
     //Como estan definidos los campos en la base de datos
-    $("#idusuario_suscriptor").val(data.idusuario_suscriptor);
-    $("#nombre_completo").val(data.nombre_completo);
-    $("#nombre_usuario").val(data.nombre_usuario);
-    $("#perfil").val(data.perfil);
-    $("#email").val(data.email);
+    $("#idtipodocumento").val(data.idtipodocumento);
+    $("#descripcion").val(data.descripcion);
 
-    mostrarformu(true);
+    mostrarform(true);
 
   });
 
 }
 
+
 //=======================================
-// Desactivar usuario
+// mostrar / ocultar formulario
+//=======================================
+function mostrarform(flag) {
+  //limpiar();
+  if (flag) {
+    $("#listadoregistros").slideUp(500);
+    $("#formularioregistros").slideDown(500);
+    $("#btnNuevoDocto").fadeOut("slow");
+
+  } else {
+    $("#listadoregistros").slideDown(500);
+    $("#formularioregistros").slideUp(500);
+    $("#btnNuevoDocto").fadeIn("slow");
+
+  }
+}
+
+//=======================================
+// Cancelar nuevo / edicion de tipo documento
+//=======================================
+function cancelarform(){
+  $('#formulario')[0].reset();
+  //limpiar();
+  mostrarform(false);
+  tabla.ajax.reload();
+}
+
+//=======================================
+// Desactivar tipo documento
 //=======================================
 function desactivar(info){
   console.log(info);
   var result = info.split("|");
   swal({
             title: "¿Estás seguro?",
-            text: "Se desactivará el usuario: "+ result[1] + " con todos sus permisos y no lo podrá ser utilizado en Check-Docs.",
+            text: "Se desactivará el tipo: "+ result[1] + ", y no lo podrá ser utilizado en Check-Docs.",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
@@ -173,16 +173,16 @@ function desactivar(info){
       });
 }
 
-function confirmarDesactivar(idusuario_suscriptor){
+function confirmarDesactivar(idtipodocumento){
 
-    var url = "views/ajax/usuario.php?op=desactivar";
+    var url = "views/ajax/tipo_documento.php?op=desactivar";
       $.ajax({
         type: 'POST',
         url: url,
-        data:('idusuario_suscriptor='+ idusuario_suscriptor),
+        data:('idtipodocumento='+ idtipodocumento),
         success: function (respuesta) {
             if (respuesta == 1) {
-                swal("¡Bien hecho!", "El usuario ha sido desactivado correctamente.", "success");
+                swal("¡Bien hecho!", "El tipo de documento ha sido desactivado correctamente.", "success");
                 tabla.ajax.reload();
             }else{
               swal("Atención", "Ocurrio un error al actualizar el registro, intente nuevamente", "error");
@@ -201,7 +201,7 @@ function activar(info) {
   var result = info.split("|");
   swal({
             title: "¿Estás seguro?",
-            text: "Se activará el usuario: "+ result[1] + ", con sus permisos asignados en Check-Docs.",
+            text: "Se activará el tipo de documento: "+ result[1] + ", para poder usarse en Check-Docs.",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
@@ -218,16 +218,16 @@ function activar(info) {
       });
 }
 
-function confirmarActivar(idusuario_suscriptor){
+function confirmarActivar(idtipodocumento){
 
-    var url = "views/ajax/usuario.php?op=activar";
+    var url = "views/ajax/tipo_documento.php?op=activar";
       $.ajax({
         type: 'POST',
         url: url,
-        data:('idusuario_suscriptor='+ idusuario_suscriptor),
+        data:('idtipodocumento='+ idtipodocumento),
         success: function (respuesta) {
             if (respuesta == 1) {
-                swal("¡Bien hecho!", "El usuario ha sido activado correctamente.", "success");
+                swal("¡Bien hecho!", "El tipo de documento ha sido activado correctamente.", "success");
                 tabla.ajax.reload();
             }else{
               swal("Atención", "Ocurrio un error al actualizar el registro, intente nuevamente", "error");
@@ -236,6 +236,7 @@ function confirmarActivar(idusuario_suscriptor){
       });
       return false;
 }
+
 
 
 init();

@@ -10,6 +10,7 @@
          $enlaces=="admin_inicio"         ||
          $enlaces== "procesos"            ||
          $enlaces== "usuarios"            ||
+         $enlaces== "tipo_documento"     ||
          $enlaces=="salir")
 
          {

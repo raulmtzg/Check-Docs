@@ -39,6 +39,7 @@
             <ul class="treeview-menu">
               <li><a href="#"><i class="fa fa-circle-o"></i> Tablero</a></li>
               <li><a href="admin_inicio"><i class="fa fa-circle-o"></i> Página inicio</a></li>
+              <li><a href="tipo_documento"><i class="fa fa-circle-o"></i> Tipo Documento</a></li>
               <li><a href="usuarios"><i class="fa fa-circle-o"></i> Usuarios</a></li>
               <li><a href="procesos"><i class="fa fa-circle-o"></i> Procesos</a></li>
             </ul>

@@ -41,9 +41,10 @@
       <label>Tipo documento:</label>
       <select id="tipoDocumento" name="tipoDocumento" class="form-control" required>
         <option value="">-- Elije --</option>
-        <option value="Proceso">Proceso</option>
-        <option value="Procedimiento">Procedimiento</option>
-        <option value="Indicador">Indicador</option>
+        <?php
+        $tipos = new TipoDocumento();
+        $tipos ->listarTiposActivosController();
+        ?>
       </select>
     </div>
     <div class=" form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
