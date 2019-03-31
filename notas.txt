@@ -7,3 +7,6 @@ https://devlaz.com/restringir-caracteres-en-campos-con-javascript
 Documentacion de menu contextual
 https://github.com/pwnedgod/supercontextmenu
 https://www.baulphp.com/menu-contextual-personalizable-para-su-aplicacion-con-jquery/
+
+=== Convertir Word a PDF ===============
+https://stackoverflow.com/questions/5538584/convert-word-doc-docx-and-excel-xls-xlsx-to-pdf-with-php

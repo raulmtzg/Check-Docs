@@ -153,13 +153,23 @@ function mostrarform(flag) {
     $("#listadoregistros").slideUp(500);
     $("#formularioregistros").slideDown(500);
     $("#btnNuevoDocto").fadeOut("slow");
+    var idsubproceso = $("#btnNuevoDocto").data("subproceso");
+    $("#idsubproceso").val(idsubproceso);
 
   } else {
     $("#listadoregistros").slideDown(500);
     $("#formularioregistros").slideUp(500);
     $("#btnNuevoDocto").fadeIn("slow");
+    // $("#idsubproceso").val("");
+    limpiar();
 
   }
+}
+
+function limpiar(){
+  $('#formulario')[0].reset();
+  $('#responsable').selectpicker('refresh');
+  $('#responsable').val("");
 }
 
 function getUbicacion(ruta){
@@ -194,7 +204,7 @@ function guardaryeditar(e){
     data: formData,
     contentType: false,
     processData: false,
-    success: function(datos) {      
+    success: function(datos) {
       switch (datos) {
         case "1":
           $("#exito-label").html('<strong>¡Bien hecho!</strong> ¡El centro de costos ha sido creado correctamente!.').fadeIn(1000);

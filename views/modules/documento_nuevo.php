@@ -4,6 +4,7 @@
     <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
       <label>Código documento:</label>
       <input type="hidden" name="iddocumento" id="iddocumento">
+      <input type="text" name="idsubproceso" id="idsubproceso">
       <input type="text" class="form-control" name="codigodocumento" id="codigodocumento" placeholder="" maxlength="10" required>
     </div>
     <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -39,7 +40,7 @@
     </div>
     <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
       <label>Tipo documento:</label>
-      <select id="tipoDocumento" name="tipoDocumento" class="form-control" required>
+      <select id="tipodocumento" name="tipodocumento" class="form-control" required>
         <option value="">-- Elije --</option>
         <?php
         $tipos = new TipoDocumento();

@@ -31,13 +31,13 @@
                     <!-- <th class="text-center">FECHA ALTA</th>                   -->
                     <th></th>
                     <th>ID</th>
-                    <th class="text-center">Código</th>
-                    <th class="text-center">Nombre</th>
-                    <th class="text-center">Responsable</th>
-                    <th class="text-center">Versión</th>
-                    <th class="text-center">Tipo</th>
-                    <th class="text-center">Última revisión</th>
-                    <!-- <th class="text-center">Opciones</th> -->
+                    <th class="text-center">CÓDIGO</th>
+                    <th class="text-center">NOMBRE</th>
+                    <th class="text-center">RESPONSABLE</th>
+                    <th class="text-center">VERSIÓN</th>
+                    <th class="text-center">TIPO</th>
+                    <th class="text-center">ÚLTIMA REVISIÓN</th>
+                    <th class="text-center">OPCIONES</th>
 
                   </thead>
                   <tbody>
@@ -52,6 +52,14 @@
                       <td>0</td>
                       <td>Procedimiento</td>
                       <td>2019-01-25</td>
+                      <td class="text-center">
+                         <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Enviar" onclick="">
+                           <i class="fa fa-paper-plane-o icon-color-info"></i>
+                         </button>
+                         <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Enviar" onclick="">
+                           <i class="fa fa-refresh icon-color-success" aria-hidden="true" ></i>
+                         </button>
+                      </td>
                     </tr>
                     <tr class="derecho fila-proceso" data-id="dos">
                       <td class="documento-revision">
@@ -64,6 +72,11 @@
                       <td>0</td>
                       <td>Procedimiento</td>
                       <td>2019-01-25</td>
+                      <td class="text-center">
+                         <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Enviar" onclick="">
+                           <i class="fa fa-paper-plane-o icon-color-info"></i>
+                         </button>
+                      </td>
                     </tr>
                     <tr class="derecho fila-proceso" data-id="tres">
                       <td class="documento-edicion">
@@ -76,6 +89,11 @@
                       <td>0</td>
                       <td>Procedimiento</td>
                       <td>2019-01-25</td>
+                      <td class="text-center">
+                         <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Enviar" onclick="">
+                           <i class="fa fa-paper-plane-o icon-color-info"></i>
+                         </button>
+                      </td>
                     </tr>
                   </tbody>
 
