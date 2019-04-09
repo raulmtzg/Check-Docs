@@ -37,6 +37,7 @@
                     <th class="text-center">VERSIÓN</th>
                     <th class="text-center">TIPO</th>
                     <th class="text-center">ÚLTIMA REVISIÓN</th>
+                    <th class="text-center">ESTADO</th>
                     <th class="text-center">OPCIONES</th>
 
                   </thead>
@@ -52,6 +53,7 @@
                       <td>0</td>
                       <td>Procedimiento</td>
                       <td>2019-01-25</td>
+                      <td class="text-center"><span class="label bg-green">ACTIVO</span></td>
                       <td class="text-center">
                          <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Enviar" onclick="">
                            <i class="fa fa-paper-plane-o icon-color-info"></i>
@@ -72,6 +74,7 @@
                       <td>0</td>
                       <td>Procedimiento</td>
                       <td>2019-01-25</td>
+                      <td class="text-center"><span class="label bg-warning">REVISIÓN</span></td>
                       <td class="text-center">
                          <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Enviar" onclick="">
                            <i class="fa fa-paper-plane-o icon-color-info"></i>
@@ -89,6 +92,7 @@
                       <td>0</td>
                       <td>Procedimiento</td>
                       <td>2019-01-25</td>
+                      <td class="text-center"><span class="label bg-info">EDICIÓN</span></td>
                       <td class="text-center">
                          <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Enviar" onclick="">
                            <i class="fa fa-paper-plane-o icon-color-info"></i>

@@ -4,7 +4,7 @@
   require_once "../../models/parametros.php";
 
   $ruta=isset($_POST["ruta"])? trim(mb_strtoupper(filter_var($_POST['ruta'],FILTER_SANITIZE_STRING), 'UTF-8')):"";
-
+  $idsubproceso=isset($_POST["idsubproceso"])? trim(filter_var($_POST['idsubproceso'], FILTER_SANITIZE_NUMBER_INT)):"";
   $iddocumento=isset($_POST["iddocumento"])? trim(filter_var($_POST['iddocumento'], FILTER_SANITIZE_NUMBER_INT)):"";
   $codigodocumento=isset($_POST["codigodocumento"])? trim(mb_strtoupper(filter_var($_POST['codigodocumento'],FILTER_SANITIZE_STRING), 'UTF-8')):"";
   $nombredocumento=isset($_POST["nombredocumento"])? trim(mb_strtoupper(filter_var($_POST['nombredocumento'],FILTER_SANITIZE_STRING), 'UTF-8')):"";
@@ -24,7 +24,7 @@
     case 'guardaryeditar':
     		if (empty($iddocumento)){
           $stmt = new Documentos();
-          $stmt -> insertarController($codigodocumento, $nombredocumento, $responsable, $fecharevision, $version, $tipodocumento, $_FILES['archivo']);
+          $stmt -> insertarController($idsubproceso, $codigodocumento, $nombredocumento, $responsable, $fecharevision, $version, $tipodocumento, $_FILES['archivo']);
     		}
     		else {
           $stmt = new Documentos();

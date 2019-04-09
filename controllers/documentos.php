@@ -19,7 +19,7 @@
       echo $html;
     }
 
-    public function insertarController($codigodocumento, $nombredocumento, $usuarioresponsable, $fecharevision, $version, $tipodocumento, $file){
+    public function insertarController($idsubproceso, $codigodocumento, $nombredocumento, $usuarioresponsable, $fecharevision, $version, $tipodocumento, $file){
 
       session_start();
       $parametros = ParametrosModels::parametrosModel();
@@ -31,22 +31,42 @@
       #Obtener el tipo Documento
       $documento = DocumentosModels::getTipoDocumentoModels($tipodocumento, "tipodocumento");
 
+
       #Obtener el usuario responsable
       $responsable = DocumentosModels::getUsuarioResponsableModels($usuarioresponsable,"usuarios_suscriptores");
 
-      $datosController = array("codigodocumento"       =>  $codigodocumento,
-								               "nombredocumento"       =>  $nombredocumento,
-                               "usuarioresponsable"    =>  $usuarioresponsable,
-                               "fechaultimarevision"   =>  $fecha,
-	                             "fechaalta"             =>  $fechaalta,
-                               "version"               =>  $version,
-                               "idtipodocumento"       =>  $tipodocumento,
-                               "tipodocumento"         => $documento['descripcion'],
-                               "idusuarioresponsable"  => $usuarioresponsable,
-                               "usuarioresponsable"    => $responsable['nombre_documento'],
-	                             "usuarioalta"       =>  $_SESSION['usuario']
-								               );
-      $respuesta = DocumentosModels::insertarModel($datosController, "tblcentrocosto");
+      #Grabar el documento en la carpeta del cliente/usuario
+      $ruta = "../files/".$_SESSION['carpeta']."/";
+      $respuestaDocumento = DocumentosModels::importarDocumentoOriginalModels($file, $ruta,$tipodocumento);
+
+      if( $respuestaDocumento['mensaje'] == "1"){
+
+        $datosController = array("codigodocumento"       =>  $codigodocumento,
+  								               "nombredocumento"       =>  $nombredocumento,
+                                 "tipodocumento"         => $documento['descripcion'],
+                                 "estado"                => "EN EDICIÓN",
+                                 "version"               =>  $version,
+                                 "usuarioresponsable"    => $responsable['nombre_completo'],
+                                 "fechaultimarevision"   =>  $fecha,
+                                 "nombrearchivo"         => $respuestaDocumento['nombredocumento'],
+                                 "fechaalta"             =>  $fechaalta,
+  	                             "usuarioalta"           =>  $_SESSION['usuario'],
+                                 "idusuarioresponsable"  =>  $usuarioresponsable,
+                                 "idsubproceso"          => $idsubproceso,
+                                 "idtipodocumento"       =>  $tipodocumento,
+                                 "idsuscriptor"          => $_SESSION['idsuscriptor']
+  								               );
+
+                                 //var_dump($datosController);
+        $respuesta = DocumentosModels::insertarDocumentoModels($datosController, "documentos");
+
+        echo $respuesta;
+
+      }else{
+        #Error al cargar el archivo
+      }
+
+
 
     }
 

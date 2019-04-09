@@ -4,7 +4,7 @@
     <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
       <label>Código documento:</label>
       <input type="hidden" name="iddocumento" id="iddocumento">
-      <input type="text" name="idsubproceso" id="idsubproceso">
+      <input type="hidden" name="idsubproceso" id="idsubproceso">
       <input type="text" class="form-control" name="codigodocumento" id="codigodocumento" placeholder="" maxlength="10" required>
     </div>
     <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">

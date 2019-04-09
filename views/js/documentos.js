@@ -207,7 +207,7 @@ function guardaryeditar(e){
     success: function(datos) {
       switch (datos) {
         case "1":
-          $("#exito-label").html('<strong>¡Bien hecho!</strong> ¡El centro de costos ha sido creado correctamente!.').fadeIn(1000);
+          $("#exito-label").html('<strong>¡Bien hecho!</strong> ¡Se ha creado un nuevo documento!.').fadeIn(1000);
           $("#exito-label").delay(2000).fadeOut("slow");
           $('#centroCosto').focus();
           limpiar();
@@ -220,25 +220,25 @@ function guardaryeditar(e){
           $("#btnGuardar").removeAttr("disabled");
           break;
         case "3":
-          $("#fail-label").html('<strong>¡Atención!</strong> Lo sentimos, ya existe un centro de costos con ese código').fadeIn(1000);
+          $("#fail-label").html('<strong>¡Atención!</strong> Lo sentimos, ya existe un documento con ese código').fadeIn(1000);
           $("#fail-label").delay(2000).fadeOut("slow");
           $('#centroCosto').focus();
           $("#btnGuardar").removeAttr("disabled");
           break;
         case "4":
-          $("#fail-label").html('<strong>¡Atención!</strong> Lo sentimos, no existe un centro de costos con ese código').fadeIn(1000);
+          $("#fail-label").html('<strong>¡Atención!</strong> Lo sentimos, no existe un documento  con ese código').fadeIn(1000);
           $("#fail-label").delay(2000).fadeOut("slow");
           $('#centroCosto').focus();
           $("#btnGuardar").removeAttr("disabled");
           break;
         case "5":
-          $("#exito-label").html('<strong>¡Bien hecho!</strong> ¡El centro de costos ha sido actualizado correctamente!.').fadeIn(1000);
+          $("#exito-label").html('<strong>¡Bien hecho!</strong> ¡El documento ha sido actualizado correctamente!.').fadeIn(1000);
           $("#exito-label").delay(2000).fadeOut("slow");
           $('#centroCosto').focus();
           $("#btnGuardar").removeAttr("disabled");
           break;
         case "6":
-          $("#fail-label").html('<strong>¡Atención!</strong> Lo sentimos, no existe un centro de costos con ese código').fadeIn(1000);
+          $("#fail-label").html('<strong>¡Atención!</strong> Lo sentimos, no existe un documento con ese código').fadeIn(1000);
           $("#fail-label").delay(2000).fadeOut("slow");
           $('#centroCosto').focus();
           $("#btnGuardar").removeAttr("disabled");
@@ -255,10 +255,8 @@ function guardaryeditar(e){
 
 function limpiar(){
   $('#formulario')[0].reset();
-  $('#formularioPartidas')[0].reset();
-
-  $("#idcentrocosto").selectpicker('refresh');
-  $("#idcentrocosto").val("");
+  $("#responsable").selectpicker('refresh');
+  $("#responsable").val("");
 }
 
 init();
