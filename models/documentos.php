@@ -4,6 +4,17 @@
 
   class DocumentosModels{
 
+    public function listarDocumentosModels($idsuscriptor, $idsubproceso, $condicion, $tabla){
+      $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE idsuscriptor = :idsuscriptor AND idsubproceso = :idsubproceso AND condicion = :condicion");
+      $stmt ->bindParam(":idsuscriptor", $idsuscriptor, PDO::PARAM_INT);
+      $stmt ->bindParam(":idsubproceso", $idsubproceso, PDO::PARAM_INT);
+      $stmt -> bindParam(":condicion", $condicion, PDO::PARAM_STR);
+
+      $stmt -> execute();
+      return $stmt->fetchAll();  #Si es mas de una fila es fetchAll
+      $stmt ->close();
+    }
+
     public function getRutaModels($identificadorsubproceso, $tabla){
 
       $stmt = Conexion::conectar()->prepare("SELECT proceso, subproceso, idsubproceso FROM $tabla
@@ -143,5 +154,23 @@
       }
 
     }
+
+    public function getDocumendoByIdModels($iddocumento, $tabla){
+
+      $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla
+                                            WHERE iddocumento = :iddocumento");
+      $stmt->execute(array(
+        ':iddocumento' => $iddocumento
+      ));
+      return $stmt->fetch();
+      $stmt ->close();
+    }
+
+
+
+
+
+
+
 
   }

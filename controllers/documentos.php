@@ -2,6 +2,113 @@
 
   class Documentos {
 
+    public function listarDocumentosController($idsubproceso) {
+      session_start();
+
+      $documentos = DocumentosModels::listarDocumentosModels($_SESSION['idsuscriptor'],$idsubproceso, "1", "documentos");
+      $tabla = "";
+      $tabla.='<table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
+        <thead>
+          <!-- <th class="text-center">FECHA ALTA</th>-->
+          <th></th>
+          <th>ID</th>
+          <th class="text-center">CÓDIGO</th>
+          <th class="text-center">NOMBRE</th>
+          <th class="text-center">RESPONSABLE</th>
+          <th class="text-center">VERSIÓN</th>
+          <th class="text-center">TIPO</th>
+          <th class="text-center">ÚLTIMA REVISIÓN</th>
+          <th class="text-center">ESTADO</th>
+          <th class="text-center">OPCIONES</th>
+
+        </thead>
+        <tbody>';
+        // <td class="documento-aprobado">
+        //   <!-- <span data-toggle="tooltip" data-placement="top" title="Aprobado">&nbsp;</span> -->
+        // </td>
+        foreach ($documentos as $documento) {
+          $classEstado ='';
+          switch ($documento['estado']){
+            case 'EN EDICIÓN':
+              $classEstado= "documento-edicion";
+              $btnEstado ="bg-info";
+            break;
+            case 'EN REVISIÓN':
+              $classEstado= "documento-revision";
+              $btnEstado ="bg-warning";
+            break;
+            case 'EN REVISIÓN':
+              $classEstado= "documento-revision";
+              $btnEstado ="bg-warning";
+            break;
+            case 'AUTORIZADO':
+              $classEstado= "documento-aprobado";
+              $btnEstado ="bg-green";
+            break;
+          }
+
+          $tabla.='
+          <tr class="derecho fila-proceso" data-id='.$documento['iddocumento'].'>
+            <td class='.$classEstado.'></td>
+            <td ><i class="fa fa-file-text-o icon-color-info" aria-hidden="true"></i> '.$documento['iddocumento'].' </td>
+            <td>'.$documento['codigodocumento'].'</td>
+            <td>'.$documento['nombredocumento'].'</td>
+            <td>'.$documento['usuarioresponsable'].'</td>
+            <td>'.$documento['version'].'</td>
+            <td>'.$documento['tipodocumento'].'</td>
+            <td>'.$documento['fechaultimarevision'].'</td>
+            <td class="text-center"><span class="label '.$btnEstado.'">'.$documento['estado'].'</span></td>
+            <td class="text-center">
+            <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Enviar" onclick="">
+            <i class="fa fa-paper-plane-o icon-color-info"></i>
+            </button>
+            <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Enviar" onclick="">
+            <i class="fa fa-refresh icon-color-success" aria-hidden="true" ></i>
+            </button>
+            </td>
+          </tr>';
+        }
+      //     <tr class="derecho fila-proceso" data-id="dos">
+      //       <td class="documento-revision">
+      //         <!-- <span data-toggle="tooltip" data-placement="top" title="Revisión">&nbsp;</span> -->
+      //       </td>
+      //       <td><i class="fa fa-file-text-o icon-color-info" aria-hidden="true"></i> 4852 </td>
+      //       <td>SIS-PROD-2</td>
+      //       <td>Procedimiento de Sistemas</td>
+      //       <td>Admin</td>
+      //       <td>0</td>
+      //       <td>Procedimiento</td>
+      //       <td>2019-01-25</td>
+      //       <td class="text-center"><span class="label bg-warning">REVISIÓN</span></td>
+      //       <td class="text-center">
+      //          <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Enviar" onclick="">
+      //            <i class="fa fa-paper-plane-o icon-color-info"></i>
+      //          </button>
+      //       </td>
+      //     </tr>
+      //     <tr class="derecho fila-proceso" data-id="tres">
+      //       <td class="documento-edicion">
+      //         <!-- <span data-toggle="tooltip" data-placement="top" title="Edición">&nbsp;</span> -->
+      //       </td>
+      //       <td><i class="fa fa-file-text-o icon-color-info" aria-hidden="true"></i> 4852 </td>
+      //       <td>SIS-PROD-2</td>
+      //       <td>Procedimiento de Sistemas</td>
+      //       <td>Admin</td>
+      //       <td>0</td>
+      //       <td>Procedimiento</td>
+      //       <td>2019-01-25</td>
+      //       <td class="text-center"><span class="label bg-info">EDICIÓN</span></td>
+      //       <td class="text-center">
+      //          <button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Enviar" onclick="">
+      //            <i class="fa fa-paper-plane-o icon-color-info"></i>
+      //          </button>
+      //       </td>
+      //     </tr>
+      $tabla.='</tbody>
+        </table>';
+      echo $tabla;
+    }
+
     public function getRutaController($identificadorsubproceso){
       $ruta = explode("/", $identificadorsubproceso);
       $total = count($ruta) -1;
@@ -69,5 +176,22 @@
 
 
     }
+
+    public function getDocumendoByIdController($iddocumento) {
+
+      $respuesta = DocumentosModels::getDocumendoByIdModels($iddocumento, "documentos");
+      echo json_encode($respuesta);
+
+    }
+
+    public function editarController( $iddocumento, $idsubproceso, $codigodocumento, $nombredocumento, $responsable, $fecharevision, $version, $tipodocumento ) {
+        echo $iddocumento;
+    }
+
+
+
+
+
+
 
   }

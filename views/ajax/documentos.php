@@ -16,6 +16,10 @@
 
 
   switch ($_GET["op"]){
+    case 'listarDocumentos':
+        $stmt = new Documentos();
+        $stmt -> listarDocumentosController($idsubproceso);
+    break;
 
     case 'getRuta':
         $stmt = new Documentos();
@@ -28,8 +32,13 @@
     		}
     		else {
           $stmt = new Documentos();
-          $stmt -> editarController($idcentrocosto, $centroCosto, $descripcion);
+          $stmt -> editarController($iddocumento, $idsubproceso, $codigodocumento, $nombredocumento, $responsable, $fecharevision, $version, $tipodocumento);
     		}
+    break;
+
+    case 'getDocumendoById':
+        $stmt = new Documentos();
+        $stmt -> getDocumendoByIdController($iddocumento);
     break;
 
 

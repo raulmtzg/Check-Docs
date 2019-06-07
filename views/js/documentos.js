@@ -1,4 +1,6 @@
 var filaDocumento;
+var subproceso;
+
 $(document).ready(function(){
   var URLactual = window.location;
   getUbicacion(URLactual.pathname);
@@ -10,10 +12,13 @@ $('#fecharevision').datepicker({
     format: 'dd/mm/yyyy'
   });
 
+
+
 });
 
 
-$('.derecho').on('contextmenu', function(e) {
+// $('.derecho').on('contextmenu', function(e) {
+$('body').on('contextmenu','.derecho', function(e) {
   e.preventDefault();
   filaDocumento = $(this).data("id");
   superCm.createMenu([
@@ -27,7 +32,7 @@ $('.derecho').on('contextmenu', function(e) {
     {
       icon: 'fa fa-edit',
       label: 'Editar documento',
-      opc:'verDocto',
+      opc:'editarDocumento',
       action: process,
       identificador: filaDocumento
     },
@@ -112,32 +117,62 @@ $('.derecho').on('contextmenu', function(e) {
   ], e);
 });
 
-
-function init(){
-  $("#formulario").on("submit", function(e) {
-    guardaryeditar(e);
-  });
-}
-
-
-
+//==================================================
+// Funciones para menu contextual
+//==================================================
 function process(option) {
   // alert('Processing user with ID ' + option.idRow + ' and role ' + option.role);
 
   switch (option.opc) {
 
     case 'verDocto':
-      verDocto(option.identificador);
-      break;
+    verDocto(option.identificador);
+    break;
     case 'print':
-      printDocto(option.identificador);
-      break;
+    printDocto(option.identificador);
+    break;
+    case 'editarDocumento':
+    editarDocumento(option.identificador);
     default:
 
   }
   superCm.updateMenu(allowHorzReposition = true, allowVertReposition = true);
   superCm.destroyMenu();
 }
+
+function init(){
+  $("#formulario").on("submit", function(e) {
+    guardaryeditar(e);
+  });
+
+
+}
+
+function listarDocumentos() {
+
+  var url = "views/ajax/documentos.php?op=listarDocumentos";
+  var idsubproceso = $("#btnNuevoDocto").data("subproceso");
+
+  $.ajax({
+    url: url,
+    type: "POST",
+    data: {idsubproceso},
+    beforeSend: function() {
+      $("#listadoDocumentos").html('<div class="col-md-12 text-center">'+
+                                      '<i class="fa fa-spinner fa-pulse fa-5x fa-fw icon-color-info"></i>'+
+                                      '<span class="sr-only">Cargando...</span></div>');
+
+    },
+    success: function(datos) {
+      //var resp = eval(datos);
+      // console.log(datos);
+      $("#listadoDocumentos").html(datos);
+    }
+
+  });
+
+}
+
 
 function verDocto(identificador){
   console.log('Ver el documento: ', identificador);
@@ -162,6 +197,7 @@ function mostrarform(flag) {
     $("#btnNuevoDocto").fadeIn("slow");
     // $("#idsubproceso").val("");
     limpiar();
+    listarDocumentos();
 
   }
 }
@@ -182,6 +218,7 @@ function getUbicacion(ruta){
     data: {ruta},
     success: function(datos) {
       $("#ruta-documento").html(datos);
+      listarDocumentos();
     }
 
   });
@@ -197,6 +234,7 @@ function guardaryeditar(e){
   e.preventDefault();
   $("#btnGuardar").prop("disabled", true);
   var formData = new FormData($("#formulario")[0]);
+
 
   $.ajax({
     url: "views/ajax/documentos.php?op=guardaryeditar",
@@ -258,5 +296,60 @@ function limpiar(){
   $("#responsable").selectpicker('refresh');
   $("#responsable").val("");
 }
+
+//==================================================
+// Funcion Editar DOCUMENTOS Menu contextual
+//==================================================
+
+function editarDocumento(iddocumento) {
+  console.log('iddocumento', iddocumento);
+  $("#archivo").removeAttr('require');
+  $("#archivo").attr('disabled','true');
+  $.post("views/ajax/documentos.php?op=getDocumendoById", {
+    iddocumento: iddocumento
+  }, function(data, status) {
+    data = JSON.parse(data);
+    
+    mostrarform(true);
+    var fechaRev = data.fechaultimarevision.split("-");
+    var fechaRevision = fechaRev[2] + '/' + fechaRev[1] + '/' + fechaRev[0];
+
+    //Como estan definidos los campos en la base de datos
+    $("#iddocumento").val(data.iddocumento);
+    $("#idsubproceso").val(data.idsubproceso);
+
+    $("#codigodocumento").val(data.codigodocumento);
+    $("#nombredocumento").val(data.nombredocumento);
+    $("#responsable").val(data.idusuarioresponsable);
+    $('#fecharevision').datepicker('update', fechaRevision );
+    //$("#fecharevision").val(data.fechaultimarevision);
+    $("#version").val(data.version);
+    $("#tipodocumento").val(data.idtipodocumento);
+    $("#nombredocumento").val(data.nombredocumento);
+    $("#nombredocumento").val(data.nombredocumento);
+    $("#nombredocumento").val(data.nombredocumento);
+    $("#nombredocumento").val(data.nombredocumento);
+    $("#nombredocumento").val(data.nombredocumento);
+    $("#nombredocumento").val(data.nombredocumento);
+    $("#nombredocumento").val(data.nombredocumento);
+    $("#nombredocumento").val(data.nombredocumento);
+
+
+  });
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 init();
