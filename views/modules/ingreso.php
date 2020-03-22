@@ -1,3 +1,6 @@
+<?php
+
+?>
 
 <!doctype html>
 <html lang="es">
@@ -11,127 +14,125 @@
       <meta name="keyworks" content="API, puerto de veracruz, sistema de nombramientos, control de acceso de personal"> -->
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <!-- Bootstrap Core CSS -->
-      <link href="assets2/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-      <!-- page css -->
-      <link href="views/css2/pages/login-register-lock.css" rel="stylesheet">
-      <!-- Custom CSS -->
-      <link href="views/css2/style.css" rel="stylesheet">
+      <!-- Bootstrap 3.3.5 -->
+      <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+      <!-- Animate -->
+      <link rel="stylesheet" href="assets/animate/css/animate.min.css">
+      <!-- Login Personalizado  -->
+      <link rel="stylesheet" href="views/css/custom-login.css">
+      <!-- Font Awesome -->
+      <link rel="stylesheet" href="assets/font-awesome-4.7.0/css/font-awesome.css">
 
-      <!-- You can change the theme colors from here -->
-      <link href="views/css2/colors/default-dark.css" id="theme" rel="stylesheet">
-      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-      <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-      <![endif]-->
+      <!-- fuentes utilizadas en el sitio web -->
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald|PT+Sans" rel="stylesheet">
+
+      <!-- hoja de estilos propio o personalizada -->
+      <link rel="stylesheet" href="views/css/main-login.css">
+
+      <!-- SWEET ALERT -->
+      <link rel="stylesheet" href="assets/sweetalert/sweetalert.css">
 
     </head>
-    <body class="card-no-border">
-      <!-- ============================================================== -->
-      <!-- Preloader - style you can find in spinners.css -->
-      <!-- ============================================================== -->
-      <div class="preloader">
-          <div class="loader">
-              <div class="loader__figure"></div>
-              <p class="loader__label">Check-Docs</p>
-          </div>
-      </div>
-    <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
-    <!-- ============================================================== -->
-    <section id="wrapper">
-      <div class="login-register" style="background-image:url(assets2/images/login-register.jpg);">
-        <div class="login-box card">
-          <div class="card-body">
-            <form class="form-horizontal form-material" name="formulario" id="formulario" method="POST">
-                <h3 class="box-title m-b-20 text-center">Iniciar Sesión</h3>
-                <div class="form-group ">
-                    <div class="col-xs-12">
-                        <input id="email_usuario" name="email_usuario" class="form-control" type="email" required="" placeholder="Email" autocomplete="off">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-xs-12">
-                        <input class="form-control" type="password" id="pass_usuario" name="pass_usuario" required="" placeholder="Password"> </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-md-12">
-                        <div class="checkbox checkbox-info pull-left p-t-0">
-                            <input id="checkbox-signup" type="checkbox" class="filled-in chk-col-light-blue">
-                            <label for="checkbox-signup"> Recordar </label>
-                        </div> <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Olvidaste password?</a> </div>
-                </div>
-                <div class="form-group text-center">
-                    <div class="col-xs-12 p-b-20">
-                        <button id="btnIniciar" class="btn btn-block btn-lg btn-info btn-rounded" type="submit">Entrar</button>
-                    </div>
-                </div>
-                <!-- <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
-                        <div class="social">
-                            <a href="javascript:void(0)" class="btn  btn-facebook" data-toggle="tooltip" title="Login with Facebook"> <i aria-hidden="true" class="fa fa-facebook"></i> </a>
-                            <a href="javascript:void(0)" class="btn btn-googleplus" data-toggle="tooltip" title="Login with Google"> <i aria-hidden="true" class="fa fa-google-plus"></i> </a>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- <div class="form-group m-b-0">
-                    <div class="col-sm-12 text-center">
-                        Don't have an account? <a href="pages-register.html" class="text-info m-l-5"><b>Sign Up</b></a>
-                    </div>
-                </div> -->
-            </form>
-            <form class="form-horizontal" id="recoverform" action="index.html">
-                <div class="form-group ">
-                    <div class="col-xs-12">
-                        <h3>Recuperar Password</h3>
-                        <p class="text-muted">Ingresa tu Email y te enviaremos las instrucciones! </p>
-                    </div>
-                </div>
-                <div class="form-group ">
-                    <div class="col-xs-12">
-                        <input class="form-control" type="text" required="" placeholder="Email"> </div>
-                </div>
-                <div class="form-group text-center m-t-20">
-                    <div class="col-xs-12">
-                        <button class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Recuperar</button>
-                    </div>
-                </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
 
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- All Jquery -->
-    <!-- ============================================================== -->
-    <script src="assets2/plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="assets2/plugins/bootstrap/js/popper.min.js"></script>
-    <script src="assets2/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <!--Custom JavaScript -->
-    <script type="text/javascript">
-        $(function() {
-            $(".preloader").fadeOut();
-        });
-        $(function() {
-            $('[data-toggle="tooltip"]').tooltip()
-        });
-        // ==============================================================
-        // Login and Recover Password
-        // ==============================================================
-        $('#to-recover').on("click", function() {
-            $("#loginform").slideUp();
-            $("#recoverform").fadeIn();
-        });
-    </script>
-    <script type="text/javascript" src="views/js/functions/ingreso.js"></script>
+        <!-- Add your site or application content here -->
+        <div class="contenedor-login clearfix">
+          <div class="hero-login">
+            <div class="contenedor-login">
+              <h1>Bienvenido</h1>
+              <h2 class="titulo">Check-Docs</h2>
+            </div>
+          </div><!-- .hero-login -->
+          <div class="form-login clearfix">
+            <div class="form-title">
+              <h2 class="titulo">Check-Docs</h2>
+            </div>
+            <div class="form-contenedor">
+              <!-- <div class="form-caption">
+                <h3>Iniciar Sesión</h3>
+              </div> -->
+              <div class="form-iniciar">
+                <a class="hiddenanchor" id="toregister"></a>
+                <a class="hiddenanchor" id="tologin"></a>
+                <div id="wrapper">
+                    <div id="login" class="animate form">
+                      <section class="login_content">
+                        <form name="formulario" id="formulario" method="POST">
+                          <h1>Iniciar sesión</h1>
+                          <div>
+                            <input type="email" id="email_usuario" name="email_usuario" class="form-control"   placeholder="Email" required="required" autocomplete="on" />
+                          </div>
+                          <div>
+                              <input type="password" id="pass_usuario" name="pass_usuario" class="form-control" autocomplete="off" placeholder="Password" required="required" />
+                          </div>
 
-</body>
+                          <div class="logear-usuario">
+                              <button type="submit" class="btn btn-primary" id="btnIniciar" style="width: 150px"><i class="fa fa-sign-in"></i> Iniciar Sesión</button>
+                              <!-- <button type="button" id="iniciar-sesion"  name="iniciar-sesion" class="btn btn-primary submit" style="width: 150px"><i class="fa fa-sign-in" aria-hidden="true"></i> Iniciar sesión</button> -->
+                              <a class="reset_pass" href="#toregister">Olvidaste tu password?</a>
+                              <!-- <a href="identificar.html">Entrar</a> -->
+                          </div>
+                          <div class="clearfix"></div>
+                          <div class="separator">
+                            <div class="clearfix"></div>
+                            <br />
+                            <div>
+                              <!-- <h1>LOGO EMPRESA</h1> -->
+                              <!-- <div class="contenedor-logo">
+                                <img src="img/logo.jpg" alt="">
+                              </div> -->
+                              <p>©2018 Todos los derechos reservados. <a href="#" target="_blank">Check-Docs</a></p>
+                            </div>
+                          </div>
+                          <div id="mensaje" class="alert alert-warning ocultar-contenido"> <strong>Atención! </strong>El usuario no existe</div>
 
+                        </form><!-- .form -->
+                      </section><!-- .section -->
+                    </div>
+                    <div id="register" class="animate form">
+                      <section class="login_content">
+                        <form id="frmRecuperarPassword" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" name="login">
+                          <h3>Recuperar password</h3>
+                          <br>
+                          <div>
+                            <input type="email" id="email_recuperar"name="email_recuperar" class="form-control" placeholder="Email" required="required"/>
+                          </div>
+                          <div>
+                            <button type="submit" class="btn btn-primary submit" style="width: 150px"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Enviar</button>
+                          </div>
+                          <div class="clearfix"></div>
+                          <div class="separator">
+                            <p class="change_link">Recordaste tu password?
+                                <a href="#tologin" class="to_register"> Iniciar sesión </a>
+                            </p>
+                            <div class="clearfix"></div>
+                            <br />
+                            <div>
+                               <!-- <h1>LOGO EMPRESA</h1> -->
+                              <p>©2018 Todos los derechos reservados. <a href="#">Check-Docs</a></p>
+                            </div>
+                          </div>
+                        </form><!-- .form -->
+                      </section><!-- .section -->
+                    </div><!-- .register -->
+                  </div><!-- .wrapper -->
+              </div><!-- .form-iniciar -->
+            </div><!-- .form-contenedor -->
+          </div><!-- .form-login -->
+        </div><!-- .contenedor-login -->
+
+        <!-- jQuery 3.1.1 -->
+        <script src="assets/jquery/js/jquery-3.1.1.min.js"></script>
+
+        <!-- <script src="js/plugins.js"></script> -->
+
+        <!-- SWEET ALERT  -->
+        <script src="assets/sweetalert/sweetalert.min.js"></script>
+
+        <script type="text/javascript" src="views/js/ingreso.js"></script>
+
+    </body>
 </html>
