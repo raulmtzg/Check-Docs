@@ -2,7 +2,7 @@
 
 class Ingreso{
 
-  public function iniciarSesionController($email_usuario, $pass_usuario){
+  static public function iniciarSesionController($email_usuario, $pass_usuario){
 
       #240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9
       $claveHash= hash("SHA256",$pass_usuario);
@@ -75,7 +75,10 @@ class Ingreso{
           $_SESSION['perfil']= $respuesta['perfil'];
           $_SESSION['foto']= $respuesta['foto'];
 
-
+          // echo "<pre>";
+          // print_r($_SESSION);
+          // echo "</pre>";
+          // die;
 
 
           echo "1";

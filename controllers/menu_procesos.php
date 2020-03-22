@@ -15,16 +15,14 @@
           $subprocesos = MenuProcesosModels::getSubprocesosModels($procesos[$a]['idproceso'], "1", "subprocesos");
           if( count($subprocesos) > 1 ){
             #Tiene mas de una opcion
-            $menu.='<li class="treeview">
-                      <a href="#">
-                        <i class="fa fa-folder-o"></i>
-                        <span>'.$procesos[$a]['descripcion'].'</span>
-                        <i class="fa fa-angle-left pull-right"></i>                        
-                      </a>
-                      <ul class="treeview-menu">';
+            $menu.='<li>
+                      <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                        <i class="mdi mdi-gauge"></i>
+                        <span class="hide-menu">'.$procesos[$a]['descripcion'].'</span></a>
+                        <ul aria-expanded="false" class="collapse">';
             $j = 1;
             while ($j < count($subprocesos)) {
-               $menu.='<li><a href="'.$subprocesos[$j]['identificadorsubproceso'].'"><i class="fa fa-folder-open"></i> '.$subprocesos[$j]['descripcion'].'</a></li>';
+               $menu.='<li><a href="'.$subprocesos[$j]['identificadorsubproceso'].'">'.$subprocesos[$j]['descripcion'].'</a></li>';
                $j++;
             }
 
@@ -35,7 +33,7 @@
             #Sin subprocesos
             $menu.='<li>
               <a href="'.$subprocesos[0]['identificadorsubproceso'].'">
-                <i class="fa fa-folder-o"></i> <span>'.$subprocesos[0]['descripcion'].'</span>
+                <span>'.$subprocesos[0]['descripcion'].'</span>
               </a>
             </li>';
 

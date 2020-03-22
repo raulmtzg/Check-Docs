@@ -14,12 +14,12 @@
 
         $data[]=array(
           "0"=>$row["descripcion"],
-          "1"=>($row['condicion']==1)?'<p class="text-center"><span class="label bg-green">ACTIVO</span></p>':
-          '<p class="text-center"><span class="label bg-red">BAJA</span></p>',
-          "2"=>($row['condicion']==1)?'<p class="text-center"><button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Editar" onclick="mostrarDatos('.$row['idtipodocumento'].')"><i class="fa fa-pencil icon-color-info"></i></button>'.
-            ' <button class="btn  btn-sm btn-default " data-toggle="tooltip" data-placement="top" title="Desactivar" onclick="desactivar('.$info.')"><i class="fa fa-ban icon-color-danger"></i></button>':
-            '<p class="text-center"><button class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="top" title="Editar" onclick="mostrarDatos('.$row['idtipodocumento'].')"><i class="fa fa-pencil icon-color-info"></i></button>'.
-            '<button class="btn btn-sm btn-default " data-toggle="tooltip" data-placement="top" title="Activar" onclick="activar('.$info.')"><i class="fa fa-check icon-color-success"></i></button></p>'
+          "1"=>($row['condicion']==1)?'<p class="text-center"><span class="label label-success label-rounded">ACTIVO</span></p>':
+          '<p class="text-center"><span class="label label-danger label-rounded">BAJA</span></p>',
+          "2"=>($row['condicion']==1)?'<p class="text-center"><button class="btn btn-outline-info btn-sm"  data-toggle="tooltip" data-placement="top" title="Editar" onclick="mostrarDatos('.$row['idtipodocumento'].')"><i class="fa fa-pencil"></i></button>'.
+            ' <button class="btn btn-outline-danger btn-sm"  data-toggle="tooltip" data-placement="top" title="Desactivar" onclick="desactivar('.$info.')"><i class="fa fa-ban"></i></button>':
+            '<p class="text-center"><button class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" onclick="mostrarDatos('.$row['idtipodocumento'].')"><i class="fa fa-pencil"></i></button>'.
+            ' <button class="btn btn-outline-success btn-sm" data-toggle="tooltip" data-placement="top" title="Activar" onclick="activar('.$info.')"><i class="fa fa-check"></i></button></p>'
           );
       }
       $results = array(

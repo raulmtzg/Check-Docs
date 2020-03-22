@@ -187,7 +187,7 @@
       session_start();
 
       $rows= ProcesosModels::listarProcesosModel($_SESSION['idsuscriptor'], "procesos");
-
+      
       $data= Array();
       foreach ($rows as $row) {
         $info="";
