@@ -2,7 +2,7 @@
 
 class Ingreso{
 
-  public function iniciarSesionController($email_usuario, $pass_usuario){
+  static public function iniciarSesionController($email_usuario, $pass_usuario){
 
       #240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9
       $claveHash= hash("SHA256",$pass_usuario);
@@ -75,9 +75,6 @@ class Ingreso{
           $_SESSION['perfil']= $respuesta['perfil'];
           $_SESSION['foto']= $respuesta['foto'];
 
-
-
-
           echo "1";
 
         }
@@ -87,7 +84,6 @@ class Ingreso{
           $datosController = array("emailActual" => $emailActual, "actualizarIntentos" => $intentos);
           $respuestaActualizarIntentos = IngresoModels::intentosModel($datosController, "administradores");
 
-          // echo '<div class="alert alert-danger">Error al ingresar</div>';
           #No existe el usuario o password incorrecto
           echo "2";
         }
@@ -97,8 +93,7 @@ class Ingreso{
         //$intentos=0;
         $datosController = array("emailActual" => $emailActual, "actualizarIntentos" => $intentos);
         $respuestaActualizarIntentos = IngresoModels::intentosModel($datosController, "tblusuarios");
-
-        // echo '<div class="alert alert-danger">Ha fallado 3 veces, ingrese el captcha</div>';
+        
         #Ha superado los intentos
         echo "4";
 

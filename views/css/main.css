@@ -6,15 +6,15 @@
 
 
 .skin-blue-light .main-header .navbar {
-    background-color: #2F333E;
+    background-color: #000510;
 }
 
 .skin-blue-light .main-header .navbar .sidebar-toggle:hover {
-    background-color: #086ec5;
+    background-color: #2F333E;
 }
 
 .skin-blue-light .main-header .logo {
-    background-color: #2F333E;
+    background-color: #000510;
     color: #fff;
     border-bottom: 0 solid transparent;
 }
@@ -25,11 +25,12 @@
 }
 .skin-blue-light .sidebar-menu>li:hover>a, .skin-blue-light .sidebar-menu>li.active>a {
     color: #fff;
-    background: #086ec5;
+    background: #010a13
+    /* #086ec5; */
 }
 
 .main-footer {
-    background: #2F333E;
+    background: #000510;
     padding: 15px;
     color: #fff;
     border-top: 1px solid #d2d6de;

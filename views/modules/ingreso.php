@@ -1,138 +1,120 @@
 <?php
-
+	// $token = $_GET['t'];
+	// if( $token !== "0"){
+	// 	header("location:inicio");
+	// }
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bienvenidos a Check-Docs</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="views/img/checkdocs-icon.png" />
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/login/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/login/fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/login/vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/login/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/login/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/login/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/login/vendor/daterangepicker/daterangepicker.css">
+	<!-- SWEET ALERT -->
+	<link rel="stylesheet" href="assets/sweetalert/sweetalert.css">
 
-<!doctype html>
-<html lang="es">
-    <head>
-      <meta charset="utf-8">
-      <meta http-equiv="x-ua-compatible" content="ie=edge">
-      <title>Bienvenidos a Check-Docs</title>
-      <link rel="icon" type="image/png" href="views/img/checkdocs-icon.png" />
-      <!-- <meta name="author" content="SACSI-Diseño &amp; Desarrollo Web ">
-      <meta name="description" content="Sistema de Nombramientos de Personal">
-      <meta name="keyworks" content="API, puerto de veracruz, sistema de nombramientos, control de acceso de personal"> -->
-      <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/login/css/util.css">
+	<link rel="stylesheet" type="text/css" href="assets/login/css/main.css">
+<!--===============================================================================================-->
+</head>
+<body>
 
-      <!-- Bootstrap 3.3.5 -->
-      <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-      <!-- Animate -->
-      <link rel="stylesheet" href="assets/animate/css/animate.min.css">
-      <!-- Login Personalizado  -->
-      <link rel="stylesheet" href="views/css/custom-login.css">
-      <!-- Font Awesome -->
-      <link rel="stylesheet" href="assets/font-awesome-4.7.0/css/font-awesome.css">
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form" name="formulario" id="formulario" method="POST">
+					<span class="login100-form-title p-b-26">
+						Check-Docs
+					</span>
+					<span class="login100-form-title p-b-25">
+						<!-- <i class="zmdi zmdi-font"></i> -->
+						<img src="views/img/logo_checkdocs.png" class="img-thumbnail rounded mx-auto d-block" alt="">
+					</span>
 
-      <!-- fuentes utilizadas en el sitio web -->
-      <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald|PT+Sans" rel="stylesheet">
+					<div class="wrap-input100 validate-input" data-validate = "El correo es obligatorio">
+						<input class="input100" type="email" name="email_usuario" id="email_usuario" required>
+						<span class="focus-input100" data-placeholder="Email"></span>
+					</div>
 
-      <!-- hoja de estilos propio o personalizada -->
-      <link rel="stylesheet" href="views/css/main-login.css">
+					<div class="wrap-input100 validate-input" data-validate="El password es obligatorio">
+						<span class="btn-show-pass">
+							<i class="zmdi zmdi-eye"></i>
+						</span>
+						<input class="input100" type="password" name="pass_usuario" id="pass_usuario" required>
+						<span class="focus-input100" data-placeholder="Password"></span>
+					</div>
 
-      <!-- SWEET ALERT -->
-      <link rel="stylesheet" href="assets/sweetalert/sweetalert.css">
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" type="submit" id="btnInciarSesion">
+								Iniciar Sesión
+							</button>
+						</div>
+					</div>
 
-    </head>
-    <body>
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+					<div class="text-center p-t-25">
+						<span class="txt1">
+							Olvidaste tu contraseña?
+						</span>
 
-        <!-- Add your site or application content here -->
-        <div class="contenedor-login clearfix">
-          <div class="hero-login">
-            <div class="contenedor-login">
-              <h1>Bienvenido</h1>
-              <h2 class="titulo">Check-Docs</h2>
-            </div>
-          </div><!-- .hero-login -->
-          <div class="form-login clearfix">
-            <div class="form-title">
-              <h2 class="titulo">Check-Docs</h2>
-            </div>
-            <div class="form-contenedor">
-              <!-- <div class="form-caption">
-                <h3>Iniciar Sesión</h3>
-              </div> -->
-              <div class="form-iniciar">
-                <a class="hiddenanchor" id="toregister"></a>
-                <a class="hiddenanchor" id="tologin"></a>
-                <div id="wrapper">
-                    <div id="login" class="animate form">
-                      <section class="login_content">
-                        <form name="formulario" id="formulario" method="POST">
-                          <h1>Iniciar sesión</h1>
-                          <div>
-                            <input type="email" id="email_usuario" name="email_usuario" class="form-control"   placeholder="Email" required="required" autocomplete="on" />
-                          </div>
-                          <div>
-                              <input type="password" id="pass_usuario" name="pass_usuario" class="form-control" autocomplete="off" placeholder="Password" required="required" />
-                          </div>
+						<a class="txt2" href="#">
+							Recuperar
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
-                          <div class="logear-usuario">
-                              <button type="submit" class="btn btn-primary" id="btnIniciar" style="width: 150px"><i class="fa fa-sign-in"></i> Iniciar Sesión</button>
-                              <!-- <button type="button" id="iniciar-sesion"  name="iniciar-sesion" class="btn btn-primary submit" style="width: 150px"><i class="fa fa-sign-in" aria-hidden="true"></i> Iniciar sesión</button> -->
-                              <a class="reset_pass" href="#toregister">Olvidaste tu password?</a>
-                              <!-- <a href="identificar.html">Entrar</a> -->
-                          </div>
-                          <div class="clearfix"></div>
-                          <div class="separator">
-                            <div class="clearfix"></div>
-                            <br />
-                            <div>
-                              <!-- <h1>LOGO EMPRESA</h1> -->
-                              <!-- <div class="contenedor-logo">
-                                <img src="img/logo.jpg" alt="">
-                              </div> -->
-                              <p>©2018 Todos los derechos reservados. <a href="#" target="_blank">Check-Docs</a></p>
-                            </div>
-                          </div>
-                          <div id="mensaje" class="alert alert-warning ocultar-contenido"> <strong>Atención! </strong>El usuario no existe</div>
 
-                        </form><!-- .form -->
-                      </section><!-- .section -->
-                    </div>
-                    <div id="register" class="animate form">
-                      <section class="login_content">
-                        <form id="frmRecuperarPassword" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" name="login">
-                          <h3>Recuperar password</h3>
-                          <br>
-                          <div>
-                            <input type="email" id="email_recuperar"name="email_recuperar" class="form-control" placeholder="Email" required="required"/>
-                          </div>
-                          <div>
-                            <button type="submit" class="btn btn-primary submit" style="width: 150px"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Enviar</button>
-                          </div>
-                          <div class="clearfix"></div>
-                          <div class="separator">
-                            <p class="change_link">Recordaste tu password?
-                                <a href="#tologin" class="to_register"> Iniciar sesión </a>
-                            </p>
-                            <div class="clearfix"></div>
-                            <br />
-                            <div>
-                               <!-- <h1>LOGO EMPRESA</h1> -->
-                              <p>©2018 Todos los derechos reservados. <a href="#">Check-Docs</a></p>
-                            </div>
-                          </div>
-                        </form><!-- .form -->
-                      </section><!-- .section -->
-                    </div><!-- .register -->
-                  </div><!-- .wrapper -->
-              </div><!-- .form-iniciar -->
-            </div><!-- .form-contenedor -->
-          </div><!-- .form-login -->
-        </div><!-- .contenedor-login -->
+	<div id="dropDownSelect1"></div>
 
-        <!-- jQuery 3.1.1 -->
-        <script src="assets/jquery/js/jquery-3.1.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="assets/login/vendor/jquery/jquery-3.2.1.min.js"></script>
 
-        <!-- <script src="js/plugins.js"></script> -->
+<!--===============================================================================================-->
+	<script src="assets/login/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="assets/login/vendor/bootstrap/js/popper.js"></script>
+	<script src="assets/login/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="assets/login/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="assets/login/vendor/daterangepicker/moment.min.js"></script>
+	<script src="assets/login/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="assets/login/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
 
-        <!-- SWEET ALERT  -->
-        <script src="assets/sweetalert/sweetalert.min.js"></script>
+<!-- SWEET ALERT  -->
+<script src="assets/sweetalert/sweetalert.min.js"></script>
+	<script src="assets/login/js/main.js"></script>
 
-        <script type="text/javascript" src="views/js/ingreso.js"></script>
+ <!-- Scripts Propios -->
+ <script src="views/js/ingreso.js"></script>
+ <!-- <script src="views/js/globals.js"></script> -->
 
-    </body>
-</html>
+
+<!--
+</body>
+</html> -->
