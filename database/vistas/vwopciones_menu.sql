@@ -1,6 +1,6 @@
 CREATE VIEW `vwopciones_menu` AS
 SELECT         
-		procesos.idsuscriptor,
+		procesos.idempresa,
         procesos.idproceso,
         procesos.descripcion AS proceso,
         procesos.publicar,

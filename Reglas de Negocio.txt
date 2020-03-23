@@ -1,0 +1,8 @@
+1. Crear el usuario super administrador automaticamente
+2. Configurar directo en la base datos si sera el sistema multi empresa 
+3. Crear usuario administrador del sistema con los datos proporcionados de la empresa
+4. El usuario administrador y super administrador seran relacionados automaticamente a las empresas
+5. Solo existe un usuario administrador por sistema
+
+
+240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9
